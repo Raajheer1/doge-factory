@@ -47,7 +47,7 @@ def build_request(agent_type: AgentType, demo: dict, persona_path: str | None) -
 
 def main() -> None:
     load_dotenv()
-    # An empty key would shadow an `ant auth login` profile, which the SDK uses otherwise.
+    # Remove an empty key so other explicitly configured SDK credentials can be used.
     if not os.environ.get("ANTHROPIC_API_KEY"):
         os.environ.pop("ANTHROPIC_API_KEY", None)
     parser = argparse.ArgumentParser(prog="voice-agents")
