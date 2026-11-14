@@ -203,7 +203,8 @@ def run_campaign(demo: dict) -> Iterator[dict]:
             talking_points=plan.talking_points, objections=plan.objections,
             first_message=plan.first_message,
         )
-        request.metadata = {"person_id": person.id, "run_id": h.run_id}
+        request.metadata = {"person_id": person.id, "run_id": h.run_id, "query": h.query,
+                            "policy_id": h.policy.id, "jurisdiction": h.policy.jurisdiction.name}
         agent = _agent(AgentType.GENERATED, persona.name, name, request, persona,
                        archetype=planned.archetype.label)
         built += 1
