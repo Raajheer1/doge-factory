@@ -3,13 +3,18 @@
 import json
 import math
 import os
+from datetime import date
+from urllib.parse import urlparse
 from urllib import error, request
 
 
 NODE_FIELDS = {
     "Jurisdiction": ("id", "name", "level"),
-    "PolicyDocument": ("id", "title", "text", "source_url"),
-    "Actor": ("id", "name", "type"),
+    "PolicyDocument": ("id", "title", "text", "source_url", "citation", "document_type",
+                       "issuing_agency", "publication_date", "status", "topics"),
+    "PolicySection": ("id", "title", "text", "citation", "order", "source_url"),
+    "Actor": ("id", "name", "type", "role", "organization", "source_url",
+              "verified_at", "public_contact"),
     "PolicyFinding": ("id", "description", "evidence_quote"),
     "RedlineProposal": ("id", "proposed_text", "estimated_annual_savings"),
 }
@@ -23,11 +28,28 @@ RELATIONSHIPS = {
     "HAS_FINDING": ("PolicyDocument", "PolicyFinding"),
     "ADDRESSED_BY": ("PolicyFinding", "RedlineProposal"),
     "PROPOSES_CHANGE_TO": ("RedlineProposal", "PolicyDocument"),
+    "HAS_SECTION": ("PolicyDocument", "PolicySection"),
+    "NEXT_SECTION": ("PolicySection", "PolicySection"),
+    "CITES": ("PolicyDocument", "PolicyDocument"),
+    "ADMINISTERS": ("Actor", "PolicyDocument"),
+    "WORKS_FOR": ("Actor", "Actor"),
+}
+
+OPTIONAL_NODE_FIELDS = {
+    "PolicyDocument": {"citation", "document_type", "issuing_agency", "publication_date",
+                       "status", "topics"},
+    "Actor": {"role", "organization", "source_url", "verified_at", "public_contact"},
+}
+SOURCED_RELATIONSHIPS = {
+    "LOBBIED_ON", "HAS_AUTHORITY_OVER", "CITES", "ADMINISTERS", "WORKS_FOR",
 }
 
 
 def _url(value):
-    return isinstance(value, str) and value.startswith(("https://", "http://")) and len(value.split("://", 1)[1]) > 0
+    if not isinstance(value, str):
+        return False
+    parsed = urlparse(value)
+    return parsed.scheme in {"https", "http"} and bool(parsed.netloc)
 
 
 def validate_fixture(fixture):
@@ -43,27 +65,54 @@ def validate_fixture(fixture):
         if not isinstance(node, dict) or node.get("label") not in NODE_FIELDS:
             raise ValueError("unknown node label")
         label = node["label"]
-        if set(node) != {"label", *NODE_FIELDS[label]}:
+        required = set(NODE_FIELDS[label]) - OPTIONAL_NODE_FIELDS.get(label, set())
+        if not required <= set(node) or not set(node) <= {"label", *NODE_FIELDS[label]}:
             raise ValueError(f"invalid {label} properties")
         node_id = node["id"]
         if not isinstance(node_id, str) or not node_id.strip() or node_id in by_id:
             raise ValueError("node IDs must be unique nonempty strings")
+        required_strings = required - {"order", "estimated_annual_savings"}
         if any(not isinstance(node[field], str) or not node[field].strip()
-               for field in NODE_FIELDS[label] if field != "estimated_annual_savings"):
+               for field in required_strings):
             raise ValueError(f"invalid {label} property")
+        if any(not isinstance(value, str) for field, value in node.items()
+               if field in OPTIONAL_NODE_FIELDS.get(label, ())):
+            raise ValueError(f"invalid {label} metadata")
+        if label == "PolicySection" and (
+            isinstance(node["order"], bool) or not isinstance(node["order"], int)
+            or node["order"] < 1
+        ):
+            raise ValueError("section order must be positive")
+        if label == "PolicyDocument" and "document_type" in node and node["document_type"] not in {
+            "statute", "regulation", "notice", "guidance", "form", "evidence",
+        }:
+            raise ValueError("invalid document type")
+        if label == "PolicyDocument" and "status" in node and node["status"] not in {
+            "current", "historical_snapshot", "superseded", "verify_current_status",
+        }:
+            raise ValueError("invalid document status")
+        if label == "Actor" and "source_url" in node and not _url(node["source_url"]):
+            raise ValueError("actor source URL required")
+        if label == "PolicySection" and not _url(node["source_url"]):
+            raise ValueError("section source URL required")
         if label == "Jurisdiction" and node["level"] not in {"federal", "state", "local"}:
             raise ValueError("invalid jurisdiction level")
         if label == "Actor" and node["type"] not in {"official", "lobbyist", "organization"}:
             raise ValueError("invalid actor type")
-        if label == "RedlineProposal" and (
-            isinstance(node["estimated_annual_savings"], bool)
-            or not isinstance(node["estimated_annual_savings"], (int, float))
-            or not math.isfinite(node["estimated_annual_savings"])
-            or node["estimated_annual_savings"] < 0
-        ):
-            raise ValueError("savings must be a nonnegative number")
+        if label == "RedlineProposal":
+            savings = node["estimated_annual_savings"]
+            if savings is not None and (
+                isinstance(savings, bool) or not isinstance(savings, (int, float))
+                or not math.isfinite(savings) or savings < 0
+            ):
+                raise ValueError("savings must be a nonnegative number or null")
         if label == "PolicyDocument" and not _url(node["source_url"]):
             raise ValueError("document requires a source URL")
+        if label == "PolicyDocument" and "publication_date" in node:
+            try:
+                date.fromisoformat(node["publication_date"])
+            except ValueError as exc:
+                raise ValueError("publication date must be ISO YYYY-MM-DD") from exc
         by_id[node_id] = node
 
     seen = set()
@@ -72,7 +121,7 @@ def validate_fixture(fixture):
             raise ValueError("unknown relationship type")
         kind, src, dst = edge["type"], edge.get("src"), edge.get("dst")
         expected = {"type", "src", "dst"}
-        if kind in {"LOBBIED_ON", "HAS_AUTHORITY_OVER"}:
+        if kind in SOURCED_RELATIONSHIPS:
             expected.add("source_url")
         if (set(edge) != expected or not isinstance(src, str) or not isinstance(dst, str)
                 or src not in by_id or dst not in by_id):
@@ -86,8 +135,22 @@ def validate_fixture(fixture):
             raise ValueError("only lobbyists represent clients or lobby")
         if kind == "REPRESENTS" and by_id[dst]["type"] != "organization":
             raise ValueError("lobbyists must represent organizations")
-        if kind in {"LOBBIED_ON", "HAS_AUTHORITY_OVER"} and not _url(edge["source_url"]):
-            raise ValueError("lobbying and authority require a supporting source URL")
+        if kind == "ADMINISTERS" and actor_type != "organization":
+            raise ValueError("only an organization can administer a document")
+        if kind == "WORKS_FOR" and (
+            actor_type != "official" or by_id[dst]["type"] != "organization"
+        ):
+            raise ValueError("only officials can work for an organization")
+        if kind in SOURCED_RELATIONSHIPS and not _url(edge["source_url"]):
+            raise ValueError("sourced relationships require a supporting URL")
+        if kind == "CITES" and src == dst:
+            raise ValueError("a document cannot cite itself")
+        if kind == "NEXT_SECTION" and (
+            by_id[dst]["order"] != by_id[src]["order"] + 1
+            or by_id[dst]["citation"].split(" / passage ")[0]
+            != by_id[src]["citation"].split(" / passage ")[0]
+        ):
+            raise ValueError("section order or parent does not match")
         key = (kind, src, dst)
         if key in seen:
             raise ValueError("duplicate relationship")
@@ -136,14 +199,18 @@ class HousingGraph:
         # Hosted BYOG uses user-owned string property IDs (internal numeric IDs are not stable).
         # MERGE followed by SET refreshes properties on every rerun.
         for label, fields in NODE_FIELDS.items():
-            rows = [{field: node[field] for field in fields}
+            rows = [{field: node.get(field) for field in fields}
                     for node in fixture["nodes"] if node["label"] == label]
             if rows:
-                assignments = ", ".join(f"n.{field} = row.{field}" for field in fields if field != "id")
-                self.query(
-                    f"UNWIND $rows AS row MERGE (n:{label} {{id: row.id}}) SET {assignments}",
-                    {"rows": rows},
+                assignments = ", ".join(
+                    f"n.{field} = row.{field}" for field in fields if field != "id"
                 )
+                chunk_size = 1 if label == "PolicyDocument" else 25
+                for start in range(0, len(rows), chunk_size):
+                    self.query(
+                        f"UNWIND $rows AS row MERGE (n:{label} {{id: row.id}}) SET {assignments}",
+                        {"rows": rows[start:start + chunk_size]},
+                    )
         for kind, (source_label, target_label) in RELATIONSHIPS.items():
             rows = [edge for edge in fixture["relationships"] if edge["type"] == kind]
             if not rows:
@@ -153,9 +220,10 @@ class HousingGraph:
                 f"MATCH (a:{source_label} {{id: row.src}}), (b:{target_label} {{id: row.dst}}) "
                 f"MERGE (a)-[r:{kind}]->(b)"
             )
-            if kind in {"LOBBIED_ON", "HAS_AUTHORITY_OVER"}:
+            if kind in SOURCED_RELATIONSHIPS:
                 cypher += " SET r.source_url = row.source_url"
-            self.query(cypher, {"rows": rows})
+            for start in range(0, len(rows), 50):
+                self.query(cypher, {"rows": rows[start:start + 50]})
 
     def document_context(self, document_id):
         """Traverse from a document without requiring unrelated optional connections."""
@@ -190,3 +258,37 @@ class HousingGraph:
                 "c.id AS client_id, c.name AS client_name, r.source_url AS filing_url", params,
             ),
         }
+
+    def section_context(self, section_id):
+        """Read a passage with its parent document and immediate neighbors."""
+        rows = self.query(
+            "MATCH (d:PolicyDocument)-[:HAS_SECTION]->(s:PolicySection {id: $id}) "
+            "RETURN d.id AS document_id, d.title AS document_title, "
+            "d.document_type AS document_type, d.status AS document_status, "
+            "d.source_url AS document_url, s.id AS id, s.citation AS citation, "
+            "s.text AS text, s.order AS section_order",
+            {"id": section_id},
+        )
+        if not rows:
+            return None
+        previous = self.query(
+            "MATCH (p:PolicySection)-[:NEXT_SECTION]->(s:PolicySection {id: $id}) "
+            "RETURN p.id AS id, p.text AS text", {"id": section_id},
+        )
+        following = self.query(
+            "MATCH (s:PolicySection {id: $id})-[:NEXT_SECTION]->(n:PolicySection) "
+            "RETURN n.id AS id, n.text AS text", {"id": section_id},
+        )
+        return {"section": rows[0], "previous": previous, "next": following}
+
+    def policy_contacts(self, document_id):
+        """Return sourced administering organizations and their relevant officeholders."""
+        return self.query(
+            "MATCH (agency:Actor)-[r:ADMINISTERS]->(d:PolicyDocument {id: $id}) "
+            "OPTIONAL MATCH (official:Actor)-[:WORKS_FOR]->(agency) "
+            "RETURN agency.id AS agency_id, agency.name AS agency_name, "
+            "r.source_url AS administration_source, official.id AS official_id, "
+            "official.name AS official_name, official.role AS role, "
+            "official.source_url AS role_source, official.public_contact AS public_contact",
+            {"id": document_id},
+        )

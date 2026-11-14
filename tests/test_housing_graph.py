@@ -53,6 +53,17 @@ class ValidationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 validate_fixture(data)
 
+    def test_unknown_savings_may_be_null_but_not_speculative(self):
+        data = copy.deepcopy(FIXTURE)
+        proposal = next(n for n in data["nodes"] if n["label"] == "RedlineProposal")
+        proposal["estimated_annual_savings"] = None
+        validate_fixture(data)
+        for invalid in (-1, True, float("nan")):
+            with self.subTest(invalid=invalid):
+                proposal["estimated_annual_savings"] = invalid
+                with self.assertRaises(ValueError):
+                    validate_fixture(data)
+
 
 @unittest.skipUnless(
     os.getenv("HYDRADB_TEST_DATABASE") and os.getenv("HYDRADB_API_KEY"),
