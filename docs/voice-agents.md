@@ -101,3 +101,28 @@ some state laws require disclosure.
 
 The figures in `voice_agents/fixtures/demo.json` are invented: $2.1M, $800, "13th District",
 "Senator Smith", and "Bluegrass Strategies". Replace them with real DOGE Factory output.
+
+## Mobilize console (demo UI)
+
+A local web UI that shows the Mobilize step end to end: the (simulated) Draft
+output that feeds it, the pipeline that turns it into persona agents, and a
+roster of the built agents, each of which can call the allowlisted phone.
+
+```bash
+pip install -e ".[console]"
+voice-agents console            # http://127.0.0.1:8000
+```
+
+- **Input** – `fixtures/demo.json`, standing in for Draft-phase output.
+- **Pipeline** – Draft input → persona synthesis → voice casting → agent
+  assembly → ready. Every step streams a trace event (`POST /api/pipeline`,
+  server-sent events). Source is **Sample** (pre-written personas in
+  `fixtures/sample_personas.json`, no API cost) or **Claude** (Haiku, each
+  persona told to differ from the ones before it).
+- **Agents** – one Constituent → Legislator agent per persona, plus the survey
+  and lobbyist agents. Click one to see its persona, dynamic variables and the
+  exact outbound-call payload, then **Call** to dial. The transcript and
+  post-call analysis stream in while the call runs.
+
+Built agents are saved to `console_agents.json` (gitignored). Calls still go
+through `place_call`, so `ALLOWED_TO_NUMBERS` applies.

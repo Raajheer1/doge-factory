@@ -1,0 +1,29 @@
+{
+  "_note": "Pre-written synthetic personas for running the console without Claude credits.",
+  "personas": [
+    {
+      "name": "Maya Thompson", "age": 34, "gender": "female", "age_band": "young",
+      "occupation": "food truck owner",
+      "background": "Maya runs a food truck in downtown Lexington with three employees. She renews several state permits every year and loses a full day each time to in-person notarization.",
+      "personal_impact": "Every renewal costs her a day of sales, roughly $800, plus the drive to Frankfort."
+    },
+    {
+      "name": "Dale Whitaker", "age": 63, "gender": "male", "age_band": "old",
+      "occupation": "horse farm manager",
+      "background": "Dale has managed a thoroughbred farm off Paris Pike for twenty years. Between agricultural, equine and trailer permits he files paperwork with the state almost every quarter.",
+      "personal_impact": "He drives into town to find a notary for forms he could sign in a minute, and once missed a deadline because the mail was slow."
+    },
+    {
+      "name": "Priya Raman", "age": 41, "gender": "female", "age_band": "middle_aged",
+      "occupation": "home health agency director",
+      "background": "Priya directs a small home health agency near UK HealthCare that employs 28 nurses and aides. Her agency license and each nurse's renewal paperwork require wet-ink signatures.",
+      "personal_impact": "Her office manager spends two days each renewal cycle chasing signatures and notary stamps instead of scheduling patient visits."
+    },
+    {
+      "name": "Marcus Bell", "age": 27, "gender": "male", "age_band": "young",
+      "occupation": "licensed electrician starting his own shop",
+      "background": "Marcus left a big contractor last year to open his own electrical business in north Lexington. He is still learning the state licensing process on top of running jobs.",
+      "personal_impact": "Getting his contractor license renewal notarized meant turning down a paying job that afternoon."
+    }
+  ]
+}

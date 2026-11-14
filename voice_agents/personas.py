@@ -1,6 +1,7 @@
 """Generate a synthetic constituent persona for a legislator's district."""
 
 import os
+from collections.abc import Sequence
 
 import anthropic
 from pydantic import BaseModel
@@ -31,9 +32,16 @@ class PersonaDraft(BaseModel):
 
 def generate_persona(
     *, legislator: Legislator, policy: Policy, district_profile: str,
-    client: anthropic.Anthropic | None = None,
+    avoid: Sequence[Persona] = (), client: anthropic.Anthropic | None = None,
 ) -> Persona:
+    """`avoid` lists personas already created for this district, so a batch
+    spreads across occupations, ages and genders instead of repeating one."""
     client = client or anthropic.Anthropic()
+    taken = "".join(f"- {p.name}, {p.age}, {p.gender.value}, {p.occupation}\n" for p in avoid)
+    variety = (
+        f"Already created (make this one clearly different in occupation, age and gender):\n{taken}\n"
+        if taken else ""
+    )
     response = client.messages.parse(
         model=MODEL,
         max_tokens=16000,
@@ -45,7 +53,7 @@ def generate_persona(
                 f"District profile:\n{district_profile}\n\n"
                 f"Policy: {policy.title}\n{policy.summary}\n"
                 f"Who it affects: {policy.pain_point or 'residents and small businesses'}\n\n"
-                "Create one persona."
+                f"{variety}Create one persona."
             ),
         }],
         output_format=PersonaDraft,

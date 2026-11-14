@@ -5,6 +5,7 @@
     voice-agents persona                     # generate a persona for the demo district
     voice-agents call legislator --persona generated.json
     voice-agents result <conversation_id>    # transcript outcome fields
+    voice-agents console                     # web UI: build persona agents, trigger calls
 """
 
 import argparse
@@ -63,7 +64,21 @@ def main() -> None:
     p = sub.add_parser("result")
     p.add_argument("conversation_id")
 
+    p = sub.add_parser("console")
+    p.add_argument("--port", type=int, default=8000)
+
     args = parser.parse_args()
+
+    if args.command == "console":
+        import uvicorn
+
+        from .console.server import create_app
+
+        print(f"Mobilize console: http://127.0.0.1:{args.port}")
+        uvicorn.run(create_app(store_path=Path("console_agents.json")),
+                    host="127.0.0.1", port=args.port, log_level="warning")
+        return
+
     demo = load_demo()
 
     if args.command == "persona":

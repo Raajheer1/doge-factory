@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mobilize Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo"></span>
+      <span>DOGE Factory</span>
+      <span class="crumb">/</span>
+      <span class="crumb-current">Mobilize</span>
+    </div>
+    <ol class="phases">
+      <li class="done"><span>1</span>Discover</li>
+      <li class="done"><span>2</span>Draft</li>
+      <li class="active"><span>3</span>Mobilize</li>
+    </ol>
+    <div id="health" class="health"></div>
+  </header>
+
+  <div class="shell">
+    <aside class="side">
+      <section class="run-card">
+        <div class="eyebrow">Run</div>
+        <div class="field">
+          <span>Personas</span>
+          <div class="stepper">
+            <button id="minus" aria-label="Fewer personas">−</button>
+            <output id="count">3</output>
+            <button id="plus" aria-label="More personas">+</button>
+          </div>
+        </div>
+        <div class="field">
+          <span>Persona source</span>
+          <div class="seg" id="source">
+            <button data-source="sample" class="on">Sample</button>
+            <button data-source="claude">Claude</button>
+          </div>
+        </div>
+        <p class="hint" id="source-hint"></p>
+        <button id="run" class="run-btn">
+          <svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>
+          <span>Run pipeline</span>
+        </button>
+      </section>
+
+      <section>
+        <div class="eyebrow">Context <span class="badge">simulated · from Draft</span></div>
+        <div id="context" class="context"></div>
+      </section>
+    </aside>
+
+    <main class="center">
+      <div class="canvas-wrap">
+        <div class="canvas-bar">
+          <div class="eyebrow">Agent graph</div>
+          <div id="run-meta" class="run-meta"></div>
+        </div>
+        <div class="canvas" id="canvas">
+          <svg class="edges" id="edges"></svg>
+          <div class="graph" id="graph"></div>
+        </div>
+      </div>
+      <section class="dock">
+        <div class="dock-head">
+          <div class="eyebrow">Trace</div>
+          <div id="trace-meta" class="run-meta"></div>
+        </div>
+        <div id="trace" class="trace"></div>
+      </section>
+    </main>
+
+    <aside class="inspector" id="inspector"></aside>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
