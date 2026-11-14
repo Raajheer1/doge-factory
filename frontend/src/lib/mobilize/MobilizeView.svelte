@@ -8,6 +8,7 @@
   import { FINAL_CALL_STATUSES, allAgents, applyEvent, emptyRun, fmtDuration, restoreRun } from '$lib/mobilize/run';
   import AgentGraph from '$lib/mobilize/AgentGraph.svelte';
   import TraceTimeline from '$lib/mobilize/TraceTimeline.svelte';
+  import ConfidenceCard from '$lib/mobilize/ConfidenceCard.svelte';
   import AgentInspector, { type CallState } from '$lib/mobilize/AgentInspector.svelte';
   import { enterRun, journey, redlinePath } from '$lib/journey.svelte';
   import './mobilize.css';
@@ -252,6 +253,8 @@
             {/if}
           </aside>
         </div>
+
+        {#if campaign}<div class="mz-card mz-conf-card"><ConfidenceCard run={handoff?.run_id || runId} /></div>{/if}
 
         <div class="mz-card mz-trace-card">
           <div class="mz-card-bar"><span class="mini-label">TRACE</span><span class="mz-runmeta">Every pipeline step, with timing</span></div>

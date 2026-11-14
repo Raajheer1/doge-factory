@@ -5,6 +5,7 @@
   import { AP_STAGES, PERSONAS, Stopped, appendEvent, isFinished, loadLog, runAutopilot, type APEvent, type APStage } from '$lib/autopilot';
   import { enterRun, journey, mobilizePath, redlinePath } from '$lib/journey.svelte';
   import AgentGraph from '$lib/mobilize/AgentGraph.svelte';
+  import ConfidenceCard from '$lib/mobilize/ConfidenceCard.svelte';
   import { applyEvent, emptyRun } from '$lib/mobilize/run';
   import '$lib/mobilize/mobilize.css';
   import { loadRun, TERMINAL_STATUSES } from '$lib/runs';
@@ -207,6 +208,7 @@
           {#if callData?.transcript?.length}<div class="ap-transcript">{#each callData.transcript as turn}<p class={turn.role}><b>{turn.role === 'agent' ? callAgent.caller : 'You'}</b> {turn.message}</p>{/each}</div>{/if}
           {#if callData?.summary}<p class="ap-small"><b>Summary:</b> {callData.summary}</p>{/if}
         {/if}
+        {#if s.key === 'call' && campaign && agents.length}<div class="mz-card ap-conf"><ConfidenceCard run={runId} /></div>{/if}
       </div>
     </li>
   {/each}

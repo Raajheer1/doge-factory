@@ -31,6 +31,7 @@ type HandoffPolicy struct {
 	Citation      string              `json:"citation,omitempty"`
 	Jurisdiction  HandoffJurisdiction `json:"jurisdiction"`
 	IssuingAgency string              `json:"issuing_agency,omitempty"`
+	DocumentType  string              `json:"document_type,omitempty"`
 	SourceURL     string              `json:"source_url,omitempty"`
 	EffectiveDate string              `json:"effective_date,omitempty"`
 	Synthetic     bool                `json:"synthetic"`
@@ -95,7 +96,7 @@ func buildHandoff(r Run, f analysis.Finding, b analysis.HandoffBrief, people []p
 	}
 	return MobilizeHandoff{
 		Version: "mobilize.v1", RunID: r.ID, Query: r.Query,
-		Policy: HandoffPolicy{ID: p.ID, Title: p.Title, SpokenTitle: b.SpokenTitle, Citation: p.Citation, Jurisdiction: jurisdiction, IssuingAgency: p.IssuingAgency, SourceURL: p.SourceURL, EffectiveDate: p.EffectiveDate, Synthetic: p.Synthetic},
+		Policy: HandoffPolicy{ID: p.ID, Title: p.Title, SpokenTitle: b.SpokenTitle, Citation: p.Citation, Jurisdiction: jurisdiction, IssuingAgency: p.IssuingAgency, DocumentType: p.DocumentType, SourceURL: p.SourceURL, EffectiveDate: p.EffectiveDate, Synthetic: p.Synthetic},
 		Change: HandoffChange{Summary: b.Summary, Barrier: f.Barrier, EvidenceQuote: f.SourcePassage, ProposedText: f.Amendment, Justification: f.Justification, Safeguards: nonNil(f.Safeguards), Uncertainties: nonNil(f.Uncertainties)},
 		Impact: HandoffImpact{AffectedGroups: b.AffectedGroups},
 		People: callable,

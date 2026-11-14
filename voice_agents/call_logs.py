@@ -93,14 +93,22 @@ def row(saved: dict) -> dict:
     }
 
 
-def push(saved: dict) -> bool:
-    """Upsert one saved call (and its turns) to Supabase; a no-op if it isn't configured."""
+def upsert(table: str, rows: dict | list[dict], on_conflict: str | None = None) -> bool:
+    """Upsert rows into a Supabase table; a no-op if Supabase isn't configured."""
     url, key = os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SECRET_KEY")
     if not url or not key:
         return False
     headers = {"apikey": key, "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"}
     if key.startswith("eyJ"):  # a legacy service_role JWT also goes in Authorization
         headers["Authorization"] = f"Bearer {key}"
+    params = {"on_conflict": on_conflict} if on_conflict else None
+    httpx.post(f"{url.rstrip('/')}/rest/v1/{table}", headers=headers, params=params, json=rows,
+               timeout=30).raise_for_status()
+    return True
+
+
+def push(saved: dict) -> bool:
+    """Upsert one saved call (and its turns) to Supabase."""
     r = row(saved)
     c = saved["conversation"]
     record = {
@@ -111,12 +119,12 @@ def push(saved: dict) -> bool:
         # The useful parts of the ElevenLabs record; traces and realtime snapshots are left out.
         "raw": {k: c.get(k) for k in ("metadata", "analysis", "transcript", "conversation_initiation_client_data")},
     }
-    base = url.rstrip("/") + "/rest/v1"
-    httpx.post(f"{base}/calls", headers=headers, json=record, timeout=30).raise_for_status()
+    if not upsert("calls", record):
+        return False
     turns = [{"conversation_id": r["conversation_id"], "turn_index": i, "role": t["role"],
               "at_secs": t["at"], "message": t["message"]} for i, t in enumerate(r["transcript"])]
     if turns:
-        httpx.post(f"{base}/call_turns", headers=headers, json=turns, timeout=30).raise_for_status()
+        upsert("call_turns", turns)
     return True
 
 

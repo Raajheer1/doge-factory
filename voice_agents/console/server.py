@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field, ValidationError
 
-from .. import call_logs, calls
+from .. import call_logs, calls, confidence
 from ..cli import load_demo
 from .. import planner
 from . import pipeline
@@ -72,6 +72,7 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
             "allowed_numbers": sorted(calls.allowed_numbers()),
             "persona_model": pipeline.PERSONA_MODEL,
             "planner_model": planner.MODEL,
+            "confidence_model": confidence.MODEL,
             "max_personas": MAX_PERSONAS,
         }
 
@@ -103,6 +104,9 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
         else:
             source, label, pause = pipeline.sample_source(), "sample personas", sample_pause
 
+        if campaign:
+            confidence.start(data["handoff"])  # baseline score before any call
+
         def stream():
             store.clear()  # each run replaces the roster shown in the graph
             events = pipeline.run_campaign(data) if campaign else pipeline.run(
@@ -113,6 +117,11 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
                 yield f"data: {json.dumps(ev)}\n\n"
 
         return StreamingResponse(stream(), media_type="text/event-stream")
+
+    @app.get("/api/confidence")
+    def get_confidence(run: str | None = None):
+        """confidence.v1 for one run (the last built by default): the latest snapshot and its history."""
+        return confidence.view(run) or {"key": run, "current": None, "history": [], "reading": []}
 
     @app.post("/api/agents/{agent_id}/call")
     def place_call(agent_id: str):
@@ -143,8 +152,10 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
         if convo.get("status") in call_logs.FINAL:
             # Keep a local copy, with what we told the agent, for later analysis.
             agent = next((a for a in store.agents.values() if conversation_id in a.conversations), None)
-            call_logs.save(convo, call_logs.agent_context(agent) if agent else None)
+            path = call_logs.save(convo, call_logs.agent_context(agent) if agent else None)
             call_logs.write_index()
+            if path:
+                confidence.on_call_async(json.loads(path.read_text()))  # rescore the run in the background
         analysis = convo.get("analysis") or {}
         return {
             "status": convo.get("status"),
