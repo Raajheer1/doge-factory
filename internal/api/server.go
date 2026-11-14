@@ -45,7 +45,7 @@ type Server struct {
 }
 
 func New(repo policy.Repository, a analysis.Analyzer) *Server {
-	workers := 4
+	workers := 6
 	if value := os.Getenv("AUDIT_WORKERS"); value != "" {
 		if n, err := strconv.Atoi(value); err == nil && n >= 1 && n <= 20 {
 			workers = n
