@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -40,19 +39,10 @@ type Server struct {
 	mu       sync.Mutex
 	runs     map[string]*Run
 	path     string
-	workers  int
 	timeout  time.Duration
 }
 
 func New(repo policy.Repository, a analysis.Analyzer) *Server {
-	workers := 6
-	if value := os.Getenv("AUDIT_WORKERS"); value != "" {
-		if n, err := strconv.Atoi(value); err == nil && n >= 1 && n <= 20 {
-			workers = n
-		} else {
-			log.Printf("invalid AUDIT_WORKERS %q; using %d (allowed: 1–20)", value, workers)
-		}
-	}
 	timeout := 30 * time.Minute
 	if value := os.Getenv("AUDIT_TIMEOUT"); value != "" {
 		if d, err := time.ParseDuration(value); err == nil && d > 0 {
@@ -61,7 +51,7 @@ func New(repo policy.Repository, a analysis.Analyzer) *Server {
 			log.Printf("invalid AUDIT_TIMEOUT %q; using %s", value, timeout)
 		}
 	}
-	return &Server{repo: repo, analyzer: a, runs: map[string]*Run{}, workers: workers, timeout: timeout}
+	return &Server{repo: repo, analyzer: a, runs: map[string]*Run{}, timeout: timeout}
 }
 func (s *Server) Routes() *echo.Echo {
 	e := echo.New()
@@ -151,7 +141,7 @@ func (s *Server) execute(id string) {
 	r.Stage = "auditing_and_drafting"
 	s.saveWorkerLocked()
 	s.mu.Unlock()
-	// A bounded worker pool analyzes provisions independently. The collector
+	// Each retrieved provision is analyzed concurrently. The collector
 	// owns progress updates, and stores findings in retrieval order rather than
 	// completion order so the highest-ranked result remains first.
 	type result struct {
@@ -159,32 +149,19 @@ func (s *Server) execute(id string) {
 		finding *analysis.Finding
 		err     error
 	}
-	jobs := make(chan int)
-	results := make(chan result, s.workers)
+	results := make(chan result, len(provisions))
 	var workers sync.WaitGroup
-	for i := 0; i < s.workers && i < len(provisions); i++ {
+	for index := range provisions {
 		workers.Add(1)
-		go func() {
+		go func(index int) {
 			defer workers.Done()
-			for index := range jobs {
-				if ctx.Err() != nil {
-					return
-				}
-				finding, err := s.analyzer.Analyze(ctx, query, provisions[index])
-				results <- result{index: index, finding: finding, err: err}
-			}
-		}()
-	}
-	go func() {
-		defer close(jobs)
-		for i := range provisions {
-			select {
-			case <-ctx.Done():
+			if ctx.Err() != nil {
 				return
-			case jobs <- i:
 			}
-		}
-	}()
+			finding, err := s.analyzer.Analyze(ctx, query, provisions[index])
+			results <- result{index: index, finding: finding, err: err}
+		}(index)
+	}
 	go func() { workers.Wait(); close(results) }()
 	findings := make([]*analysis.Finding, len(provisions))
 	for outcome := range results {
