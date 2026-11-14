@@ -65,3 +65,20 @@ DOGE Factory is a policy-analysis and drafting-support tool. Its output is not l
 ## Voice agents
 
 The Mobilize step's calling agents live in `voice_agents/`. See [docs/voice-agents.md](docs/voice-agents.md).
+
+### Run the policy workbench locally
+
+Set `HYDRADB_API_KEY` and `AI_GATEWAY_API_KEY` in the root `.env`. The Go server reads environment variables; it does not load `.env` automatically. In a terminal at the repository root, export the variables and start the server:
+
+```sh
+set -a
+source .env
+set +a
+go run ./cmd/server
+```
+
+In a second terminal, run `cd frontend`, `npm install` (first run), and `npm run dev`. Open http://127.0.0.1:5173. Choose **Healthcare** or **Housing**, enter a goal, and start an analysis. You can close or refresh the page while it runs; the backend continues processing. Open **Saved runs** in the sidebar to revisit a result, including after restarting the services.
+
+The Go server saves runs, findings, errors, and the approved finding in `data/runs.json` (relative to the directory where the server is started). This file is local, gitignored, and intended for a single server process. Set `RUNS_FILE` to use another path. Keep the backend running until an analysis finishes: if it stops or restarts during a run, that run is marked failed on startup, with any partial results retained; it does not automatically resume.
+
+The frontend defaults to the Go API at `http://127.0.0.1:8080`; set `VITE_API_BASE_URL` in `frontend/.env` before starting Vite if needed. The default HydraDB database is `doge-factory`; set `HYDRADB_DATABASE_ID` to override it. Analysis requires an AI Gateway account with access and credits. Results are limited to the selected collection and are drafts for review; stored source snapshots may be incomplete or outdated.

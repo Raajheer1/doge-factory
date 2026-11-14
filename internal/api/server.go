@@ -19,6 +19,7 @@ import (
 
 type Run struct {
 	ID                string             `json:"id"`
+	Collection        string             `json:"collection,omitempty"`
 	Query             string             `json:"query"`
 	Status            string             `json:"status"`
 	Stage             string             `json:"stage"`
@@ -27,6 +28,7 @@ type Run struct {
 	Findings          []analysis.Finding `json:"findings"`
 	Errors            []string           `json:"errors"`
 	CreatedAt         time.Time          `json:"created_at"`
+	Coverage          string             `json:"coverage,omitempty"`
 	SelectedFindingID string             `json:"selected_finding_id,omitempty"`
 }
 type Server struct {
@@ -63,17 +65,30 @@ func (s *Server) list(c *echo.Context) error {
 }
 func (s *Server) create(c *echo.Context) error {
 	var body struct {
-		Query string `json:"query"`
+		Query      string `json:"query"`
+		Collection string `json:"collection"`
 	}
 	if err := c.Bind(&body); err != nil || strings.TrimSpace(body.Query) == "" || len(body.Query) > 2000 {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "query is required and must be at most 2000 characters"})
+	}
+	if body.Collection == "" {
+		body.Collection = "healthcare"
+	}
+	if body.Collection != "healthcare" && body.Collection != "housing" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "collection must be healthcare or housing"})
+	}
+	if _, ok := s.repo.(policy.BYOG); !ok && body.Collection == "housing" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "housing requires the hosted HydraDB configuration"})
 	}
 	b := make([]byte, 16)
 	if _, err := rand.Read(b); err != nil {
 		return c.JSON(500, map[string]string{"error": "could not create run"})
 	}
 	id := hex.EncodeToString(b)
-	run := &Run{ID: id, Query: strings.TrimSpace(body.Query), Status: "queued", Stage: "queued", Findings: []analysis.Finding{}, Errors: []string{}, CreatedAt: time.Now().UTC()}
+	run := &Run{ID: id, Collection: body.Collection, Query: strings.TrimSpace(body.Query), Status: "queued", Stage: "queued", Findings: []analysis.Finding{}, Errors: []string{}, CreatedAt: time.Now().UTC()}
+	if _, ok := s.repo.(policy.BYOG); ok {
+		run.Coverage = "Collection: " + body.Collection + ". Sources are incomplete and snapshots may not reflect current law. Up to 20 candidates are analyzed. No findings does not establish that no relevant policy exists."
+	}
 	s.mu.Lock()
 	s.runs[id] = run
 	if err := s.saveLocked(); err != nil {
@@ -90,7 +105,7 @@ func runResponse(id string) map[string]string {
 	return map[string]string{"id": id, "status": "queued", "status_url": "/api/runs/" + id}
 }
 func (s *Server) execute(id string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 	s.mu.Lock()
 	r := s.runs[id]
@@ -99,7 +114,13 @@ func (s *Server) execute(id string) {
 	s.saveWorkerLocked()
 	query := r.Query
 	s.mu.Unlock()
-	provisions, err := s.repo.Search(ctx, query, 20)
+	var provisions []policy.Provision
+	var err error
+	if repo, ok := s.repo.(policy.BYOG); ok {
+		provisions, err = repo.SearchCollection(ctx, query, 20, r.Collection)
+	} else {
+		provisions, err = s.repo.Search(ctx, query, 20)
+	}
 	if err != nil {
 		s.fail(id, err)
 		return

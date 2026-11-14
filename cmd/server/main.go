@@ -14,8 +14,19 @@ func main() {
 	if key == "" {
 		log.Fatal("AI_GATEWAY_API_KEY is required")
 	}
+	gateway := analysis.NewGateway(key, os.Getenv("AI_GATEWAY_BASE_URL"), os.Getenv("AI_GATEWAY_MODEL"))
 	var repo policy.Repository
-	if os.Getenv("HYDRA_URL") != "" {
+	if os.Getenv("HYDRADB_API_KEY") != "" {
+		base := os.Getenv("HYDRADB_BASE_URL")
+		if base == "" {
+			base = "https://api.hydradb.com"
+		}
+		db := os.Getenv("HYDRADB_DATABASE_ID")
+		if db == "" {
+			db = "doge-factory"
+		}
+		repo = policy.BYOG{BaseURL: base, Database: db, Key: os.Getenv("HYDRADB_API_KEY"), Expand: gateway.SearchTerms}
+	} else if os.Getenv("HYDRA_URL") != "" {
 		graph, cell := os.Getenv("HYDRA_GRAPH_ID"), os.Getenv("HYDRA_CELL_ID")
 		if graph == "" {
 			graph = "default"
@@ -42,7 +53,6 @@ func main() {
 		}
 		repo = fixtures
 	}
-	gateway := analysis.NewGateway(key, os.Getenv("AI_GATEWAY_BASE_URL"), os.Getenv("AI_GATEWAY_MODEL"))
 	addr := os.Getenv("ADDR")
 	if addr == "" {
 		addr = "127.0.0.1:8080"
