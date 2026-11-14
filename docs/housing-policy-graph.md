@@ -50,6 +50,8 @@ This integration targets **hosted BYOG** (`POST /byog/query`, `database`, `colle
 
 ## HUD EIV research pilot
 
+See the [pilot specification](hud-eiv-policy-graph-spec.md) for the graph contract, source and evidence rules, read behavior, and known gaps.
+
 The HUD EIV pilot extends the initial small graph with `PolicySection` passages, document provenance (`citation`, `document_type`, `issuing_agency`, `publication_date`, `status`, `topics`), and sourced `HAS_SECTION`, `NEXT_SECTION`, `CITES`, `ADMINISTERS`, and `WORKS_FOR` links. This **does not rewrite** the earlier fictional fixture. These additional records support passage-level retrieval and distinguish an agency's administering role from an individual's authority to change a rule. Passages are source-ordered portions of the original full-text document, and status is metadata.
 
 From the repository root, set a valid `HYDRADB_API_KEY` and `HYDRADB_DATABASE_ID=doge-factory` **in the shell** (the module does not load `.env` automatically). With the provided Desktop actor roster, import the pilot to its **dedicated** graph collection:
