@@ -30,6 +30,11 @@
     <span>DOGE<span class="brand-light">FACTORY</span><small>AI POLICY FACTORY</small></span>
   </a>
 
+  <div class="side-section">WORKSPACE</div>
+  <a class="side-link" class:side-current={journey.stage === 'queue'} href="/runs" aria-current={journey.stage === 'queue' ? 'page' : undefined}>
+    <Inbox size={17} /> Problem queue
+  </a>
+
   <div class="side-section">{journey.runId ? 'THIS RUN' : sandbox ? 'DEMO SANDBOX' : 'HOW IT WORKS'}</div>
   <ol class="stepper">
     {#each STAGES as stage, i}
@@ -54,11 +59,6 @@
     <div class="side-section">AUTOMATION</div>
     <a class="side-link" class:side-current={journey.stage === 'autopilot'} href={autopilotPath(journey.runId)} aria-current={journey.stage === 'autopilot' ? 'page' : undefined}><Zap size={17} /> Autopilot</a>
   {/if}
-
-  <div class="side-section">WORKSPACE</div>
-  <a class="side-link" class:side-current={journey.stage === 'queue'} href="/runs" aria-current={journey.stage === 'queue' ? 'page' : undefined}>
-    <Inbox size={17} /> Problem queue
-  </a>
 
   <div class="side-bottom">
     <div class="side-note"><span class="note-icon"><ShieldCheck size={17} /></span>

@@ -41,12 +41,15 @@ from the person's type and `relevance`:
 |---|---|---|
 | lobbyist | Lobbyist pitch: raise it with their named clients, take a meeting | DOGE Factory organizer |
 | `authority_over_document` / `administers` (agency or official) | Stakeholder → Agency: guidance, waiver or support | resident from an affected group |
-| other official | Constituent → Legislator: support the amendment | constituent from an affected group |
+| legislator (Senator, Representative, …) | Constituent → Legislator: support the amendment | constituent from an affected group |
 | other organization | Coalition invite: sign a coalition letter | DOGE Factory organizer |
+| any other official or agency | Stakeholder → Agency | resident from an affected group |
 
-A small model (`PERSONA_MODEL`, Haiku by default) then writes the caller, goal, talking
-points, likely objections and opening line from the handoff, one call per person, four
-at a time. They fill the variables of the single **Generated Caller** agent, whose
+An OpenAI model (`PLANNER_MODEL`, `gpt-6.1-terra` by default, needs `OPENAI_API_KEY`)
+then writes the caller, goal, talking points, likely objections and opening line from the
+handoff, one person at a time at `PLANNER_EFFORT` (default `high`), about 10 seconds
+each. The model's reasoning summary (when it gives one) and the plan as it is written
+stream to the UI as `think` events, so the graph shows each agent being worked out. They fill the variables of the single **Generated Caller** agent, whose
 prompt holds the call structure and the rules (no invented facts, AI disclosure, end the
 call). Code picks each caller's gender and age band, so voices vary across the roster.
 Its post-call fields are `target_position` (supportive/undecided/opposed/no_answer),
@@ -81,6 +84,21 @@ constituent data).
 | legislator | `office_position` (supportive/undecided/opposed/no_answer), `commitment`, `staffer_contact`, `objections` |
 | survey | `aware_of_issue`, `personal_experience`, `support_score` (1-5, 0 = no answer), `concerns`, `willing_to_contact_rep`, `do_not_call` |
 | lobbyist | `interest_level` (high/medium/low/declined), `objections`, `next_step`, `follow_up_contact` |
+
+## Call logs
+
+Finished calls are saved locally in `call_logs/` (gitignored) for analysis:
+
+- `call_logs/<conversation_id>.json`: the full ElevenLabs conversation (transcript with
+  timings, analysis, data collection, metadata) plus `context`, which records the agent that
+  placed it: call type, caller persona, target, run and person ids, and the exact
+  variables and opening line.
+- `call_logs/calls.jsonl`: one flat row per call (duration, outcome fields, evaluation,
+  word counts, transcript), for pandas or duckdb.
+
+The Mobilize API saves a call as soon as it finishes. `voice-agents export-calls` backfills
+every finished call from all four agents and rebuilds `calls.jsonl`. ElevenLabs also keeps
+every conversation (retention is unlimited on these agents).
 
 ## Calling from another language (e.g. Go)
 
