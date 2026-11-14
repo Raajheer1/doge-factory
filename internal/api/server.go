@@ -108,7 +108,7 @@ func (s *Server) create(c *echo.Context) error {
 	id := hex.EncodeToString(b)
 	run := &Run{ID: id, Collection: body.Collection, Query: strings.TrimSpace(body.Query), Status: "queued", Stage: "queued", Findings: []analysis.Finding{}, Errors: []string{}, CreatedAt: time.Now().UTC()}
 	if _, ok := s.repo.(policy.BYOG); ok {
-		run.Coverage = "Collection: " + body.Collection + ". Sources are incomplete and snapshots may not reflect current law. Up to 20 candidates are analyzed. No findings does not establish that no relevant policy exists."
+		run.Coverage = "Collection: " + body.Collection + ". Sources are incomplete and snapshots may not reflect current law. Up to 10 candidates are analyzed. No findings does not establish that no relevant policy exists."
 	}
 	s.mu.Lock()
 	s.runs[id] = run
@@ -138,9 +138,9 @@ func (s *Server) execute(id string) {
 	var provisions []policy.Provision
 	var err error
 	if repo, ok := s.repo.(policy.BYOG); ok {
-		provisions, err = repo.SearchCollection(ctx, query, 20, r.Collection)
+		provisions, err = repo.SearchCollection(ctx, query, 10, r.Collection)
 	} else {
-		provisions, err = s.repo.Search(ctx, query, 20)
+		provisions, err = s.repo.Search(ctx, query, 10)
 	}
 	if err != nil {
 		s.fail(id, err)
