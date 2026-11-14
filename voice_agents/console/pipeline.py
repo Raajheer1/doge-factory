@@ -217,7 +217,8 @@ def _input_from_finding(handoff: dict, demo: dict) -> dict:
             "pain_point": finding["barrier"],
             "key_legislators": demo["policy"]["key_legislators"],
         },
-        "legislator": {**demo["legislator"], "district": f"{jurisdiction}'s 13th Senate District"},
+        # Placeholder when the handoff carries no people; don't invent a district.
+        "legislator": {**demo["legislator"], "district": f"a demo district in {jurisdiction}"},
         "district_profile": f"A mixed urban and rural district in {jurisdiction} with residents, "
                             "small businesses and public-sector workers affected by state rules.",
         "lobbyist": {
