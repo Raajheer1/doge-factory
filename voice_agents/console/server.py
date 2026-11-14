@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field, ValidationError
 
-from .. import calls
+from .. import call_logs, calls
 from ..cli import load_demo
 from .. import planner
 from . import pipeline
@@ -140,6 +140,11 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
             convo = calls.get_conversation(conversation_id)
         except httpx.HTTPStatusError as exc:
             raise HTTPException(502, f"ElevenLabs: {exc.response.text}")
+        if convo.get("status") in call_logs.FINAL:
+            # Keep a local copy, with what we told the agent, for later analysis.
+            agent = next((a for a in store.agents.values() if conversation_id in a.conversations), None)
+            call_logs.save(convo, call_logs.agent_context(agent) if agent else None)
+            call_logs.write_index()
         analysis = convo.get("analysis") or {}
         return {
             "status": convo.get("status"),

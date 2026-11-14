@@ -64,6 +64,8 @@ def main() -> None:
     p = sub.add_parser("result")
     p.add_argument("conversation_id")
 
+    sub.add_parser("export-calls", help="save every finished call to call_logs/ and rebuild calls.jsonl")
+
     p = sub.add_parser("console")
     p.add_argument("--port", type=int, default=8000)
 
@@ -77,6 +79,13 @@ def main() -> None:
         print(f"Mobilize API on http://127.0.0.1:{args.port}; open the frontend at /mobilize")
         uvicorn.run(create_app(store_path=Path("console_agents.json")),
                     host="127.0.0.1", port=args.port, log_level="warning")
+        return
+
+    if args.command == "export-calls":
+        from .call_logs import export_all
+
+        saved, index = export_all()
+        print(f"Saved {saved} new calls; {index} has one row per call")
         return
 
     demo = load_demo()

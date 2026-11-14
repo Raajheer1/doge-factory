@@ -85,6 +85,21 @@ constituent data).
 | survey | `aware_of_issue`, `personal_experience`, `support_score` (1-5, 0 = no answer), `concerns`, `willing_to_contact_rep`, `do_not_call` |
 | lobbyist | `interest_level` (high/medium/low/declined), `objections`, `next_step`, `follow_up_contact` |
 
+## Call logs
+
+Finished calls are saved locally in `call_logs/` (gitignored) for analysis:
+
+- `call_logs/<conversation_id>.json`: the full ElevenLabs conversation (transcript with
+  timings, analysis, data collection, metadata) plus `context`, which records the agent that
+  placed it: call type, caller persona, target, run and person ids, and the exact
+  variables and opening line.
+- `call_logs/calls.jsonl`: one flat row per call (duration, outcome fields, evaluation,
+  word counts, transcript), for pandas or duckdb.
+
+The Mobilize API saves a call as soon as it finishes. `voice-agents export-calls` backfills
+every finished call from all four agents and rebuilds `calls.jsonl`. ElevenLabs also keeps
+every conversation (retention is unlimited on these agents).
+
 ## Calling from another language (e.g. Go)
 
 All the call layer sends is one HTTP request. `voice-agents preview <type>` prints the

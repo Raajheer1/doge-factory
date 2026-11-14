@@ -99,8 +99,11 @@ Rules:
 - Tailor the goal to this person's actual lever (their authority, committee, clients or members).
 - Talking points: 2-3 short spoken sentences. Objections: 1-2 lines of the form
   "If they say <concern>, say <short answer>", grounded in the safeguards and justification.
-- first_message: one or two sentences the caller opens with: their name, who they are, why this person.
-  Do not mention being an AI."""
+- first_message: one short, casual spoken sentence, under 20 words: first name, who they are, and a
+  quick "got a minute?". Example: "Hi, this is Dana, I sell used cars over in Bowling Green, got a quick
+  minute?". Save the details for later in the call. Do not mention being an AI.
+- Everything is spoken aloud on a phone: write it the way a person talks (contractions, plain words),
+  never like a memo."""
 
 
 class CallPlan(BaseModel):

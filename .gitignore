@@ -9,3 +9,4 @@ generated_persona.json
 console_agents.json
 data/
 frontend/node_modules
+call_logs/
