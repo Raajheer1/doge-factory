@@ -158,10 +158,16 @@
 .mz-conf-card{margin-top:16px}
 .mz-conf-empty{padding:18px 20px;margin:0}
 .mz-conf-body{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:22px;padding:18px 20px}
-.mz-conf-score{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
-.mz-conf-score strong{font-size:44px;line-height:1;letter-spacing:-.04em;color:#1f3328}
-.mz-conf-score>span{font-size:12px;color:#8a998f}
-.mz-conf-score em{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:20px;padding:3px 9px;margin-left:6px;background:#eef2ee;color:#42574b}
+.mz-conf-pair{display:flex;align-items:center;gap:14px}
+.mz-conf-arrow{color:#b7c4bb;flex:none}
+.mz-conf-score{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mz-conf-score>div{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.mz-conf-score>small{font-size:10.5px;color:#8a998f}
+.mz-conf-score.dim strong{color:#7d8d83}
+.mz-conf-wait{font-size:40px;line-height:1;color:#c3cec6}
+.mz-conf-score strong{font-size:38px;line-height:1;letter-spacing:-.04em;color:#1f3328}
+.mz-conf-score>div>span{font-size:12px;color:#8a998f}
+.mz-conf-score em{align-self:center;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:20px;padding:3px 9px;margin-left:6px;background:#eef2ee;color:#42574b}
 .mz-conf-score em[data-band=likely],.mz-conf-score em[data-band=promising]{background:#e7f3ec;color:#245b40}
 .mz-conf-score em[data-band=uphill],.mz-conf-score em[data-band="long shot"]{background:#f8ece8;color:#854a3d}
 .mz-conf-delta{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;color:#809087;margin-left:4px}
@@ -176,6 +182,7 @@
 .mz-conf-chart .line{fill:none;stroke:#3b805e;stroke-width:2;stroke-linejoin:round}
 .mz-conf-chart .dot{fill:#3b805e;stroke:#fff;stroke-width:2}
 .mz-conf-chart .dot.base{fill:#fff;stroke:#3b805e}
+.mz-conf-chart .split{stroke:#b7c4bb;stroke-width:1;stroke-dasharray:3 3}
 .mz-conf-tip{position:absolute;top:0;right:0;max-width:70%;background:#1f3328;color:#fff;font-size:11px;border-radius:7px;padding:6px 9px;pointer-events:none}
 .mz-conf-tip span{display:block;color:#c9d6cd;margin-top:2px}
 .mz-conf-factors{display:grid;grid-template-columns:max-content 1fr;gap:7px 14px;margin:14px 0 0;font-size:12px}
@@ -192,6 +199,9 @@
 .mz-conf-stance .mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#b7c4bb}
 .mz-conf-stance .fill{position:absolute;top:0;bottom:0;background:#3b805e;border-radius:4px}
 .mz-conf-stance .fill.neg{background:#b0584a}
+.mz-conf-stance.guess .fill{opacity:.45}
+.mz-conf-tag{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#eef2ee;color:#5d7064;border-radius:4px;padding:1px 5px}
+.mz-conf-why{font-size:11px;color:#6b7d72;margin:4px 0 0;line-height:1.45}
 .mz-conf-stance b{font-size:11.5px;color:#25392d;min-width:38px;text-align:right}
 .mz-conf-read{font-size:11px;color:#5d7064;margin:6px 0 0;text-transform:none}
 .mz-conf-targets blockquote{margin:6px 0 0;padding-left:9px;border-left:2px solid #d5dfd7;font-size:11.5px;color:#42574b;font-style:italic}

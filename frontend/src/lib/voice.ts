@@ -31,20 +31,22 @@ export interface Conversation {
 export interface ConfidenceTarget {
   person_id: string; name: string; type: string; relevance: string; leverage: number;
   called: boolean; reached: boolean; stance: number | null; weight: number; points: number; calls?: number;
+  source: 'call' | 'expected' | null; expected?: { position: string; reason: string } | null;
   position?: string; commitment?: string; sentiment?: number; engagement?: number; read_confidence?: number;
   objections?: string[]; evidence?: string[]; rationale?: string; conversation_id?: string;
 }
-export interface ConfidenceTrigger { type: 'baseline' | 'call'; summary: string; conversation_id?: string; person_id?: string }
+export interface ConfidenceTrigger { type: 'baseline' | 'plan' | 'call'; summary: string; conversation_id?: string; person_id?: string }
 export interface ConfidenceSnapshot {
   version: 'confidence.v1'; seq: number; run_id: string; policy_id: string; policy_title: string; jurisdiction: string;
-  score: number; band: string; delta: number; support: number; evidence_pull: number;
+  score: number; band: string; delta: number; phase: 'before_calls' | 'after_calls'; support: number; evidence_pull: number;
   factors: { key: string; label: string; points: number; detail: string }[];
   coverage: { people: number; called: number; reached: number }; objections: string[];
   targets: ConfidenceTarget[]; trigger: ConfidenceTrigger; computed_at: string; reader_model: string;
 }
+export type ConfidencePoint = Pick<ConfidenceSnapshot, 'seq' | 'score' | 'band' | 'delta' | 'phase' | 'trigger' | 'computed_at'>;
 export interface ConfidenceView {
   key: string | null; current: ConfidenceSnapshot | null; reading: string[];
-  history: Pick<ConfidenceSnapshot, 'seq' | 'score' | 'band' | 'delta' | 'trigger' | 'computed_at'>[];
+  before: ConfidencePoint | null; after: ConfidencePoint | null; history: ConfidencePoint[];
 }
 
 const base = (import.meta.env.VITE_VOICE_API_BASE_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');
