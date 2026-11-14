@@ -96,6 +96,16 @@ Finished calls are saved locally in `call_logs/` (gitignored) for analysis:
 - `call_logs/calls.jsonl`: one flat row per call (duration, outcome fields, evaluation,
   word counts, transcript), for pandas or duckdb.
 
+With `SUPABASE_URL` and `SUPABASE_SECRET_KEY` in `.env`, every saved call is also upserted to
+Supabase (schema in `supabase/migrations/`):
+
+- `calls`: one row per call, linked by `run_id`, `person_id` and `policy_id`, with outcome
+  fields, ElevenLabs evaluation and sentiment, the transcript (as JSON and text), the agent's
+  `context` and the `raw` ElevenLabs record. `analysis` (jsonb) is left empty for your own
+  scores, such as sentiment or confidence.
+- `call_turns`: one row per spoken turn (`role`, `at_secs`, `message`), with its own
+  `analysis` jsonb for per-utterance scores.
+
 The Mobilize API saves a call as soon as it finishes. `voice-agents export-calls` backfills
 every finished call from all four agents and rebuilds `calls.jsonl`. ElevenLabs also keeps
 every conversation (retention is unlimited on these agents).
