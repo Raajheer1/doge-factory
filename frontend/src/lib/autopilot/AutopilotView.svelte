@@ -2,14 +2,14 @@
   import { onDestroy, onMount } from 'svelte';
   import ExpandableText from '$lib/ExpandableText.svelte';
   import { ArrowRight, Check, CircleAlert, FastForward, LoaderCircle, Pause, PhoneCall, Play, RotateCcw, Square, Zap } from '@lucide/svelte';
-  import { AP_STAGES, PERSONAS, Stopped, appendEvent, isFinished, loadLog, runAutopilot, type APEvent, type APStage } from '$lib/autopilot';
+  import { AP_STAGES, Stopped, appendEvent, isFinished, loadLog, runAutopilot, type APEvent, type APStage } from '$lib/autopilot';
   import { enterRun, journey, mobilizePath, redlinePath } from '$lib/journey.svelte';
   import AgentGraph from '$lib/mobilize/AgentGraph.svelte';
   import ConfidenceCard from '$lib/mobilize/ConfidenceCard.svelte';
   import { applyEvent, emptyRun } from '$lib/mobilize/run';
   import '$lib/mobilize/mobilize.css';
   import { loadRun, TERMINAL_STATUSES } from '$lib/runs';
-  import type { Run } from '$lib/api';
+  import type { HandoffPerson, Run } from '$lib/api';
   import './autopilot.css';
 
   let { runId, live }: { runId: string; live: boolean } = $props();
@@ -97,7 +97,8 @@
   const callAgent = $derived(lastData('call', 'agent'));
   // The Mobilize agent graph, rebuilt from the recorded pipeline events so it fills in live and in replays.
   const campaign = $derived(!!handoff?.people?.length);
-  const planned = $derived(campaign ? handoff!.people.length : PERSONAS);
+  const planned = $derived(handoff?.people?.length ?? 0);
+  const targetNames = $derived(((handoff?.people ?? []) as HandoffPerson[]).map((p) => (p.type === 'official' && p.title ? `${p.title} ${p.name}` : p.name)));
   const graph = $derived.by(() => {
     const raw = (byStage.mobilize ?? []).filter((e) => e.data?.pipeline).map((e) => e.data!.pipeline);
     if (!raw.length) return null;
@@ -195,7 +196,7 @@
         {/if}
 
         {#if s.key === 'mobilize' && graph}
-          <div class="ap-graph"><AgentGraph run={graph} planned={planned} {campaign} ticking={mode === 'live'} sourceLabel={campaign ? lastData('mobilize', 'plan')?.model ?? 'Planner' : 'Claude'}
+          <div class="ap-graph"><AgentGraph run={graph} planned={planned} {campaign} targets={targetNames} ticking={mode === 'live'} sourceLabel={lastData('mobilize', 'plan')?.model ?? 'Planner'}
             proposalTitle={handoff?.spoken_title ?? ''} jurisdiction={chosen?.jurisdiction ?? ''} target={campaign ? `${planned} people` : handoff?.people?.[0]?.name ?? ''}
             selectedId={null} liveAgentId={liveAgentId} onselect={() => {}} /></div>
         {:else if s.key === 'mobilize' && (personas.length || agents.length)}

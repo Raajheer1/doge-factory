@@ -98,7 +98,10 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
         except (KeyError, TypeError) as exc:
             raise HTTPException(422, f"Handoff is missing {exc}")
         # A mobilize.v1 handoff with people gets one purpose-built agent per person.
-        campaign = body.source == "claude" and bool(data.get("handoff", {}).get("people"))
+        if "handoff" in data and not data["handoff"].get("people"):
+            # Never fall back to the demo's placeholder targets for a real policy.
+            raise HTTPException(422, "No people are linked to this policy, so there is no one to build agents for.")
+        campaign = bool(data.get("handoff", {}).get("people"))  # real runs never use sample personas
         if body.source == "claude":
             source, label, pause = pipeline.claude_source(data), pipeline.CLAUDE_LABEL, 0.0
         else:

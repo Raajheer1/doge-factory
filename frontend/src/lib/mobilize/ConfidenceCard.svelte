@@ -28,6 +28,7 @@
   const before = $derived(view?.before ?? null);
   const after = $derived(view?.after ?? null);
   const firstCall = $derived(hist.findIndex((h) => h.phase === 'after_calls'));
+  const calls = $derived(hist.filter((h) => h.trigger.type === 'call').length);
   const BANDS = [75, 55, 40, 25];
 
   // Score over each scoring event (baseline, then one per call), on a fixed 0-100 scale.
@@ -48,7 +49,7 @@
     <span class="mz-runmeta">{#if reading}<LoaderCircle class="spin" size={12} /> Reading the latest call…{:else if cur}{cur.version} · rescored after every call · {cur.reader_model}{/if}</span>
   </div>
   {#if !cur}
-    <p class="mz-muted mz-conf-empty">Scores appear once agents are being built in Live mode from a handoff with people: each planned agent sets a before-calls score, and each finished call moves the after-calls score.</p>
+    <p class="mz-muted mz-conf-empty">Scores appear once agents are built: each planned agent sets the before-calls score, and each finished call moves the after-calls score.</p>
   {:else}
     <div class="mz-conf-body">
       <div class="mz-conf-main">
@@ -83,7 +84,7 @@
               <rect x={x(i) - 14} y={PAD.t} width="28" height={H - PAD.t - PAD.b} fill="transparent" role="presentation" onmouseenter={() => (hover = i)} />
             {/each}
             <text x={PAD.l} y={H - 4} class="tick start">baseline</text>
-            {#if hist.length > 1}<text x={W - PAD.r} y={H - 4} class="tick end">{firstCall > 0 ? `call ${hist.length - firstCall}` : `${hist.length - 1} planned`}</text>{/if}
+            {#if hist.length > 1}<text x={W - PAD.r} y={H - 4} class="tick end">{calls ? `${calls} call${calls === 1 ? '' : 's'}` : `${hist.length - 1} planned`}</text>{/if}
           </svg>
           {#if shown}<figcaption class="mz-conf-tip"><b>{Math.round(shown.score)}</b> {shown.band}{shown.seq > 0 ? ` (${signed(shown.delta)})` : ''}<span>{shown.trigger.summary}</span></figcaption>{/if}
         </figure>

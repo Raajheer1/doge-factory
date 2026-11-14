@@ -123,17 +123,21 @@ and rejects it with a field-level error if something required is missing.
 
 ### `people`: who Mobilize may call
 
-Only include people the analysis thinks are relevant, ordered most relevant first. Mobilize builds:
-- for the first `official` with a `state`, constituent callers from that state;
-- for the first `lobbyist`, a pitch tailored to their `clients`.
+Only include people the analysis thinks are relevant, ordered most relevant first. Mobilize builds
+one purpose-built agent per person (see [voice-agents.md](voice-agents.md)); a handoff with no people
+is refused rather than filled with demo targets.
 
-Later people are carried for context; the console targets one of each for now.
+The Go API reads people from the policy graph: actors linked directly to the document
+(`HAS_AUTHORITY_OVER`, `LOBBIED_ON`, `RELEVANT_TO`, `ADMINISTERS`, and staff of the administering agency).
+When none are linked, it falls back to the agency that issued the document and its staff, plus up to
+4 members of the committee whose name best matches the document (`committee_jurisdiction`). Officials
+recorded with only a role use it as their `title`.
 
 | Field | Type | Notes |
 | --- | --- | --- |
 | `id` ✱ | string | Stable ID. |
 | `name` ✱ | string | |
-| `type` ✱ | `official` \| `lobbyist` \| `organization` | Organizations are context only; they don't get calls. |
+| `type` ✱ | `official` \| `lobbyist` \| `organization` | Organizations get an agency or coalition call. |
 | `title` | string | How to address them: `Senator`, `Representative`, `Secretary`… Required for officials. |
 | `role` | string | Plain role, e.g. `Chair, Senate Banking Subcommittee on Housing…`. |
 | `organization` | string | Chamber, agency or employer. |

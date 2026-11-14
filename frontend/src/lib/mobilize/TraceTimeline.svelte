@@ -3,7 +3,7 @@
 
   let { run, now }: { run: RunState; now: number } = $props();
 
-  const LABEL = { input: 'Draft input', plan: 'Plan', persona: 'Persona', think: 'Thinking', voice: 'Voice cast', assemble: 'Assemble', ready: 'Ready', error: 'Error' };
+  const LABEL = { input: 'Draft input', plan: 'Plan', persona: 'Caller', think: 'Thinking', voice: 'Voice cast', assemble: 'Assemble', ready: 'Ready', error: 'Error' };
   const t0 = $derived(run.start ?? now);
   const total = $derived(Math.max((run.end ?? now) - t0, 1));
   const clock = (t: number) => new Date(t).toLocaleTimeString([], { hour12: false }) + '.' + String(t % 1000).padStart(3, '0');
@@ -19,7 +19,7 @@
   {#if !run.rows.length}
     <p class="mz-empty">{run.legislators.length
       ? 'Agents restored from the last run. Build again to see a fresh trace.'
-      : 'Build agents to watch each step: persona synthesis, voice casting and agent assembly.'}</p>
+      : 'Build agents to watch each step: call planning, voice casting and agent assembly.'}</p>
   {:else}
     {#each run.rows as row}
       {@const end = row.end ?? now}

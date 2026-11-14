@@ -18,7 +18,6 @@ export const AP_STAGES: { key: APStage; label: string }[] = [
   { key: 'call', label: 'Place the call' },
 ];
 
-export const PERSONAS = 2; // legacy handoffs only; a handoff with people gets one agent per person
 
 const key = (runId: string) => `doge-autopilot:${runId}`;
 export function loadLog(runId: string): APEvent[] {
@@ -111,24 +110,25 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
     desired_change: finding.desired_change, safeguards: finding.safeguards ?? [],
   });
   await gate(2500);
-  if (!window.confirm('Review the finding, its source, amendment, and safeguards before approving. Approve this redline for mobilization?')) throw new Stopped();
+  // Autopilot approves on its own; review happens in Redline afterwards.
   await approveFinding(runId, finding.id);
-  log('redline', 'done', 'Redline approved for mobilization');
+  log('redline', 'done', 'Redline auto-approved for mobilization');
 
   // 4. Handoff (mobilize.v1 with people from the graph).
   await gate(1000);
   log('handoff', 'running', 'Preparing the mobilize.v1 handoff');
   const handoff = await loadHandoff(runId);
   const summary = handoffSummary(handoff);
-  log('handoff', 'done', `${summary.people.filter((p) => p.type !== 'organization').length} people to mobilize`, summary);
+  const people = handoff.people?.length ?? 0;
+  if (!people) { log('handoff', 'error', 'No people are linked to this policy, so there is no one to build agents for.', summary); return; }
+  log('handoff', 'done', `${people} people to mobilize`, summary);
 
   // 5. Build voice agents.
   await gate(1500);
-  const people = handoff.people?.length ?? 0;
-  log('mobilize', 'running', people ? `Planning one purpose-built agent for each of ${people} people` : `Generating ${PERSONAS} constituent personas and voice agents`);
+  log('mobilize', 'running', `Planning one purpose-built agent for each of ${people} people`);
   try { localStorage.setItem('doge-agents-run', runId); } catch { /* optional */ }
   const agents: VoiceAgent[] = [];
-  await runPipeline({ personas: PERSONAS, source: 'claude', handoff }, (ev) => {
+  await runPipeline({ source: 'claude', handoff }, (ev) => {
     // Every raw pipeline event is kept so the agent graph rebuilds live and in replays.
     const pipeline = ev;
     if (ev.status === 'error') log('mobilize', 'error', ev.message, { pipeline });
@@ -143,8 +143,8 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
 
   // 6. Call: the first agent (the most relevant person, or the first constituent) rings the allowlisted number.
   await gate(2000);
-  const caller = agents.find((a) => a.kind === 'legislator') ?? agents[0];
-  if (!priorCall && !window.confirm(`Place a real call to ${caller.request.to_number}? The caller is synthetic; verify the target, consent and applicable disclosure requirements first.`)) throw new Stopped();
+  // No prompt: the Mobilize API only dials allowlisted numbers (ALLOWED_TO_NUMBERS).
+  const caller = agents[0];
   log('call', 'running', caller.archetype ? `${caller.caller} is calling ${caller.target} (${caller.archetype})` : `${caller.caller} is calling as a constituent of ${caller.target}`, { agent: agentSummary(caller), to: caller.request.to_number });
   const conversation_id = priorCall ?? (await placeCall(caller.id)).conversation_id;
   try { localStorage.setItem(`doge-autopilot-call:${runId}`, conversation_id); } catch { /* storage is optional */ }

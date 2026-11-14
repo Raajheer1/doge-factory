@@ -4,8 +4,8 @@
   import type { AgentKind, VoiceAgent } from '$lib/voice';
   import { avatarColor, initials, type NodeState, type RunState } from './run';
 
-  let { run, planned, campaign = false, ticking = true, sourceLabel, proposalTitle, jurisdiction, target, selectedId, liveAgentId, onselect }: {
-    run: RunState; planned: number; campaign?: boolean; ticking?: boolean; sourceLabel: string; proposalTitle: string; jurisdiction: string; target: string;
+  let { run, planned, campaign = false, ticking = true, targets = [], sourceLabel, proposalTitle, jurisdiction, target, selectedId, liveAgentId, onselect }: {
+    run: RunState; planned: number; campaign?: boolean; ticking?: boolean; targets?: string[]; sourceLabel: string; proposalTitle: string; jurisdiction: string; target: string;
     selectedId: string | null; liveAgentId: string | null; onselect: (id: string) => void;
   } = $props();
 
@@ -106,7 +106,7 @@
   </svg>
   <div class="mz-graph">
     <div class="mz-col-label" style="grid-column:1">Input</div>
-    <div class="mz-col-label" style="grid-column:2">Synthesis</div>
+    <div class="mz-col-label" style="grid-column:2">{campaign ? 'Planning' : 'Synthesis'}</div>
     <div class="mz-col-label" style="grid-column:3">{campaign ? 'Callers' : 'Personas'}</div>
     <div class="mz-col-label" style="grid-column:4">Voice agents</div>
 
@@ -133,7 +133,7 @@
           {#if slot.persona}<span class="mz-avatar" style="background:{avatarColor(slot.persona.name)}">{initials(slot.persona.name)}</span>
           {:else}<span class="mz-ic"><Sparkles size={15} /></span>{/if}
           <div class="mz-min">
-            <div class="mz-name">{slot.persona?.name ?? (slot.target ? `Caller → ${slot.target}` : `Persona ${i + 1}`)}</div>
+            <div class="mz-name">{slot.persona?.name ?? (slot.target ?? targets[i] ? `Caller → ${slot.target ?? targets[i]}` : `Persona ${i + 1}`)}</div>
             <div class="mz-sub">{slot.persona ? `${slot.persona.age} · ${slot.persona.occupation}`
               : slot.state === 'error' ? 'Skipped'
               : slot.state === 'running' ? (slot.phase === 'writing' ? `Writing the call plan… ${secs(slot.startedAt)}` : slot.target ? `Thinking… ${secs(slot.startedAt)}` : 'Drafting…')

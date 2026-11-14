@@ -67,7 +67,7 @@ export const getConversation = (id: string) => request<Conversation>(`/api/conve
 export const getConfidence = (run?: string | null) => request<ConfidenceView>(`/api/confidence${run ? `?run=${encodeURIComponent(run)}` : ''}`);
 
 /** Run the pipeline, calling `onEvent` for each streamed trace event. */
-export async function runPipeline(body: { personas: number; source: 'sample' | 'claude'; handoff: Handoff | null }, onEvent: (e: PipelineEvent) => void) {
+export async function runPipeline(body: { personas?: number; source: 'sample' | 'claude'; handoff: Handoff | null }, onEvent: (e: PipelineEvent) => void) {
   let response: Response;
   try {
     response = await fetch(base + '/api/pipeline', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
