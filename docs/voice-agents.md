@@ -118,9 +118,11 @@ cd frontend && npm run dev      # open http://127.0.0.1:5173/mobilize
 - **Input:** approve a finding in Policy analysis, then choose *Prepare
   mobilization → Open Mobilize*. The page loads the Go handoff
   (`POST /api/runs/:id/mobilize`) and sends it with the pipeline request, and
-  `input_from_handoff` maps the finding onto the agents' policy variables.
-  Legislator, lobbyist and district aren't in the handoff yet, so they are demo
-  placeholders. Opened without a run, the page uses `fixtures/demo.json`.
+  `input_from_handoff` maps it onto the agents' variables. A
+  [`mobilize.v1`](mobilize-handoff.md) handoff supplies the targets: the first
+  official with a state and the first lobbyist in `people`. The Go API still
+  sends the older `{finding}` shape, which carries no people, so those targets
+  stay demo placeholders. Opened without a run, the page uses `fixtures/demo.json`.
 - **Agent graph:** proposal → persona synthesis → personas → voice agents,
   streamed from `POST /api/pipeline` (server-sent events). Source is **Sample**
   (pre-written Kentucky personas, no API cost) or **Claude** (Haiku, each
