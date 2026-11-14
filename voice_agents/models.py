@@ -9,6 +9,7 @@ class AgentType(str, Enum):
     LEGISLATOR = "legislator"  # constituent calls a legislator's office
     SURVEY = "survey"  # org surveys a constituent
     LOBBYIST = "lobbyist"  # org pitches a lobbyist
+    GENERATED = "generated"  # role, goal and script written per target by the planner
 
 
 class Gender(str, Enum):

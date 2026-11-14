@@ -94,6 +94,8 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
             raise HTTPException(422, f"Invalid mobilize.v1 handoff: {exc}")
         except (KeyError, TypeError) as exc:
             raise HTTPException(422, f"Handoff is missing {exc}")
+        # A mobilize.v1 handoff with people gets one purpose-built agent per person.
+        campaign = body.source == "claude" and bool(data.get("handoff", {}).get("people"))
         if body.source == "claude":
             source, label, pause = pipeline.claude_source(data), pipeline.CLAUDE_LABEL, 0.0
         else:
@@ -101,8 +103,9 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
 
         def stream():
             store.clear()  # each run replaces the roster shown in the graph
-            for ev in pipeline.run(data, persona_count=body.personas, next_persona=source,
-                                   source_label=label, pause=pause):
+            events = pipeline.run_campaign(data) if campaign else pipeline.run(
+                data, persona_count=body.personas, next_persona=source, source_label=label, pause=pause)
+            for ev in events:
                 if "agent" in ev:
                     store.add(ConsoleAgent(**ev["agent"]))
                 yield f"data: {json.dumps(ev)}\n\n"

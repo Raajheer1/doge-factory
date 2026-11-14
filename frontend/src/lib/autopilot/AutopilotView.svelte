@@ -169,11 +169,11 @@
 
         {#if s.key === 'mobilize' && (personas.length || agents.length)}
           {#if personas.length}<ul class="ap-personas">{#each personas as p}<li><strong>{p.name}, {p.age}</strong><small>{p.occupation}</small><p>{p.personal_impact}</p></li>{/each}</ul>{/if}
-          {#if agents.length}<div class="ap-chips">{#each agents as a}<span>{a.caller} → {a.target}</span>{/each}</div>{/if}
+          {#if agents.length}<div class="ap-chips">{#each agents as a}<span>{a.archetype ? `${a.archetype}: ` : ''}{a.caller} → {a.target}</span>{/each}</div>{/if}
         {/if}
 
         {#if s.key === 'call' && callAgent}
-          <p class="ap-small"><PhoneCall size={13} /> {callAgent.caller} ({callAgent.persona?.occupation ?? callAgent.kind}) calling {callAgent.target}{callData ? ` · ${callData.status}` : ''}{callData?.duration ? ` · ${callData.duration}s` : ''}</p>
+          <p class="ap-small"><PhoneCall size={13} /> {callAgent.caller} ({callAgent.archetype || callAgent.persona?.occupation || callAgent.kind}) calling {callAgent.target}{callData ? ` · ${callData.status}` : ''}{callData?.duration ? ` · ${callData.duration}s` : ''}</p>
           {#if callData?.transcript?.length}<div class="ap-transcript">{#each callData.transcript as turn}<p class={turn.role}><b>{turn.role === 'agent' ? callAgent.caller : 'You'}</b> {turn.message}</p>{/each}</div>{/if}
           {#if callData?.summary}<p class="ap-small"><b>Summary:</b> {callData.summary}</p>{/if}
         {/if}

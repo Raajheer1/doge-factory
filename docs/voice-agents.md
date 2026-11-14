@@ -29,6 +29,28 @@ post-call analysis (data_collection fields)  →  written back to DB
 | `legislator` | `agent_5501m7ck1rtnf0wt4z429ddj3130` | constituent persona → legislator's office |
 | `survey` | `agent_2801m7cp2e12e5d89y6drn7g8arm` | DOGE Factory → constituent |
 | `lobbyist` | `agent_5901m7cp2pj8frcaj8hh7sg83ajj` | DOGE Factory → lobbyist |
+| `generated` | `agent_3301m7dmyfnreghty1h21sxack3z` | planner-written caller → any person in a `mobilize.v1` handoff |
+
+### Generated agents
+
+With a `mobilize.v1` handoff that lists people, the Claude source builds **one agent per
+person** instead of the fixed set (`voice_agents/planner.py`). Code picks the call type
+from the person's type and `relevance`:
+
+| Person | Call type | Caller |
+|---|---|---|
+| lobbyist | Lobbyist pitch: raise it with their named clients, take a meeting | DOGE Factory organizer |
+| `authority_over_document` / `administers` (agency or official) | Stakeholder → Agency: guidance, waiver or support | resident from an affected group |
+| other official | Constituent → Legislator: support the amendment | constituent from an affected group |
+| other organization | Coalition invite: sign a coalition letter | DOGE Factory organizer |
+
+A small model (`PERSONA_MODEL`, Haiku by default) then writes the caller, goal, talking
+points, likely objections and opening line from the handoff, one call per person, four
+at a time. They fill the variables of the single **Generated Caller** agent, whose
+prompt holds the call structure and the rules (no invented facts, AI disclosure, end the
+call). Code picks each caller's gender and age band, so voices vary across the roster.
+Its post-call fields are `target_position` (supportive/undecided/opposed/no_answer),
+`commitment`, `follow_up_contact` and `objections`.
 
 The prompts live in ElevenLabs. The `{{placeholders}}` in each prompt must match
 `required_variables` in `voice_agents/agents.py`. Every agent allows a per-call override of
@@ -119,8 +141,9 @@ cd frontend && npm run dev      # open http://127.0.0.1:5173/mobilize
   mobilization → Open Mobilize*. The page loads the Go handoff
   (`POST /api/runs/:id/mobilize`) and sends it with the pipeline request, and
   `input_from_handoff` maps it onto the agents' variables. A
-  [`mobilize.v1`](mobilize-handoff.md) handoff supplies the targets: the first
-  official with a state and the first lobbyist in `people`. The Go API still
+  [`mobilize.v1`](mobilize-handoff.md) handoff supplies the targets: with Claude,
+  one generated agent per person in `people` (see *Generated agents*); with
+  Sample, the first official with a state and the first lobbyist. The Go API still
   sends the older `{finding}` shape, which carries no people, so those targets
   stay demo placeholders. Opened without a run, the page uses `fixtures/demo.json`.
 - **Agent graph:** proposal → persona synthesis → personas → voice agents,

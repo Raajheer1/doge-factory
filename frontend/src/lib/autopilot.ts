@@ -18,7 +18,7 @@ export const AP_STAGES: { key: APStage; label: string }[] = [
   { key: 'call', label: 'Place the call' },
 ];
 
-export const PERSONAS = 2; // kept small so a run stays cheap
+export const PERSONAS = 2; // legacy handoffs only; a handoff with people gets one agent per person
 
 const key = (runId: string) => `doge-autopilot:${runId}`;
 export function loadLog(runId: string): APEvent[] {
@@ -53,7 +53,7 @@ const handoffSummary = (h: Handoff) => ({
   notes: h.notes ?? '',
 });
 
-const agentSummary = (a: VoiceAgent) => ({ id: a.id, kind: a.kind, caller: a.caller, target: a.target, voice: a.voice, persona: a.persona ? { name: a.persona.name, age: a.persona.age, occupation: a.persona.occupation, personal_impact: a.persona.personal_impact } : null });
+const agentSummary = (a: VoiceAgent) => ({ id: a.id, kind: a.kind, archetype: a.archetype ?? '', caller: a.caller, target: a.target, voice: a.voice, persona: a.persona ? { name: a.persona.name, age: a.persona.age, occupation: a.persona.occupation, personal_impact: a.persona.personal_impact } : null });
 
 /** Run the whole journey for `runId`, appending to its log through `emit`. */
 export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ctl: Controls, onRosterBuilt?: () => void) {
@@ -121,23 +121,24 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
 
   // 5. Build voice agents.
   await gate(1500);
-  log('mobilize', 'running', `Generating ${PERSONAS} constituent personas and voice agents`);
+  const people = handoff.people?.length ?? 0;
+  log('mobilize', 'running', people ? `Planning one purpose-built agent for each of ${people} people` : `Generating ${PERSONAS} constituent personas and voice agents`);
   try { localStorage.setItem('doge-agents-run', runId); } catch { /* optional */ }
   const agents: VoiceAgent[] = [];
   await runPipeline({ personas: PERSONAS, source: 'claude', handoff }, (ev) => {
     if (ev.status === 'error') log('mobilize', 'error', ev.message);
     else if (ev.stage === 'persona' && ev.status === 'done') log('mobilize', 'progress', ev.message, { persona: ev.data?.persona });
     else if (ev.stage === 'assemble' && ev.agent) { agents.push(ev.agent); log('mobilize', 'progress', ev.message, { agent: agentSummary(ev.agent) }); }
-    else if (ev.stage === 'input') log('mobilize', 'progress', ev.message, { input: ev.data });
+    else if (ev.stage === 'input' || ev.stage === 'plan') log('mobilize', 'progress', ev.message, { [ev.stage]: ev.data });
   });
   if (!agents.length) { log('mobilize', 'error', 'No agents were built.'); return; }
   onRosterBuilt?.();
   log('mobilize', 'done', `${agents.length} agents ready`, { agents: agents.map(agentSummary) });
 
-  // 6. Call: the first constituent → legislator agent rings the allowlisted number.
+  // 6. Call: the first agent (the most relevant person, or the first constituent) rings the allowlisted number.
   await gate(2000);
   const caller = agents.find((a) => a.kind === 'legislator') ?? agents[0];
-  log('call', 'running', `${caller.caller} is calling as a constituent of ${caller.target}`, { agent: agentSummary(caller), to: caller.request.to_number });
+  log('call', 'running', caller.archetype ? `${caller.caller} is calling ${caller.target} (${caller.archetype})` : `${caller.caller} is calling as a constituent of ${caller.target}`, { agent: agentSummary(caller), to: caller.request.to_number });
   const conversation_id = priorCall ?? (await placeCall(caller.id)).conversation_id;
   if (priorCall) log('call', 'progress', 'Reattached to the call placed earlier; not redialing', { conversation_id });
   let lastTurns = -1;
