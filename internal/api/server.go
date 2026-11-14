@@ -74,11 +74,11 @@ func (s *Server) create(c *echo.Context) error {
 	if body.Collection == "" {
 		body.Collection = "healthcare"
 	}
-	if body.Collection != "healthcare" && body.Collection != "housing" {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": "collection must be healthcare or housing"})
+	if body.Collection != "healthcare" && body.Collection != "housing" && body.Collection != "other" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "collection must be healthcare, housing or other"})
 	}
-	if _, ok := s.repo.(policy.BYOG); !ok && body.Collection == "housing" {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": "housing requires the hosted HydraDB configuration"})
+	if _, ok := s.repo.(policy.BYOG); !ok && body.Collection != "healthcare" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": body.Collection + " requires the hosted HydraDB configuration"})
 	}
 	b := make([]byte, 16)
 	if _, err := rand.Read(b); err != nil {

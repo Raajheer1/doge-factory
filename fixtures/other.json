@@ -1,0 +1,2015 @@
+{
+  "nodes": [
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us-ky",
+      "name": "Kentucky",
+      "level": "state"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ky-title-affidavit",
+      "title": "Notarized sale-price affidavit for motor vehicle transfers",
+      "text": "A person shall not purchase, sell, or trade any motor vehicle without delivering to the county clerk the title, and a notarized affidavit if required and available under KRS 138.450 attesting to the total and actual consideration paid. The signatures on the affidavit shall be individually notarized before the county clerk shall issue a transfer of registration. 'Notarized affidavit' means a dated affidavit signed by the buyer and the seller on which the signature of the buyer and the signature of the seller are individually notarized.",
+      "source_url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58262",
+      "citation": "KRS 186.190(3)(b); KRS 138.450(22)",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, car, vehicle, auto, title, transfer, private, sale, marketplace, notary, notarization, notarized, affidavit, signature, e-signature, identity, verification, proofing, kyc, dmv, county, clerk",
+      "issuing_agency": "Kentucky Transportation Cabinet"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ky-title-affidavit:passage:001",
+      "title": "KRS 186.190(3)(b); KRS 138.450(22), blocking passage",
+      "text": "A person shall not purchase, sell, or trade any motor vehicle without delivering to the county clerk the title, and a notarized affidavit if required and available under KRS 138.450 attesting to the total and actual consideration paid. The signatures on the affidavit shall be individually notarized before the county clerk shall issue a transfer of registration. 'Notarized affidavit' means a dated affidavit signed by the buyer and the seller on which the signature of the buyer and the signature of the seller are individually notarized.",
+      "citation": "KRS 186.190(3)(b); KRS 138.450(22)",
+      "order": 1,
+      "source_url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58262"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ky-title-affidavit:evidence",
+      "title": "Cost and status evidence: Notarized sale-price affidavit for motor vehicle transfers",
+      "text": "SB 110 (2026 Acts ch. 135) makes electronic titles the default from July 1, 2027 but kept the notarized affidavit. KRS 186A.017 already allows electronic signatures by approved entities. Anderson County processed 4,340 titles in 2024 (SB 110 local mandate statement); 4,340 x 2 signatures x $2 = $17,360/yr in notarial acts in one county (computed). Maryland HB 251 (2026) repealed its notarized bill-of-sale requirement. Ohio ORC 4505.06 still requires title applications sworn before a notary.",
+      "source_url": "https://apps.legislature.ky.gov/recorddocuments/note/26RS/sb110/LM.pdf",
+      "citation": "KRS 186.190(3)(b); KRS 138.450(22)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:ky-transportation-cabinet",
+      "name": "Kentucky Transportation Cabinet",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us",
+      "name": "United States",
+      "level": "federal"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fed-passport-consent",
+      "title": "Notarized absent-parent consent for a child's passport",
+      "text": "Consent must be signed before a notary public or a passport specialist. Form DS-3053 is printed for manual signature, notarization, and submission.",
+      "source_url": "https://www.ecfr.gov/current/title-22/section-51.28",
+      "citation": "22 CFR 51.28(a)(3)(i); Form DS-3053",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, passport, child, minor, parent, consent, notary, notarization, identity, verification, proofing, remote, signature, state, department",
+      "issuing_agency": "U.S. Department of State, Bureau of Consular Affairs"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:fed-passport-consent:passage:001",
+      "title": "22 CFR 51.28(a)(3)(i); Form DS-3053, blocking passage",
+      "text": "Consent must be signed before a notary public or a passport specialist. Form DS-3053 is printed for manual signature, notarization, and submission.",
+      "citation": "22 CFR 51.28(a)(3)(i); Form DS-3053",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-22/section-51.28"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fed-passport-consent:evidence",
+      "title": "Cost and status evidence: Notarized absent-parent consent for a child's passport",
+      "text": "OMB 1405-0129: 362,900 forms/yr, 120,967 burden hours/yr, $2,794,330/yr in notary fees, $311,330/yr federal processing cost.",
+      "source_url": "https://www.reginfo.gov/public/do/PRAViewICR?ref_nbr=202412-1405-001",
+      "citation": "22 CFR 51.28(a)(3)(i); Form DS-3053",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:state-consular-affairs",
+      "name": "U.S. Department of State, Bureau of Consular Affairs",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us-tx",
+      "name": "Texas",
+      "level": "state"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tx-will-handwriting",
+      "title": "Witnesses must sign wills in their own handwriting",
+      "text": "Witnesses must subscribe their names to the will in their own handwriting in the testator's presence. The Uniform Electronic Transactions Act does not apply to a law governing the creation and execution of wills.",
+      "source_url": "https://tcss.legis.texas.gov/resources/ES/htm/ES.251.htm",
+      "citation": "Tex. Estates Code 251.051; Bus. & Com. Code 322.003(b)(1)",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, wills, estate, planning, probate, electronic, will, e-will, witness, signature, handwriting, legal, online, county, clerk"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:tx-will-handwriting:passage:001",
+      "title": "Tex. Estates Code 251.051; Bus. & Com. Code 322.003(b)(1), blocking passage",
+      "text": "Witnesses must subscribe their names to the will in their own handwriting in the testator's presence. The Uniform Electronic Transactions Act does not apply to a law governing the creation and execution of wills.",
+      "citation": "Tex. Estates Code 251.051; Bus. & Com. Code 322.003(b)(1)",
+      "order": 1,
+      "source_url": "https://tcss.legis.texas.gov/resources/ES/htm/ES.251.htm"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tx-will-handwriting:evidence",
+      "title": "Cost and status evidence: Witnesses must sign wills in their own handwriting",
+      "text": "OCA FY2024: 63,952 new decedents' estate cases/yr. E-will bills failed in 2019 (HB 3848) and 2023 (SB 1779).",
+      "source_url": "https://www.txcourts.gov/media/1460326/1-county-level-probate-and-mh-activity-detail-print-fy-2024.xlsx",
+      "citation": "Tex. Estates Code 251.051; Bus. & Com. Code 322.003(b)(1)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fed-i9-physical-exam",
+      "title": "Physical examination of identity documents for Form I-9",
+      "text": "The employer must physically examine the documentation presented by the individual. The remote alternative procedure is available only to qualified employers participating in E-Verify.",
+      "source_url": "https://www.law.cornell.edu/cfr/text/8/274a.2",
+      "citation": "8 CFR 274a.2; DHS notice 88 FR 47749",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, hiring, onboarding, employment, hr, remote, worker, i-9, identity, document, verification, video, e-verify, staffing, payroll",
+      "issuing_agency": "U.S. Citizenship and Immigration Services"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:fed-i9-physical-exam:passage:001",
+      "title": "8 CFR 274a.2; DHS notice 88 FR 47749, blocking passage",
+      "text": "The employer must physically examine the documentation presented by the individual. The remote alternative procedure is available only to qualified employers participating in E-Verify.",
+      "citation": "8 CFR 274a.2; DHS notice 88 FR 47749",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/cfr/text/8/274a.2"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fed-i9-physical-exam:evidence",
+      "title": "Cost and status evidence: Physical examination of identity documents for Form I-9",
+      "text": "2026 ICR notice: 35,655,796 burden hours/yr and 62,063,950 employer responses/yr. DHS may authorize alternative procedures for some or all employers; the restriction is an eligibility sentence in a notice, not statute.",
+      "source_url": "https://public-inspection.federalregister.gov/2026-09846.pdf",
+      "citation": "8 CFR 274a.2; DHS notice 88 FR 47749",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:dhs-uscis",
+      "name": "U.S. Citizenship and Immigration Services",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fed-treasurydirect-ink",
+      "title": "Ink signature before a notary for TreasuryDirect offline transactions",
+      "text": "Offline transactions will require a certified or guaranteed signature. Sign in ink in the presence of a certifying officer or notary. Original signature is required. Mail the completed authorization form.",
+      "source_url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/subchapter-A/part-363",
+      "citation": "31 CFR 363; Form FS 5444",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, savings, bonds, treasury, account, identity, verification, proofing, notary, ink, signature, fintech, mail",
+      "issuing_agency": "Bureau of the Fiscal Service"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:fed-treasurydirect-ink:passage:001",
+      "title": "31 CFR 363; Form FS 5444, blocking passage",
+      "text": "Offline transactions will require a certified or guaranteed signature. Sign in ink in the presence of a certifying officer or notary. Original signature is required. Mail the completed authorization form.",
+      "citation": "31 CFR 363; Form FS 5444",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/subchapter-A/part-363"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fed-treasurydirect-ink:evidence",
+      "title": "Cost and status evidence: Ink signature before a notary for TreasuryDirect offline transactions",
+      "text": "OMB: 33,534 forms/yr and 16,767 burden hours; at $46.38/hr about $778K/yr (computed).",
+      "source_url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=173241300",
+      "citation": "31 CFR 363; Form FS 5444",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:treasury-fiscal-service",
+      "name": "Bureau of the Fiscal Service",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:hud-two-paystubs",
+      "title": "Two consecutive pay stubs for housing income verification",
+      "text": "PHAs/MFH Owners are required to obtain a minimum of two current and consecutive pay stubs for determining projected annual income from wages when they are relying on pay stubs for Level 4 documentation.",
+      "source_url": "https://hud.gov/sites/dfiles/OCHCO/documents/2023-27pihn.pdf",
+      "citation": "HUD Notice PIH 2023-27 (Rev. 3, Apr 2026) 7.2",
+      "document_type": "notice",
+      "status": "verify_current_status",
+      "topics": "problem-library, housing, rent, voucher, public, housing, income, verification, payroll, pay, stub, paystub, employment, tenant, recertification, fintech, open, banking",
+      "issuing_agency": "HUD Office of Public and Indian Housing"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:hud-two-paystubs:passage:001",
+      "title": "HUD Notice PIH 2023-27 (Rev. 3, Apr 2026) 7.2, blocking passage",
+      "text": "PHAs/MFH Owners are required to obtain a minimum of two current and consecutive pay stubs for determining projected annual income from wages when they are relying on pay stubs for Level 4 documentation.",
+      "citation": "HUD Notice PIH 2023-27 (Rev. 3, Apr 2026) 7.2",
+      "order": 1,
+      "source_url": "https://hud.gov/sites/dfiles/OCHCO/documents/2023-27pihn.pdf"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:hud-two-paystubs:evidence",
+      "title": "Cost and status evidence: Two consecutive pay stubs for housing income verification",
+      "text": "The same notice ranks UIV using non-EIV systems (e.g., The Work Number) as the highest level of verification, but does not name consumer-permissioned payroll data. HUD-50058 ICR: 2,340,162 recertifications/yr, 1,593,040 burden hours/yr, $5,101 per agency/yr in data entry across ~4,153 agencies. HOTMA enforcement starts January 1, 2027 (PIH 2026-15).",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2023-06-07/pdf/2023-12162.pdf",
+      "citation": "HUD Notice PIH 2023-27 (Rev. 3, Apr 2026) 7.2",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:hud-pih",
+      "name": "HUD Office of Public and Indian Housing",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:snap-interview",
+      "title": "Mandatory SNAP eligibility interview",
+      "text": "Households must have a face-to-face interview with an eligibility worker at initial certification and at least once every 12 months thereafter. The State agency may use a telephone interview instead of the face-to-face interview.",
+      "source_url": "https://www.ecfr.gov/current/title-7/section-273.2",
+      "citation": "7 CFR 273.2(e)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, snap, food, stamps, benefits, eligibility, interview, caseworker, phone, call, ai, agent, voice, chatbot, application, intake",
+      "issuing_agency": "USDA Food and Nutrition Service"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:snap-interview:passage:001",
+      "title": "7 CFR 273.2(e), blocking passage",
+      "text": "Households must have a face-to-face interview with an eligibility worker at initial certification and at least once every 12 months thereafter. The State agency may use a telephone interview instead of the face-to-face interview.",
+      "citation": "7 CFR 273.2(e)",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-7/section-273.2"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:snap-interview:evidence",
+      "title": "Cost and status evidence: Mandatory SNAP eligibility interview",
+      "text": "FY2023 state SNAP administrative costs were $11.1B; the state share rises from 50% to 75% on October 1, 2026 (about +$2.8B/yr to states, computed). OMB 0584-0064: 82.6M burden hours/yr. Oregon ended its interview waiver May 31, 2026.",
+      "source_url": "https://fns-prod.azureedge.us/sites/default/files/resource-files/snap-sar-fy23.pdf",
+      "citation": "7 CFR 273.2(e)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:usda-fns",
+      "name": "USDA Food and Nutrition Service",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:snap-documentary-evidence",
+      "title": "Documentary evidence as the primary source of SNAP verification",
+      "text": "State agencies shall use documentary evidence as the primary source of verification for all items except residency and household size. Examples of acceptable documentary evidence include wage stubs, rent receipts, and utility bills.",
+      "source_url": "https://www.ecfr.gov/current/title-7/section-273.2",
+      "citation": "7 CFR 273.2(f)(4)(i)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, snap, benefits, income, verification, payroll, data, documents, pay, stub, wage, utility, bill, fintech",
+      "issuing_agency": "USDA Food and Nutrition Service"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:snap-documentary-evidence:passage:001",
+      "title": "7 CFR 273.2(f)(4)(i), blocking passage",
+      "text": "State agencies shall use documentary evidence as the primary source of verification for all items except residency and household size. Examples of acceptable documentary evidence include wage stubs, rent receipts, and utility bills.",
+      "citation": "7 CFR 273.2(f)(4)(i)",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-7/section-273.2"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:snap-documentary-evidence:evidence",
+      "title": "Cost and status evidence: Documentary evidence as the primary source of SNAP verification",
+      "text": "FY2025 SNAP payment error rate 10.62%, about $10.1B improper; from FY2028 error rates of 6% or more trigger a 5-15% state share of benefit costs. FNS does not attribute errors to paper verification.",
+      "source_url": "https://fns-prod.azureedge.us/sites/default/files/resource-files/snap-qcfy25-per.pdf",
+      "citation": "7 CFR 273.2(f)(4)(i)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:medicaid-work-docs",
+      "title": "Documentation of Medicaid work-requirement compliance",
+      "text": "Beginning on January 1, 2028, when there is no reliable information available to the State, the agency must require documentation whenever documentation is reasonably available.",
+      "source_url": "https://www.federalregister.gov/documents/2026/06/03/2026-11094",
+      "citation": "42 CFR 435.557 (IFR, 91 FR 33348)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, medicaid, health, coverage, work, requirement, compliance, documentation, payroll, income, verification, benefits, eligibility",
+      "issuing_agency": "Centers for Medicare & Medicaid Services"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:medicaid-work-docs:passage:001",
+      "title": "42 CFR 435.557 (IFR, 91 FR 33348), blocking passage",
+      "text": "Beginning on January 1, 2028, when there is no reliable information available to the State, the agency must require documentation whenever documentation is reasonably available.",
+      "citation": "42 CFR 435.557 (IFR, 91 FR 33348)",
+      "order": 1,
+      "source_url": "https://www.federalregister.gov/documents/2026/06/03/2026-11094"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:medicaid-work-docs:evidence",
+      "title": "Cost and status evidence: Documentation of Medicaid work-requirement compliance",
+      "text": "CMS regulatory impact analysis: 8.8M people document compliance twice a year, 35.2M hours and $454.8M/yr; about $552M/yr including applicants (computed); 7% of compliant or exempt people expected to lose coverage for administrative reasons.",
+      "source_url": "https://www.federalregister.gov/documents/2026/06/03/2026-11094",
+      "citation": "42 CFR 435.557 (IFR, 91 FR 33348)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:hhs-cms",
+      "name": "Centers for Medicare & Medicaid Services",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:medicaid-ex-parte",
+      "title": "Paper fallback when a data match is judged not cost-effective",
+      "text": "Documentation may be required where establishing a data match would not be effective, considering such factors as the administrative costs associated with establishing and using the data match compared with the administrative costs associated with relying on paper documentation.",
+      "source_url": "https://www.ecfr.gov/current/title-42/section-435.952",
+      "citation": "42 CFR 435.952(c)(2)(ii)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, medicaid, renewal, ex, parte, data, match, eligibility, automation, documentation, benefits",
+      "issuing_agency": "Centers for Medicare & Medicaid Services"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:medicaid-ex-parte:passage:001",
+      "title": "42 CFR 435.952(c)(2)(ii), blocking passage",
+      "text": "Documentation may be required where establishing a data match would not be effective, considering such factors as the administrative costs associated with establishing and using the data match compared with the administrative costs associated with relying on paper documentation.",
+      "citation": "42 CFR 435.952(c)(2)(ii)",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-42/section-435.952"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:medicaid-ex-parte:evidence",
+      "title": "Cost and status evidence: Paper fallback when a data match is judged not cost-effective",
+      "text": "FY2025 Medicaid improper payments $37.39B, 77% insufficient documentation (includes provider-side). Ex parte renewal rates ranged from 90%+ (AZ, NC, RI) to 11% or less (PA, TX).",
+      "source_url": "https://www.cms.gov/newsroom/fact-sheets/fiscal-year-2025-improper-payments-fact-sheet",
+      "citation": "42 CFR 435.952(c)(2)(ii)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:wic-physical-presence",
+      "title": "Physical presence at every WIC certification",
+      "text": "The State or local agency must require all applicants to be physically present at each WIC certification.",
+      "source_url": "https://www.ecfr.gov/current/title-7/section-246.7",
+      "citation": "7 CFR 246.7(o)(1)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, wic, nutrition, benefits, remote, certification, telehealth, video, appointment, clinic, in-person",
+      "issuing_agency": "USDA Food and Nutrition Service"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:wic-physical-presence:passage:001",
+      "title": "7 CFR 246.7(o)(1), blocking passage",
+      "text": "The State or local agency must require all applicants to be physically present at each WIC certification.",
+      "citation": "7 CFR 246.7(o)(1)",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-7/section-246.7"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:wic-physical-presence:evidence",
+      "title": "Cost and status evidence: Physical presence at every WIC certification",
+      "text": "FY2025 WIC administrative costs $2.33B for 6.87M participants (about $28/participant/month). 99% of local agencies certified remotely during the pandemic versus 12% before.",
+      "source_url": "https://fns-prod.azureedge.us/sites/default/files/resource-files/wisummary-10.pdf",
+      "citation": "7 CFR 246.7(o)(1)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ui-nondigital-id",
+      "title": "Separate non-digital identity option for unemployment insurance",
+      "text": "States are required to provide a non-digital ID verification option to all individuals. Participating states are required to provide a non-digital option separate from the Department's ID verification services offering.",
+      "source_url": "https://www.dol.gov/sites/dolgov/files/ETA/advisories/UIPL/2026/UIPL%2010-26/UIPL%2010-26.pdf",
+      "citation": "DOL UIPL 10-26",
+      "document_type": "guidance",
+      "status": "verify_current_status",
+      "topics": "problem-library, unemployment, insurance, identity, verification, proofing, fraud, digital, id, kyc, benefits",
+      "issuing_agency": "U.S. Department of Labor, Employment and Training Administration"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ui-nondigital-id:passage:001",
+      "title": "DOL UIPL 10-26, blocking passage",
+      "text": "States are required to provide a non-digital ID verification option to all individuals. Participating states are required to provide a non-digital option separate from the Department's ID verification services offering.",
+      "citation": "DOL UIPL 10-26",
+      "order": 1,
+      "source_url": "https://www.dol.gov/sites/dolgov/files/ETA/advisories/UIPL/2026/UIPL%2010-26/UIPL%2010-26.pdf"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ui-nondigital-id:evidence",
+      "title": "Cost and status evidence: Separate non-digital identity option for unemployment insurance",
+      "text": "DOL-OIG: at least $191 billion may have been improperly paid in pandemic UI. 2025 improper payment rate 13.15% ($4.73B). The non-digital option is also an equity safeguard.",
+      "source_url": "https://oig.dol.gov/public/Press%20Releases/OIG-Press-Release-030526.htm",
+      "citation": "DOL UIPL 10-26",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:dol-eta",
+      "name": "U.S. Department of Labor, Employment and Training Administration",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:dea-in-person-exam",
+      "title": "In-person evaluation before prescribing controlled substances by telemedicine",
+      "text": "A controlled substance may not be delivered, distributed, or dispensed by means of the Internet without a valid prescription, issued by a practitioner who has conducted at least 1 in-person medical evaluation of the patient.",
+      "source_url": "https://www.law.cornell.edu/uscode/text/21/829",
+      "citation": "21 U.S.C. 829(e)",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, telehealth, telemedicine, prescription, controlled, substances, addiction, treatment, remote, doctor, virtual, care",
+      "issuing_agency": "Drug Enforcement Administration"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:dea-in-person-exam:passage:001",
+      "title": "21 U.S.C. 829(e), blocking passage",
+      "text": "A controlled substance may not be delivered, distributed, or dispensed by means of the Internet without a valid prescription, issued by a practitioner who has conducted at least 1 in-person medical evaluation of the patient.",
+      "citation": "21 U.S.C. 829(e)",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/uscode/text/21/829"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:dea-in-person-exam:evidence",
+      "title": "Cost and status evidence: In-person evaluation before prescribing controlled substances by telemedicine",
+      "text": "DEA telehealth flexibilities end December 31, 2026. Over 7M controlled-substance prescriptions in 2024 were issued without a prior in-person visit (stakeholder data cited by DEA).",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2025-12-31/html/2025-24123.htm",
+      "citation": "21 U.S.C. 829(e)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:doj-dea",
+      "name": "Drug Enforcement Administration",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:cms-prior-auth",
+      "title": "Prior authorization by fax and the drug exemption",
+      "text": "Denials may be communicated via portal, fax, email, mail, or phone. Payers must implement a Prior Authorization API beginning January 1, 2027. This provision does not apply to prior authorization decisions for drugs.",
+      "source_url": "https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-and-prior-authorization-final-rule-cms-0057-f",
+      "citation": "CMS-0057-F",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, prior, authorization, healthcare, insurance, fax, api, fhir, medicaid, payer, ai, agent",
+      "issuing_agency": "Centers for Medicare & Medicaid Services"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:cms-prior-auth:passage:001",
+      "title": "CMS-0057-F, blocking passage",
+      "text": "Denials may be communicated via portal, fax, email, mail, or phone. Payers must implement a Prior Authorization API beginning January 1, 2027. This provision does not apply to prior authorization decisions for drugs.",
+      "citation": "CMS-0057-F",
+      "order": 1,
+      "source_url": "https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-and-prior-authorization-final-rule-cms-0057-f"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:cms-prior-auth:evidence",
+      "title": "Cost and status evidence: Prior authorization by fax and the drug exemption",
+      "text": "CMS estimates about $15B in savings over 10 years.",
+      "source_url": "https://www.cms.gov/newsroom/press-releases/cms-finalizes-rule-expand-access-health-information-improve-prior-authorization-process",
+      "citation": "CMS-0057-F",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tx-medical-license",
+      "title": "State-by-state physician licensure",
+      "text": "A person may not practice medicine in this state unless the person holds a license issued under this subtitle.",
+      "source_url": "https://texas.public.law/statutes/tex._occ._code_section_155.001",
+      "citation": "Tex. Occ. Code 155.001",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, telehealth, doctor, physician, license, multistate, remote, virtual, care, medicine",
+      "issuing_agency": "Texas Medical Board"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:tx-medical-license:passage:001",
+      "title": "Tex. Occ. Code 155.001, blocking passage",
+      "text": "A person may not practice medicine in this state unless the person holds a license issued under this subtitle.",
+      "citation": "Tex. Occ. Code 155.001",
+      "order": 1,
+      "source_url": "https://texas.public.law/statutes/tex._occ._code_section_155.001"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tx-medical-license:evidence",
+      "title": "Cost and status evidence: State-by-state physician licensure",
+      "text": "The Interstate Medical Licensure Compact has issued 246,359 licenses; each is still an extra state license.",
+      "source_url": "https://www.imlcc.com/",
+      "citation": "Tex. Occ. Code 155.001",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:tx-medical-board",
+      "name": "Texas Medical Board",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fedramp-scope",
+      "title": "FedRAMP authorization for federal cloud purchases",
+      "text": "Agencies must obtain and maintain a FedRAMP authorization when the cloud product or service falls within the scope of this section.",
+      "source_url": "https://fedramp.gov/2026/authority/m-24-15/scope/",
+      "citation": "OMB M-24-15",
+      "document_type": "guidance",
+      "status": "verify_current_status",
+      "topics": "problem-library, saas, cloud, software, procurement, government, sales, fedramp, security, authorization, startup, vendor",
+      "issuing_agency": "FedRAMP Program Management Office (GSA)"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:fedramp-scope:passage:001",
+      "title": "OMB M-24-15, blocking passage",
+      "text": "Agencies must obtain and maintain a FedRAMP authorization when the cloud product or service falls within the scope of this section.",
+      "citation": "OMB M-24-15",
+      "order": 1,
+      "source_url": "https://fedramp.gov/2026/authority/m-24-15/scope/"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fedramp-scope:evidence",
+      "title": "Cost and status evidence: FedRAMP authorization for federal cloud purchases",
+      "text": "FedRAMP FY25: an anticipated timeline of 2-3 years for vendors, if they found a sponsor. GAO-24-106591: agency sponsorship costs $69K-$400K per authorization; vendors $300K-$3.7M each. About 350 services authorized in 13 years (~27/yr). FedRAMP 20x and Consolidated Rules become mandatory January 1, 2027.",
+      "source_url": "https://www.gao.gov/assets/d24106591.pdf",
+      "citation": "OMB M-24-15",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:gsa-fedramp",
+      "name": "FedRAMP Program Management Office (GSA)",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tx-ramp",
+      "title": "TX-RAMP certification without FedRAMP reciprocity",
+      "text": "A state agency may not enter or renew a contract with a vendor to purchase cloud computing services unless the vendor demonstrates compliance with program requirements.",
+      "source_url": "https://texas.public.law/statutes/tex._gov't_code_section_2054.0593",
+      "citation": "Tex. Gov't Code 2054.0593(e)",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, saas, cloud, software, procurement, state, government, sales, security, certification, vendor, startup",
+      "issuing_agency": "Texas Department of Information Resources"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:tx-ramp:passage:001",
+      "title": "Tex. Gov't Code 2054.0593(e), blocking passage",
+      "text": "A state agency may not enter or renew a contract with a vendor to purchase cloud computing services unless the vendor demonstrates compliance with program requirements.",
+      "citation": "Tex. Gov't Code 2054.0593(e)",
+      "order": 1,
+      "source_url": "https://texas.public.law/statutes/tex._gov't_code_section_2054.0593"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tx-ramp:evidence",
+      "title": "Cost and status evidence: TX-RAMP certification without FedRAMP reciprocity",
+      "text": "Texas DIR: as of October 30, 2024, FedRAMP and StateRAMP certified products are no longer automatically added. GovRAMP charges $13,556/yr for a $1-5M revenue vendor.",
+      "source_url": "https://dir.texas.gov/information-security/tx-ramp-frequently-asked-questions-faqs",
+      "citation": "Tex. Gov't Code 2054.0593(e)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:tx-dir",
+      "name": "Texas Department of Information Resources",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ky-vendor-affidavit",
+      "title": "Notarized bidder affidavit for small purchases",
+      "text": "Small purchase awards over $1000 must be signed by awarded contractor only, and notarized. All Affidavits must be notarized in all circumstances.",
+      "source_url": "https://finance.ky.gov/eProcurement/ResourcesSupport/FrequentlyAskedQuestionsabouttheRequiredAffidavitforBiddersRevisedAugust2020.pdf",
+      "citation": "KY Finance Cabinet required affidavit for bidders",
+      "document_type": "guidance",
+      "status": "verify_current_status",
+      "topics": "problem-library, procurement, vendor, contract, government, sales, notary, affidavit, saas, subscription, startup",
+      "issuing_agency": "Kentucky Finance and Administration Cabinet"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ky-vendor-affidavit:passage:001",
+      "title": "KY Finance Cabinet required affidavit for bidders, blocking passage",
+      "text": "Small purchase awards over $1000 must be signed by awarded contractor only, and notarized. All Affidavits must be notarized in all circumstances.",
+      "citation": "KY Finance Cabinet required affidavit for bidders",
+      "order": 1,
+      "source_url": "https://finance.ky.gov/eProcurement/ResourcesSupport/FrequentlyAskedQuestionsabouttheRequiredAffidavitforBiddersRevisedAugust2020.pdf"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ky-vendor-affidavit:evidence",
+      "title": "Cost and status evidence: Notarized bidder affidavit for small purchases",
+      "text": "Out-of-state vendors must mail an original with an actual notary seal. The FAQ dates from 2020 and exempts dues and subscriptions.",
+      "source_url": "https://finance.ky.gov/eProcurement/ResourcesSupport/FrequentlyAskedQuestionsabouttheRequiredAffidavitforBiddersRevisedAugust2020.pdf",
+      "citation": "KY Finance Cabinet required affidavit for bidders",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:ky-finance-cabinet",
+      "name": "Kentucky Finance and Administration Cabinet",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:fed-advance-payment",
+      "title": "Ban on advance payment for services",
+      "text": "A payment under a contract may not be more than the value of the service already provided or the article already delivered.",
+      "source_url": "https://www.law.cornell.edu/uscode/text/31/3324",
+      "citation": "31 U.S.C. 3324(a)",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, saas, subscription, software, procurement, prepayment, annual, license, government, sales"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:fed-advance-payment:passage:001",
+      "title": "31 U.S.C. 3324(a), blocking passage",
+      "text": "A payment under a contract may not be more than the value of the service already provided or the article already delivered.",
+      "citation": "31 U.S.C. 3324(a)",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/uscode/text/31/3324"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:omb-ai-ato",
+      "title": "Authorization to operate before AI deployment",
+      "text": "AI systems must receive an authorization to operate prior to deployment.",
+      "source_url": "https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf",
+      "citation": "OMB M-25-22",
+      "document_type": "guidance",
+      "status": "verify_current_status",
+      "topics": "problem-library, ai, artificial, intelligence, procurement, software, agents, llm, deployment, authorization, government, sales",
+      "issuing_agency": "Office of Management and Budget"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:omb-ai-ato:passage:001",
+      "title": "OMB M-25-22, blocking passage",
+      "text": "AI systems must receive an authorization to operate prior to deployment.",
+      "citation": "OMB M-25-22",
+      "order": 1,
+      "source_url": "https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:omb-ai-ato:evidence",
+      "title": "Cost and status evidence: Authorization to operate before AI deployment",
+      "text": "GAO-26-107859: VA leaders said FAR-based contracts can take 2 years to award.",
+      "source_url": "https://files.gao.gov/reports/GAO-26-107859/index.html",
+      "citation": "OMB M-25-22",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:omb",
+      "name": "Office of Management and Budget",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us-nj",
+      "name": "New Jersey",
+      "level": "state"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:nj-wet-signed-plans",
+      "title": "Wet-signed paper plans at the jobsite for electronic permits",
+      "text": "Where permits are issued electronically, the applicant shall provide a physical copy of the released plans at the worksite that are sealed and wet signed by the design professional pursuant to licensing law applicable to the relevant discipline.",
+      "source_url": "https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-5-23-2-15B",
+      "citation": "N.J.A.C. 5:23-2.15B(d)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, construction, building, permit, plan, review, architecture, engineering, housing, contractor, e-seal, digital, signature, ai, plan, check",
+      "issuing_agency": "New Jersey Department of Community Affairs, Division of Codes and Standards"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:nj-wet-signed-plans:passage:001",
+      "title": "N.J.A.C. 5:23-2.15B(d), blocking passage",
+      "text": "Where permits are issued electronically, the applicant shall provide a physical copy of the released plans at the worksite that are sealed and wet signed by the design professional pursuant to licensing law applicable to the relevant discipline.",
+      "citation": "N.J.A.C. 5:23-2.15B(d)",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-5-23-2-15B"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:nj-wet-signed-plans:evidence",
+      "title": "Cost and status evidence: Wet-signed paper plans at the jobsite for electronic permits",
+      "text": "San Francisco (not NJ): 280-day median to issue new-housing permits, 3 review rounds, 1,389 stalled applications with median age 4.1 years. Honolulu with CivCheck went from 3.4 to 1.4 review cycles and 73 to 32.5 days.",
+      "source_url": "https://sfbos.archive.sf.gov/sites/default/files/BLA_Post_Entitlement_Permitting_030526.pdf",
+      "citation": "N.J.A.C. 5:23-2.15B(d)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:nj-dca-codes",
+      "name": "New Jersey Department of Community Affairs, Division of Codes and Standards",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:nepa-eis",
+      "title": "Environmental impact statement page and time limits",
+      "text": "An environmental impact statement shall not exceed 150 pages, not including any citations or appendices.",
+      "source_url": "https://www.law.cornell.edu/uscode/text/42/4336a",
+      "citation": "42 U.S.C. 4336a",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, environmental, review, permitting, nepa, infrastructure, energy, ai, drafting, documents",
+      "issuing_agency": "Council on Environmental Quality"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:nepa-eis:passage:001",
+      "title": "42 U.S.C. 4336a, blocking passage",
+      "text": "An environmental impact statement shall not exceed 150 pages, not including any citations or appendices.",
+      "citation": "42 U.S.C. 4336a",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/uscode/text/42/4336a"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:nepa-eis:evidence",
+      "title": "Cost and status evidence: Environmental impact statement page and time limits",
+      "text": "CEQ: final EISs averaged 661 pages and 4.5 years from notice of intent to record of decision. This is a practice and procurement problem more than a prohibition.",
+      "source_url": "https://nepa.gov/sites/default/files/documents/CEQ_EIS_Length_Report_2020-6-12.pdf",
+      "citation": "42 U.S.C. 4336a",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:ceq",
+      "name": "Council on Environmental Quality",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ferc-cluster-study",
+      "title": "150-day interconnection cluster study",
+      "text": "Transmission Provider shall complete the Cluster Study within one hundred fifty (150) Calendar Days of the close of the Customer Engagement Window.",
+      "source_url": "https://www.ferc.gov/sites/default/files/2024-08/LGIP.pdf",
+      "citation": "FERC LGIP 7.4",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, energy, grid, interconnection, solar, battery, power, utility, transmission, study, automation",
+      "issuing_agency": "Federal Energy Regulatory Commission"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ferc-cluster-study:passage:001",
+      "title": "FERC LGIP 7.4, blocking passage",
+      "text": "Transmission Provider shall complete the Cluster Study within one hundred fifty (150) Calendar Days of the close of the Customer Engagement Window.",
+      "citation": "FERC LGIP 7.4",
+      "order": 1,
+      "source_url": "https://www.ferc.gov/sites/default/files/2024-08/LGIP.pdf"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ferc-cluster-study:evidence",
+      "title": "Cost and status evidence: 150-day interconnection cluster study",
+      "text": "LBNL: 2,061 GW in queue; only 13% of 2000-2020 requests online by 2025; median wait over 3 years. An automated tool reproduced a two-year manual study in 10 days (FERC Commissioner Rosner).",
+      "source_url": "https://www.publicpower.org/periodical/article/backlog-power-plants-seeking-transmission-grid-connection-eased-somewhat-2025-lbnl",
+      "citation": "FERC LGIP 7.4",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:ferc",
+      "name": "Federal Energy Regulatory Commission",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us-wi",
+      "name": "Wisconsin",
+      "level": "state"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:wi-nursing-transcripts",
+      "title": "Transcripts sent directly by the school for nursing licensure",
+      "text": "The school of professional nursing or practical nursing shall forward directly to the department, official transcripts of nursing education for applicants who graduated from the school.",
+      "source_url": "https://docs.legis.wisconsin.gov/code/admin_code/n/2/ii/12",
+      "citation": "Wis. Admin. Code N 2.12(2)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, licensing, credentials, nurse, healthcare, workforce, transcripts, education, verification",
+      "issuing_agency": "Wisconsin Department of Safety and Professional Services"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:wi-nursing-transcripts:passage:001",
+      "title": "Wis. Admin. Code N 2.12(2), blocking passage",
+      "text": "The school of professional nursing or practical nursing shall forward directly to the department, official transcripts of nursing education for applicants who graduated from the school.",
+      "citation": "Wis. Admin. Code N 2.12(2)",
+      "order": 1,
+      "source_url": "https://docs.legis.wisconsin.gov/code/admin_code/n/2/ii/12"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:wi-nursing-transcripts:evidence",
+      "title": "Cost and status evidence: Transcripts sent directly by the school for nursing licensure",
+      "text": "Wisconsin LAB 23-24: $11.2M/yr credentialing; slowest healthcare credentials averaged 189.6 days, 75% of it waiting.",
+      "source_url": "https://legis.wisconsin.gov/lab/media/ky3mcygr/23-24summary_694532.pdf",
+      "citation": "Wis. Admin. Code N 2.12(2)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:wi-dsps",
+      "name": "Wisconsin Department of Safety and Professional Services",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us-ia",
+      "name": "Iowa",
+      "level": "state"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ia-newspaper-notices",
+      "title": "County records published in newspapers",
+      "text": "There shall be published in each of the official newspapers at the expense of the county during the ensuing year the proceedings of the board of supervisors, the schedule of bills allowed by the board of supervisors, and the reports of the county treasurer.",
+      "source_url": "https://www.legis.iowa.gov/docs/code/349.16.pdf",
+      "citation": "Iowa Code 349.16",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, public, notices, legal, notices, newspaper, publication, transparency, website, portal, county"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ia-newspaper-notices:passage:001",
+      "title": "Iowa Code 349.16, blocking passage",
+      "text": "There shall be published in each of the official newspapers at the expense of the county during the ensuing year the proceedings of the board of supervisors, the schedule of bills allowed by the board of supervisors, and the reports of the county treasurer.",
+      "citation": "Iowa Code 349.16",
+      "order": 1,
+      "source_url": "https://www.legis.iowa.gov/docs/code/349.16.pdf"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ia-newspaper-notices:evidence",
+      "title": "Cost and status evidence: County records published in newspapers",
+      "text": "Iowa LSA fiscal note: $50-$250 per publication; a portal would cost $150K-$500K plus about $500K/yr.",
+      "source_url": "https://www.legis.iowa.gov/docs/publications/FN/1371101.pdf",
+      "citation": "Iowa Code 349.16",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:treasury-eft-waiver",
+      "title": "EFT waiver for one-time payments",
+      "text": "Payment by electronic funds transfer is not required where the agency does not expect to make multiple payments to the same recipient within a one-year period on a regular, recurring basis but only if the payments are made to an individual or a small business concern.",
+      "source_url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/part-208/section-208.4",
+      "citation": "31 CFR 208.4(a)(7)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, payments, checks, ach, disbursement, refunds, fintech, treasury, electronic, funds",
+      "issuing_agency": "Bureau of the Fiscal Service"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:treasury-eft-waiver:passage:001",
+      "title": "31 CFR 208.4(a)(7), blocking passage",
+      "text": "Payment by electronic funds transfer is not required where the agency does not expect to make multiple payments to the same recipient within a one-year period on a regular, recurring basis but only if the payments are made to an individual or a small business concern.",
+      "citation": "31 CFR 208.4(a)(7)",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/part-208/section-208.4"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:treasury-eft-waiver:evidence",
+      "title": "Cost and status evidence: EFT waiver for one-time payments",
+      "text": "$3.07 per check vs about $0.15 ACH; 40.9M checks in FY2025, about $119M/yr avoidable (computed). Checks are 16x more likely to be lost or stolen.",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2026-04-29/html/2026-08278.htm",
+      "citation": "31 CFR 208.4(a)(7)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:irs-paper-returns",
+      "title": "IRS may not require electronic individual returns",
+      "text": "The Secretary may not require returns of any tax imposed by subtitle A on individuals, estates, and trusts to be other than on paper forms supplied by the Secretary.",
+      "source_url": "https://www.law.cornell.edu/uscode/text/26/6011",
+      "citation": "26 U.S.C. 6011(e)(1)",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, tax, returns, irs, filing, paper, scanning, ocr, document, processing, automation",
+      "issuing_agency": "Internal Revenue Service"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:irs-paper-returns:passage:001",
+      "title": "26 U.S.C. 6011(e)(1), blocking passage",
+      "text": "The Secretary may not require returns of any tax imposed by subtitle A on individuals, estates, and trusts to be other than on paper forms supplied by the Secretary.",
+      "citation": "26 U.S.C. 6011(e)(1)",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/uscode/text/26/6011"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:irs-paper-returns:evidence",
+      "title": "Cost and status evidence: IRS may not require electronic individual returns",
+      "text": "TIGTA 2026: paper returns cost 43x more to process; contractors scanned only 5% of 9.8M paper forms. Paper refunds take 14 weeks vs 7.",
+      "source_url": "https://www.oversight.gov/sites/default/files/documents/reports/2026-02/2026408003fr.pdf",
+      "citation": "26 U.S.C. 6011(e)(1)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:irs",
+      "name": "Internal Revenue Service",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us-ak",
+      "name": "Alaska",
+      "level": "state"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ak-death-certificates",
+      "title": "Paper death certificate filing",
+      "text": "A death certificate for each death that occurs in the state shall be filed with the local registrar of the registration district in which the death occurred within three days after death.",
+      "source_url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=18.50.230&secEnd=18.50.230",
+      "citation": "AS 18.50.230",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, vital, records, death, certificate, electronic, registration, public, health, data, funeral",
+      "issuing_agency": "Alaska Health Analytics and Vital Records"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ak-death-certificates:passage:001",
+      "title": "AS 18.50.230, blocking passage",
+      "text": "A death certificate for each death that occurs in the state shall be filed with the local registrar of the registration district in which the death occurred within three days after death.",
+      "citation": "AS 18.50.230",
+      "order": 1,
+      "source_url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=18.50.230&secEnd=18.50.230"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ak-death-certificates:evidence",
+      "title": "Cost and status evidence: Paper death certificate filing",
+      "text": "NCHS VSRR 40: 24.1% of Alaska deaths available within 2 weeks vs 53.6% nationally.",
+      "source_url": "https://www.cdc.gov/nchs/data/vsrr/vsrr040.pdf",
+      "citation": "AS 18.50.230",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:ak-vital-records",
+      "name": "Alaska Health Analytics and Vital Records",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:frcp-pro-se-efiling",
+      "title": "Self-represented litigants barred from e-filing by default",
+      "text": "A person not represented by an attorney may file electronically only if allowed by court order or by local rule.",
+      "source_url": "https://www.law.cornell.edu/rules/frcp/rule_5",
+      "citation": "FRCP 5(d)(3)(B)",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, courts, legal, filing, e-filing, self-represented, litigant, access, to, justice"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:frcp-pro-se-efiling:passage:001",
+      "title": "FRCP 5(d)(3)(B), blocking passage",
+      "text": "A person not represented by an attorney may file electronically only if allowed by court order or by local rule.",
+      "citation": "FRCP 5(d)(3)(B)",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/rules/frcp/rule_5"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:frcp-pro-se-efiling:evidence",
+      "title": "Cost and status evidence: Self-represented litigants barred from e-filing by default",
+      "text": "FJC 2025: 29 of 94 district courts prohibit pro se e-filing, 54 require permission. 89,971 of 303,563 civil cases (29.6%) were pro se in FY2025.",
+      "source_url": "https://www.fjc.gov/content/391989/united-states-district-courts-local-rules-and-procedures-electronic-filing-self",
+      "citation": "FRCP 5(d)(3)(B)",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Jurisdiction",
+      "id": "other:jurisdiction:us-ca",
+      "name": "California",
+      "level": "state"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ca-all-party-consent",
+      "title": "All-party consent to record calls",
+      "text": "A person who, intentionally and without the consent of all parties to a confidential communication, uses an electronic amplifying or recording device to record the confidential communication shall be punished by a fine not exceeding two thousand five hundred dollars ($2,500) per violation.",
+      "source_url": "https://california.public.law/codes/penal_code_section_632",
+      "citation": "Cal. Penal Code 632",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, ai, call, center, voice, agent, recording, transcription, customer, service, phone, government, contact, center"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ca-all-party-consent:passage:001",
+      "title": "Cal. Penal Code 632, blocking passage",
+      "text": "A person who, intentionally and without the consent of all parties to a confidential communication, uses an electronic amplifying or recording device to record the confidential communication shall be punished by a fine not exceeding two thousand five hundred dollars ($2,500) per violation.",
+      "citation": "Cal. Penal Code 632",
+      "order": 1,
+      "source_url": "https://california.public.law/codes/penal_code_section_632"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ca-all-party-consent:evidence",
+      "title": "Cost and status evidence: All-party consent to record calls",
+      "text": "CA State Auditor: in 2020 EDD's call center answered less than 1 percent of calls; staff grew to 5,600+. Public meetings are exempt.",
+      "source_url": "https://information.auditor.ca.gov/reports/2020-128and628.1/summary.html",
+      "citation": "Cal. Penal Code 632",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tcpa-ai-voice",
+      "title": "Prior express consent for artificial-voice calls",
+      "text": "No person may initiate any telephone call using an automatic telephone dialing system or an artificial or prerecorded voice to any telephone number assigned to a cellular telephone service without the prior express consent of the called party. Local government entities, including counties, cities, and towns, are persons under the TCPA.",
+      "source_url": "https://www.ecfr.gov/current/title-47/section-64.1200",
+      "citation": "47 CFR 64.1200(a)(1); FCC 24-17; FCC 20-182",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, ai, voice, agent, phone, calls, reminders, outreach, robocall, sms, text, constituent, government",
+      "issuing_agency": "Federal Communications Commission"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:tcpa-ai-voice:passage:001",
+      "title": "47 CFR 64.1200(a)(1); FCC 24-17; FCC 20-182, blocking passage",
+      "text": "No person may initiate any telephone call using an automatic telephone dialing system or an artificial or prerecorded voice to any telephone number assigned to a cellular telephone service without the prior express consent of the called party. Local government entities, including counties, cities, and towns, are persons under the TCPA.",
+      "citation": "47 CFR 64.1200(a)(1); FCC 24-17; FCC 20-182",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-47/section-64.1200"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:tcpa-ai-voice:evidence",
+      "title": "Cost and status evidence: Prior express consent for artificial-voice calls",
+      "text": "14.9M people were disenrolled from Medicaid for procedural reasons in 2023-24. J-PAL NYC: text reminders cut failures to appear by 21%.",
+      "source_url": "https://www.medicaid.gov/resources-for-states/downloads/july-2024-national-summary-renewal-outcomes.pdf",
+      "citation": "47 CFR 64.1200(a)(1); FCC 24-17; FCC 20-182",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:fcc",
+      "name": "Federal Communications Commission",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:jury-mail",
+      "title": "Juror qualification forms and summons by mail",
+      "text": "The clerk shall mail to every person whose name is drawn a juror qualification form. The summons may be served personally, or by registered, certified, or first-class mail.",
+      "source_url": "https://www.law.cornell.edu/uscode/text/28/1864",
+      "citation": "28 U.S.C. 1864, 1866",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, courts, jury, summons, mail, notification, sms, email, digital"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:jury-mail:passage:001",
+      "title": "28 U.S.C. 1864, 1866, blocking passage",
+      "text": "The clerk shall mail to every person whose name is drawn a juror qualification form. The summons may be served personally, or by registered, certified, or first-class mail.",
+      "citation": "28 U.S.C. 1864, 1866",
+      "order": 1,
+      "source_url": "https://www.law.cornell.edu/uscode/text/28/1864"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:jury-mail:evidence",
+      "title": "Cost and status evidence: Juror qualification forms and summons by mail",
+      "text": "N.D. Ill. (2009): 6.5% of forms undeliverable, 33.4% unanswered.",
+      "source_url": "https://www.ilnd.uscourts.gov/_assets/_documents/_forms/_press/Study%20of%20the%20Revised%20Jury%20Plan%20%28002%29.pdf",
+      "citation": "28 U.S.C. 1864, 1866",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ca-upl",
+      "title": "Practice of law limited to State Bar licensees",
+      "text": "No person shall practice law in California unless the person is an active licensee of the State Bar.",
+      "source_url": "https://california.public.law/codes/business_and_professions_code_section_6125",
+      "citation": "Cal. Bus. & Prof. Code 6125",
+      "document_type": "statute",
+      "status": "verify_current_status",
+      "topics": "problem-library, legal, ai, lawyer, self-help, court, documents, access, to, justice, chatbot",
+      "issuing_agency": "State Bar of California"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:ca-upl:passage:001",
+      "title": "Cal. Bus. & Prof. Code 6125, blocking passage",
+      "text": "No person shall practice law in California unless the person is an active licensee of the State Bar.",
+      "citation": "Cal. Bus. & Prof. Code 6125",
+      "order": 1,
+      "source_url": "https://california.public.law/codes/business_and_professions_code_section_6125"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:ca-upl:evidence",
+      "title": "Cost and status evidence: Practice of law limited to State Bar licensees",
+      "text": "Judicial Council: 4.3M self-represented court users; $44M self-help staffing need (older figures). Arizona has 114 licensed alternative business structures.",
+      "source_url": "https://courts.ca.gov/sites/default/files/courts/default/2024-12/rpt_leg_self_help.pdf",
+      "citation": "Cal. Bus. & Prof. Code 6125",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:ca-state-bar",
+      "name": "State Bar of California",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:faa-visual-line-of-sight",
+      "title": "Visual line of sight for drone operations",
+      "text": "The remote pilot in command must be able to see the unmanned aircraft throughout the entire flight.",
+      "source_url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.31",
+      "citation": "14 CFR 107.31",
+      "document_type": "regulation",
+      "status": "verify_current_status",
+      "topics": "problem-library, drone, uav, inspection, bridge, infrastructure, delivery, bvlos, public, works",
+      "issuing_agency": "Federal Aviation Administration"
+    },
+    {
+      "label": "PolicySection",
+      "id": "other:faa-visual-line-of-sight:passage:001",
+      "title": "14 CFR 107.31, blocking passage",
+      "text": "The remote pilot in command must be able to see the unmanned aircraft throughout the entire flight.",
+      "citation": "14 CFR 107.31",
+      "order": 1,
+      "source_url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.31"
+    },
+    {
+      "label": "PolicyDocument",
+      "id": "other:faa-visual-line-of-sight:evidence",
+      "title": "Cost and status evidence: Visual line of sight for drone operations",
+      "text": "EO 14307 required a final BVLOS rule within 240 days; 239 operators fly on case-by-case waivers.",
+      "source_url": "https://www.federalregister.gov/documents/2025/08/07/2025-14992/normalizing-unmanned-aircraft-systems-beyond-visual-line-of-sight-operations",
+      "citation": "14 CFR 107.31",
+      "document_type": "evidence",
+      "status": "verify_current_status",
+      "topics": "problem-library, evidence"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:faa",
+      "name": "Federal Aviation Administration",
+      "type": "organization",
+      "role": "administering agency",
+      "verified_at": "2026-11-14 research pass; verify before outreach"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-ky",
+      "dst": "other:ky-title-affidavit"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ky-title-affidavit",
+      "dst": "other:ky-title-affidavit:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ky-title-affidavit:evidence",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://apps.legislature.ky.gov/recorddocuments/note/26RS/sb110/LM.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:ky-transportation-cabinet",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58262"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:fed-passport-consent"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:fed-passport-consent",
+      "dst": "other:fed-passport-consent:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:fed-passport-consent:evidence",
+      "dst": "other:fed-passport-consent",
+      "source_url": "https://www.reginfo.gov/public/do/PRAViewICR?ref_nbr=202412-1405-001"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:state-consular-affairs",
+      "dst": "other:fed-passport-consent",
+      "source_url": "https://www.ecfr.gov/current/title-22/section-51.28"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-tx",
+      "dst": "other:tx-will-handwriting"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:tx-will-handwriting",
+      "dst": "other:tx-will-handwriting:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:tx-will-handwriting:evidence",
+      "dst": "other:tx-will-handwriting",
+      "source_url": "https://www.txcourts.gov/media/1460326/1-county-level-probate-and-mh-activity-detail-print-fy-2024.xlsx"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:fed-i9-physical-exam"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:fed-i9-physical-exam",
+      "dst": "other:fed-i9-physical-exam:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:fed-i9-physical-exam:evidence",
+      "dst": "other:fed-i9-physical-exam",
+      "source_url": "https://public-inspection.federalregister.gov/2026-09846.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:dhs-uscis",
+      "dst": "other:fed-i9-physical-exam",
+      "source_url": "https://www.law.cornell.edu/cfr/text/8/274a.2"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:fed-treasurydirect-ink"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:fed-treasurydirect-ink",
+      "dst": "other:fed-treasurydirect-ink:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:fed-treasurydirect-ink:evidence",
+      "dst": "other:fed-treasurydirect-ink",
+      "source_url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=173241300"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:treasury-fiscal-service",
+      "dst": "other:fed-treasurydirect-ink",
+      "source_url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/subchapter-A/part-363"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:hud-two-paystubs"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:hud-two-paystubs",
+      "dst": "other:hud-two-paystubs:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:hud-two-paystubs:evidence",
+      "dst": "other:hud-two-paystubs",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2023-06-07/pdf/2023-12162.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:hud-pih",
+      "dst": "other:hud-two-paystubs",
+      "source_url": "https://hud.gov/sites/dfiles/OCHCO/documents/2023-27pihn.pdf"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:snap-interview"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:snap-interview",
+      "dst": "other:snap-interview:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:snap-interview:evidence",
+      "dst": "other:snap-interview",
+      "source_url": "https://fns-prod.azureedge.us/sites/default/files/resource-files/snap-sar-fy23.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:usda-fns",
+      "dst": "other:snap-interview",
+      "source_url": "https://www.ecfr.gov/current/title-7/section-273.2"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:snap-documentary-evidence"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:snap-documentary-evidence",
+      "dst": "other:snap-documentary-evidence:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:snap-documentary-evidence:evidence",
+      "dst": "other:snap-documentary-evidence",
+      "source_url": "https://fns-prod.azureedge.us/sites/default/files/resource-files/snap-qcfy25-per.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:usda-fns",
+      "dst": "other:snap-documentary-evidence",
+      "source_url": "https://www.ecfr.gov/current/title-7/section-273.2"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:medicaid-work-docs"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:medicaid-work-docs",
+      "dst": "other:medicaid-work-docs:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:medicaid-work-docs:evidence",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://www.federalregister.gov/documents/2026/06/03/2026-11094"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:hhs-cms",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://www.federalregister.gov/documents/2026/06/03/2026-11094"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:medicaid-ex-parte"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:medicaid-ex-parte",
+      "dst": "other:medicaid-ex-parte:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:medicaid-ex-parte:evidence",
+      "dst": "other:medicaid-ex-parte",
+      "source_url": "https://www.cms.gov/newsroom/fact-sheets/fiscal-year-2025-improper-payments-fact-sheet"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:hhs-cms",
+      "dst": "other:medicaid-ex-parte",
+      "source_url": "https://www.ecfr.gov/current/title-42/section-435.952"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:wic-physical-presence"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:wic-physical-presence",
+      "dst": "other:wic-physical-presence:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:wic-physical-presence:evidence",
+      "dst": "other:wic-physical-presence",
+      "source_url": "https://fns-prod.azureedge.us/sites/default/files/resource-files/wisummary-10.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:usda-fns",
+      "dst": "other:wic-physical-presence",
+      "source_url": "https://www.ecfr.gov/current/title-7/section-246.7"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:ui-nondigital-id"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ui-nondigital-id",
+      "dst": "other:ui-nondigital-id:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ui-nondigital-id:evidence",
+      "dst": "other:ui-nondigital-id",
+      "source_url": "https://oig.dol.gov/public/Press%20Releases/OIG-Press-Release-030526.htm"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:dol-eta",
+      "dst": "other:ui-nondigital-id",
+      "source_url": "https://www.dol.gov/sites/dolgov/files/ETA/advisories/UIPL/2026/UIPL%2010-26/UIPL%2010-26.pdf"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:dea-in-person-exam"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:dea-in-person-exam",
+      "dst": "other:dea-in-person-exam:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:dea-in-person-exam:evidence",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2025-12-31/html/2025-24123.htm"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:doj-dea",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://www.law.cornell.edu/uscode/text/21/829"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:cms-prior-auth"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:cms-prior-auth",
+      "dst": "other:cms-prior-auth:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:cms-prior-auth:evidence",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://www.cms.gov/newsroom/press-releases/cms-finalizes-rule-expand-access-health-information-improve-prior-authorization-process"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:hhs-cms",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-and-prior-authorization-final-rule-cms-0057-f"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-tx",
+      "dst": "other:tx-medical-license"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:tx-medical-license",
+      "dst": "other:tx-medical-license:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:tx-medical-license:evidence",
+      "dst": "other:tx-medical-license",
+      "source_url": "https://www.imlcc.com/"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:tx-medical-board",
+      "dst": "other:tx-medical-license",
+      "source_url": "https://texas.public.law/statutes/tex._occ._code_section_155.001"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:fedramp-scope"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:fedramp-scope",
+      "dst": "other:fedramp-scope:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:fedramp-scope:evidence",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://www.gao.gov/assets/d24106591.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:gsa-fedramp",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://fedramp.gov/2026/authority/m-24-15/scope/"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-tx",
+      "dst": "other:tx-ramp"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:tx-ramp",
+      "dst": "other:tx-ramp:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:tx-ramp:evidence",
+      "dst": "other:tx-ramp",
+      "source_url": "https://dir.texas.gov/information-security/tx-ramp-frequently-asked-questions-faqs"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:tx-dir",
+      "dst": "other:tx-ramp",
+      "source_url": "https://texas.public.law/statutes/tex._gov't_code_section_2054.0593"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-ky",
+      "dst": "other:ky-vendor-affidavit"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ky-vendor-affidavit",
+      "dst": "other:ky-vendor-affidavit:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ky-vendor-affidavit:evidence",
+      "dst": "other:ky-vendor-affidavit",
+      "source_url": "https://finance.ky.gov/eProcurement/ResourcesSupport/FrequentlyAskedQuestionsabouttheRequiredAffidavitforBiddersRevisedAugust2020.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:ky-finance-cabinet",
+      "dst": "other:ky-vendor-affidavit",
+      "source_url": "https://finance.ky.gov/eProcurement/ResourcesSupport/FrequentlyAskedQuestionsabouttheRequiredAffidavitforBiddersRevisedAugust2020.pdf"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:fed-advance-payment"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:fed-advance-payment",
+      "dst": "other:fed-advance-payment:passage:001"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:omb-ai-ato"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:omb-ai-ato",
+      "dst": "other:omb-ai-ato:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:omb-ai-ato:evidence",
+      "dst": "other:omb-ai-ato",
+      "source_url": "https://files.gao.gov/reports/GAO-26-107859/index.html"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:omb",
+      "dst": "other:omb-ai-ato",
+      "source_url": "https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-nj",
+      "dst": "other:nj-wet-signed-plans"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:nj-wet-signed-plans",
+      "dst": "other:nj-wet-signed-plans:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:nj-wet-signed-plans:evidence",
+      "dst": "other:nj-wet-signed-plans",
+      "source_url": "https://sfbos.archive.sf.gov/sites/default/files/BLA_Post_Entitlement_Permitting_030526.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:nj-dca-codes",
+      "dst": "other:nj-wet-signed-plans",
+      "source_url": "https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-5-23-2-15B"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:nepa-eis"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:nepa-eis",
+      "dst": "other:nepa-eis:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:nepa-eis:evidence",
+      "dst": "other:nepa-eis",
+      "source_url": "https://nepa.gov/sites/default/files/documents/CEQ_EIS_Length_Report_2020-6-12.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:ceq",
+      "dst": "other:nepa-eis",
+      "source_url": "https://www.law.cornell.edu/uscode/text/42/4336a"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:ferc-cluster-study"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ferc-cluster-study",
+      "dst": "other:ferc-cluster-study:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ferc-cluster-study:evidence",
+      "dst": "other:ferc-cluster-study",
+      "source_url": "https://www.publicpower.org/periodical/article/backlog-power-plants-seeking-transmission-grid-connection-eased-somewhat-2025-lbnl"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:ferc",
+      "dst": "other:ferc-cluster-study",
+      "source_url": "https://www.ferc.gov/sites/default/files/2024-08/LGIP.pdf"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-wi",
+      "dst": "other:wi-nursing-transcripts"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:wi-nursing-transcripts",
+      "dst": "other:wi-nursing-transcripts:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:wi-nursing-transcripts:evidence",
+      "dst": "other:wi-nursing-transcripts",
+      "source_url": "https://legis.wisconsin.gov/lab/media/ky3mcygr/23-24summary_694532.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:wi-dsps",
+      "dst": "other:wi-nursing-transcripts",
+      "source_url": "https://docs.legis.wisconsin.gov/code/admin_code/n/2/ii/12"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-ia",
+      "dst": "other:ia-newspaper-notices"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ia-newspaper-notices",
+      "dst": "other:ia-newspaper-notices:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ia-newspaper-notices:evidence",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/docs/publications/FN/1371101.pdf"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:treasury-eft-waiver"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:treasury-eft-waiver",
+      "dst": "other:treasury-eft-waiver:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:treasury-eft-waiver:evidence",
+      "dst": "other:treasury-eft-waiver",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2026-04-29/html/2026-08278.htm"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:treasury-fiscal-service",
+      "dst": "other:treasury-eft-waiver",
+      "source_url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/part-208/section-208.4"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:irs-paper-returns"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:irs-paper-returns",
+      "dst": "other:irs-paper-returns:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:irs-paper-returns:evidence",
+      "dst": "other:irs-paper-returns",
+      "source_url": "https://www.oversight.gov/sites/default/files/documents/reports/2026-02/2026408003fr.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:irs",
+      "dst": "other:irs-paper-returns",
+      "source_url": "https://www.law.cornell.edu/uscode/text/26/6011"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-ak",
+      "dst": "other:ak-death-certificates"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ak-death-certificates",
+      "dst": "other:ak-death-certificates:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ak-death-certificates:evidence",
+      "dst": "other:ak-death-certificates",
+      "source_url": "https://www.cdc.gov/nchs/data/vsrr/vsrr040.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:ak-vital-records",
+      "dst": "other:ak-death-certificates",
+      "source_url": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=18.50.230&secEnd=18.50.230"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:frcp-pro-se-efiling"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:frcp-pro-se-efiling",
+      "dst": "other:frcp-pro-se-efiling:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:frcp-pro-se-efiling:evidence",
+      "dst": "other:frcp-pro-se-efiling",
+      "source_url": "https://www.fjc.gov/content/391989/united-states-district-courts-local-rules-and-procedures-electronic-filing-self"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-ca",
+      "dst": "other:ca-all-party-consent"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ca-all-party-consent",
+      "dst": "other:ca-all-party-consent:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ca-all-party-consent:evidence",
+      "dst": "other:ca-all-party-consent",
+      "source_url": "https://information.auditor.ca.gov/reports/2020-128and628.1/summary.html"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:tcpa-ai-voice"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:tcpa-ai-voice",
+      "dst": "other:tcpa-ai-voice:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:tcpa-ai-voice:evidence",
+      "dst": "other:tcpa-ai-voice",
+      "source_url": "https://www.medicaid.gov/resources-for-states/downloads/july-2024-national-summary-renewal-outcomes.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:fcc",
+      "dst": "other:tcpa-ai-voice",
+      "source_url": "https://www.ecfr.gov/current/title-47/section-64.1200"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:jury-mail"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:jury-mail",
+      "dst": "other:jury-mail:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:jury-mail:evidence",
+      "dst": "other:jury-mail",
+      "source_url": "https://www.ilnd.uscourts.gov/_assets/_documents/_forms/_press/Study%20of%20the%20Revised%20Jury%20Plan%20%28002%29.pdf"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us-ca",
+      "dst": "other:ca-upl"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:ca-upl",
+      "dst": "other:ca-upl:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:ca-upl:evidence",
+      "dst": "other:ca-upl",
+      "source_url": "https://courts.ca.gov/sites/default/files/courts/default/2024-12/rpt_leg_self_help.pdf"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:ca-state-bar",
+      "dst": "other:ca-upl",
+      "source_url": "https://california.public.law/codes/business_and_professions_code_section_6125"
+    },
+    {
+      "type": "ISSUED",
+      "src": "other:jurisdiction:us",
+      "dst": "other:faa-visual-line-of-sight"
+    },
+    {
+      "type": "HAS_SECTION",
+      "src": "other:faa-visual-line-of-sight",
+      "dst": "other:faa-visual-line-of-sight:passage:001"
+    },
+    {
+      "type": "CITES",
+      "src": "other:faa-visual-line-of-sight:evidence",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://www.federalregister.gov/documents/2025/08/07/2025-14992/normalizing-unmanned-aircraft-systems-beyond-visual-line-of-sight-operations"
+    },
+    {
+      "type": "ADMINISTERS",
+      "src": "other:actor:faa",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.31"
+    }
+  ]
+}
