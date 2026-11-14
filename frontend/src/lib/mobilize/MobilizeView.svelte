@@ -45,14 +45,18 @@
   const finding = $derived(handoff?.finding ?? null);
   const proposalTitle = $derived(finding?.provision.title ?? demo?.policy.title ?? '');
   const jurisdiction = $derived(finding?.provision.jurisdiction || demo?.policy.state || '');
-  // A handoff with people gets one generated agent per person instead of the fixed set.
+  // A real run builds one agent per person in its handoff, from the graph; only the
+  // demo sandbox (no runId) uses the Kentucky fixture and sample personas.
+  const live = $derived(!!runId);
   const people = $derived(handoff?.people ?? []);
-  const campaign = $derived(source === 'claude' && people.length > 0);
+  const campaign = $derived(live ? people.length > 0 : source === 'claude' && people.length > 0);
+  const noPeople = $derived(live && !!handoff && people.length === 0);
+  const targetNames = $derived(people.map((p) => (p.type === 'official' && p.title ? `${p.title} ${p.name}` : p.name)));
   const official = $derived(handoff?.people?.find((p) => p.type === 'official' && p.state));
   const lobbyist = $derived(handoff?.people?.find((p) => p.type === 'lobbyist' && p.clients?.length));
   // A campaign targets everyone in the handoff; otherwise the first official, else the demo target.
-  const target = $derived(campaign ? `${people.length} people` : official ? `${official.title || ''} ${official.name}`.trim() : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
-  const sourceLabel = $derived(campaign ? status?.planner_model ?? 'Planner' : source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
+  const target = $derived(live ? `${people.length} people` : official ? `${official.title || ''} ${official.name}`.trim() : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
+  const sourceLabel = $derived(live || campaign ? status?.planner_model ?? 'Planner' : source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
   const planned = $derived(campaign ? people.length : count);
   const totalCalls = $derived(agents.reduce((sum, a) => sum + a.conversations.length, 0));
 
@@ -77,7 +81,7 @@
   onDestroy(() => { disposed = true; clearInterval(ticker); clearTimeout(poll); journey.health = null; });
 
   async function build() {
-    if (building || (runId && !handoff)) return;
+    if (building || (runId && !handoff) || noPeople) return;
     buildError = '';
     clearTimeout(poll);
     call = null;
@@ -145,7 +149,7 @@
 
       <div class="page-heading">
         <div><div class="eyebrow"><span></span> STEP 3 · MOBILIZE</div><h1>Turn the proposal into <em>a conversation.</em></h1>
-          <p>Build persona voice agents from the approved proposal, watch every step, then call from any of them.</p></div>
+          <p>{live ? 'Build one voice agent for each person in the approved handoff' : 'Build voice agents from the demo proposal'}, watch every step, then call from any of them.</p></div>
         {#if runId}<a class="back-link" href={redlinePath(runId, finding?.id)}><ArrowLeft size={14} /> Back to redline</a>
         {:else}<a class="back-link" href="/"><ArrowLeft size={14} /> Start with a pitch</a>{/if}
       </div>
@@ -166,9 +170,8 @@
             </div>
             {#if handoff}
               <div class="mz-handoff">
-                <div class="mz-handoff-title"><CheckCircle2 size={16} /><span class="mini-label">ANALYSIS HANDOFF</span><span class="mz-pill">{handoff.status.replaceAll('_', ' ').toUpperCase()}</span></div>
-                <p>{handoff.message}</p>
-                {#if handoff.status === 'simulated'}<p class="mz-note">The analysis API simulated this handoff and placed no calls. Calls below are placed by the Mobilize service, to allowlisted numbers only.</p>{/if}
+                <div class="mz-handoff-title"><CheckCircle2 size={16} /><span class="mini-label">ANALYSIS HANDOFF</span><span class="mz-pill">{handoff.version ?? 'READY'}</span></div>
+                <p>{people.length ? `${people.length} people to call about “${handoff.policy?.spoken_title ?? finding.provision.title}”.` : 'No people are linked to this policy.'} Calls go only to allowlisted numbers.</p>
                 <details><summary>View complete returned handoff</summary><pre class="mz-pre">{JSON.stringify(handoff, null, 2)}</pre></details>
               </div>
             {/if}
@@ -183,14 +186,20 @@
             <a class="mz-link" href="/">Pitch a product to mobilize a real proposal <ArrowRight size={14} /></a>
           {/if}
         </div>
-        {#if campaign && demo}
+        {#if live && noPeople}
+          <div class="mz-card">
+            <div class="section-kicker">CALL ROLES <span class="mz-pill">NONE FOUND</span></div>
+            <p class="mz-error">No people are linked to this policy in the graph, so there is no one to build agents for.</p>
+            <p class="mz-note">Mobilize only calls people from the handoff; it never substitutes demo targets for a real policy.</p>
+          </div>
+        {:else if live}
           <div class="mz-card">
             <div class="section-kicker">CALL ROLES <span class="mz-pill">{people.length} FROM HANDOFF</span></div>
             <dl class="mz-kv">
               {#each people as p}<dt>{p.type}</dt><dd>{p.title ? `${p.title} ` : ''}{p.name}<small>{p.relevance.replaceAll('_', ' ')} · {p.verified_at}{p.clients?.length ? ` · for ${p.clients.join(', ')}` : ''}</small></dd>{/each}
-              <dt>Dialed number</dt><dd>{demo.to_number}<small>{status?.allowed_numbers.includes(demo.to_number) ? 'Allowlisted' : 'Not allowlisted; calls will be blocked'}</small></dd>
+              {#if demo}<dt>Dialed number</dt><dd>{demo.to_number}<small>{status?.allowed_numbers.includes(demo.to_number) ? 'Allowlisted' : 'Not allowlisted; calls will be blocked'}</small></dd>{/if}
             </dl>
-            <p class="mz-note">In Live mode, each person in the handoff gets a purpose-built agent. Calls ring the allowlisted demo number, not these people; verify roles before any real outreach.</p>
+            <p class="mz-note">Each person in the handoff gets a purpose-built agent. Calls ring the allowlisted demo number, not these people; verify roles before any real outreach.</p>
           </div>
         {:else if demo}
           <div class="mz-card">
@@ -207,21 +216,20 @@
 
       <section class="mz-build">
         <div class="section-heading mz-build-head">
-          <div><div class="section-kicker">BUILD VOICE AGENTS</div><h2>Agent graph</h2><p>Each persona becomes a caller built on an ElevenLabs agent template. Select one to call.</p></div>
+          <div><div class="section-kicker">BUILD VOICE AGENTS</div><h2>Agent graph</h2><p>Each caller is built on an ElevenLabs agent template. Select one to call.</p></div>
           <div class="mz-controls">
-            {#if campaign}<div class="mz-field"><span>Agents</span><output class="mz-fixed">{people.length}, one per person</output></div>
+            {#if live}<div class="mz-field"><span>Agents</span><output class="mz-fixed">{people.length}, one per person</output></div>
             {:else}<div class="mz-field"><span>Personas</span>
               <div class="mz-stepper"><button aria-label="Fewer personas" disabled={building} onclick={() => (count = Math.max(1, count - 1))}>−</button><output>{count}</output><button aria-label="More personas" disabled={building} onclick={() => (count = Math.min(status?.max_personas ?? 4, count + 1))}>+</button></div></div>{/if}
-            <div class="mz-seg" role="radiogroup" aria-label="Persona source">
+            {#if !live}<div class="mz-seg" role="radiogroup" aria-label="Persona source">
               <button role="radio" aria-checked={source === 'sample'} class:on={source === 'sample'} disabled={building} onclick={() => (source = 'sample')} title="Pre-written personas, no API cost">Sample</button>
               <button role="radio" aria-checked={source === 'claude'} class:on={source === 'claude'} disabled={building} onclick={() => (source = 'claude')} title="Generate agents live with a model; uses API credits">Live</button>
-            </div>
-            <button class="primary-button" disabled={building || !demo || (!!runId && !handoff)} onclick={build}>
+            </div>{/if}
+            <button class="primary-button" disabled={building || !demo || (!!runId && !handoff) || noPeople} onclick={build}>
               {#if building}<LoaderCircle class="spin" size={16} /> Building…{:else}<Hammer size={16} /> Build voice agents{/if}
             </button>
           </div>
         </div>
-        {#if source === 'sample' && finding}<p class="mz-note warn">Sample personas were written for the Kentucky permit demo. Use Claude to fit them to this proposal.</p>{/if}
         {#if buildError}<div class="action-error" role="alert">{buildError}</div>{/if}
 
         <div class="mz-workspace" id="calls">
@@ -231,7 +239,7 @@
               {#if run.start}<span class="mz-runmeta"><span class="status-dot" class:active-dot={building}></span>{building ? 'Building' : run.phase === 'error' ? 'Failed' : run.personas.some((p) => p.state === 'error') ? 'Complete with skipped roles' : 'Complete'} · {fmtDuration((run.end ?? now) - run.start)} · {run.rows.length} events · {agents.length} agents</span>{/if}
             </div>
             {#if demo}
-              <AgentGraph {run} {planned} {campaign} {sourceLabel} {proposalTitle} {jurisdiction} {target} {selectedId} {liveAgentId} onselect={select} />
+              <AgentGraph {run} {planned} {campaign} targets={targetNames} {sourceLabel} {proposalTitle} {jurisdiction} {target} {selectedId} {liveAgentId} onselect={select} />
             {/if}
           </div>
           <aside class="mz-card mz-inspector">
@@ -242,14 +250,14 @@
                 <div class="mini-label">RUN SUMMARY</div>
                 <div class="mz-stats">
                   <div><strong>{agents.length}</strong><span>voice agents</span></div>
-                  <div><strong>{run.legislators.length}</strong><span>personas</span></div>
+                  <div><strong>{run.legislators.length}</strong><span>callers</span></div>
                   <div><strong>{run.start && run.end ? fmtDuration(run.end - run.start) : '—'}</strong><span>build time</span></div>
                   <div><strong>{totalCalls}</strong><span>calls placed</span></div>
                 </div>
                 <p class="mz-muted mz-center">Select an agent in the graph to inspect it and place a call.</p>
               </div>
             {:else}
-              <div class="mz-placeholder"><PhoneCall size={22} /><strong>No agents yet</strong><p>Build voice agents to turn this proposal into persona callers, then select one to place a call.</p></div>
+              <div class="mz-placeholder"><PhoneCall size={22} /><strong>No agents yet</strong><p>Build voice agents to turn this proposal into callers, then select one to place a call.</p></div>
             {/if}
           </aside>
         </div>

@@ -88,7 +88,7 @@
       <div class="detail-column">
         <div class="detail-header"><div><div class="mini-label">REDLINE</div><h3>{selected.title || selected.provision.title}</h3>
           <div class="detail-meta"><span>{selected.provision.jurisdiction || 'Jurisdiction unavailable'}</span><span>·</span><span>{selected.provision.citation || 'Citation unavailable'}</span><span>·</span><span>Effective {displayDate(selected.provision.effective_date)}</span>{#if selected.provision.document_type}<span>·</span><span>{selected.provision.document_type.replaceAll('_', ' ')}</span>{/if}{#if selected.provision.source_status}<span>·</span><span>{selected.provision.source_status.replaceAll('_', ' ')}</span>{/if}</div></div>
-          <span class="proposal-pill">FOR REVIEW</span></div>
+          <span class="proposal-pill">{approved ? "APPROVED" : "FOR REVIEW"}</span></div>
         {#if selected.provision.synthetic}<div class="synthetic-banner"><FlaskConical size={17} /><span><strong>Synthetic demo data.</strong> This source and its generated outputs are synthetic.</span></div>{/if}
         <div class="detail-body">
           <div class="source-line"><span class="mini-label">SOURCE EVIDENCE</span>{#if selected.provision.source_url && /^https?:\/\//i.test(selected.provision.source_url)}<a href={selected.provision.source_url} target="_blank" rel="noopener noreferrer">View source <ArrowUpRight size={14} /></a>{:else}<span>Source URL unavailable</span>{/if}</div>

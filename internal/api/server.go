@@ -301,7 +301,7 @@ func (s *Server) mobilize(c *echo.Context) error {
 	respond := func(h MobilizeHandoff) error {
 		return c.JSON(200, handoffResponse{MobilizeHandoff: h, Status: "simulated", Message: "Handoff prepared; no calls were placed.", Finding: *finding})
 	}
-	if cached != nil && cached.Policy.ID == finding.Provision.ID {
+	if cached != nil && cached.Policy.ID == finding.Provision.ID && len(cached.People) > 0 { // an empty one is rebuilt: the people lookup may have improved
 		return respond(*cached)
 	}
 	b, ok := s.analyzer.(briefer)
