@@ -1,0 +1,27 @@
+{
+  "name": "doge-factory-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "@lucide/svelte": "^1.73.0",
+    "@sveltejs/adapter-auto": "^6",
+    "@sveltejs/kit": "^2",
+    "@sveltejs/vite-plugin-svelte": "^4",
+    "@tailwindcss/vite": "*",
+    "daisyui": "*",
+    "svelte": "*",
+    "tailwindcss": "*",
+    "typescript": "*",
+    "vite": "^5"
+  },
+  "devDependencies": {
+    "svelte-check": "*"
+  }
+}

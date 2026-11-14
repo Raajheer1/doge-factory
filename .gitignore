@@ -6,3 +6,5 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 generated_persona.json
+data/
+frontend/node_modules
