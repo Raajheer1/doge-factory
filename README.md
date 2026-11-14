@@ -4,6 +4,8 @@
 
 DOGE Factory is an autonomous regulatory refactoring platform that helps governments identify policy written for a paper-and-people era, modernize it for responsible automation, and build the case for legislative action.
 
+> This repository contains the initial platform blueprint. Start with the [architecture](docs/architecture.md), [policy-engine design](docs/policy-engine.md), and [research-backed source plan](docs/research.md).
+
 ## The problem
 
 Government policy is often *human-native*, rather than *AI-native*. Federal, state, and local statutes can explicitly require manual review, paper records, wet signatures, or other human-in-the-loop processes—even when technology can perform the same work more quickly, consistently, and affordably.
@@ -37,6 +39,19 @@ Translates legacy, paper-bound provisions into reviewable, AI-native legislative
 
 Packages the legislative redline, fiscal ROI memo, and stakeholder context for the lawmakers and committees positioned to act.
 
+## Platform foundation
+
+The initial product should be a **review-first evidence system**, not an autonomous law-changing system:
+
+1. **Ingest** authoritative legal text and preserve its source, version, and retrieval timestamp.
+2. **Normalize** the source into citation-addressable sections.
+3. **Detect** potential automation barriers using transparent rules plus retrieval-assisted analysis.
+4. **Verify** every finding against the source text and require human policy/legal review.
+5. **Draft** an amendment as a proposal, with a traceable rationale and alternatives.
+6. **Model** assumptions and ranges for fiscal impact; never present model output as a verified saving.
+
+See [`docs/policy-engine.md`](docs/policy-engine.md) for the MVP backlog and review gates.
+
 ## Example outcome
 
 For a given code section, DOGE Factory can help a policy team answer:
@@ -56,7 +71,7 @@ For a given code section, DOGE Factory can help a policy team answer:
 
 ## Status
 
-Early-stage concept and product development.
+Early-stage concept and product development. The first build target is one jurisdiction and one policy domain—such as municipal housing permits—before expanding coverage.
 
 ## Disclaimer
 

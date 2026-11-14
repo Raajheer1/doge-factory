@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://doge-factory.example/schemas/finding.schema.json",
+  "title": "Policy Engine Finding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "provision",
+    "barrierTypes",
+    "evidence",
+    "status",
+    "analysis"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable finding identifier."
+    },
+    "provision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["citation", "documentVersionId", "sourceUrl"],
+      "properties": {
+        "citation": { "type": "string" },
+        "documentVersionId": { "type": "string" },
+        "sourceUrl": { "type": "string", "format": "uri" }
+      }
+    },
+    "barrierTypes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "paper_only_artifact",
+          "physical_presence_requirement",
+          "wet_signature_requirement",
+          "manual_processing_mandate",
+          "fixed_timing_or_queue_rule",
+          "record_access_constraint",
+          "other"
+        ]
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["citation", "quote", "rationale"],
+        "properties": {
+          "citation": { "type": "string" },
+          "quote": { "type": "string", "minLength": 1 },
+          "rationale": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "limitations", "confidence"],
+      "properties": {
+        "summary": { "type": "string" },
+        "limitations": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "status": {
+      "enum": [
+        "detected",
+        "needs_research",
+        "under_review",
+        "rejected",
+        "approved_for_drafting",
+        "draft_reviewed",
+        "published"
+      ]
+    }
+  }
+}
