@@ -12,3 +12,7 @@ A local SvelteKit policy workbench for the separate DOGE Factory Go API. It does
 The default frontend origin is allowed by the current backend CORS configuration. The browser connects directly to the configured API; no AI Gateway or HydraDB credentials belong in this project. The health endpoint only indicates that the HTTP service is running, not that upstream services are available.
 
 Run `npm run check` for type checking and `npm run build` for a production build. Runs are stored by the backend; the frontend remembers the most recently opened run in browser storage and offers backend run history. Mobilization is currently simulated by the API and places no calls.
+
+## Mobilize page
+
+`/mobilize` builds persona voice agents from an approved proposal and can place real calls through the Python Mobilize API (`voice-agents console`, default `http://127.0.0.1:8000`, configurable with `VITE_VOICE_API_BASE_URL`). Calls only ring numbers in that service's `ALLOWED_TO_NUMBERS`. See `docs/voice-agents.md`.

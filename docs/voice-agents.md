@@ -101,3 +101,35 @@ some state laws require disclosure.
 
 The figures in `voice_agents/fixtures/demo.json` are invented: $2.1M, $800, "13th District",
 "Senator Smith", and "Bluegrass Strategies". Replace them with real DOGE Factory output.
+
+## Mobilize page (frontend `/mobilize`)
+
+The SvelteKit frontend's **Mobilize** page turns an approved proposal into
+persona voice agents and lets you call from any of them. It talks to two
+backends: the Go API for the approved proposal, and this Python package for
+building agents and placing calls.
+
+```bash
+pip install -e ".[console]"
+voice-agents console            # Mobilize API on http://127.0.0.1:8000
+cd frontend && npm run dev      # open http://127.0.0.1:5173/mobilize
+```
+
+- **Input:** approve a finding in Policy analysis, then choose *Prepare
+  mobilization → Open Mobilize*. The page loads the Go handoff
+  (`POST /api/runs/:id/mobilize`) and sends it with the pipeline request, and
+  `input_from_handoff` maps the finding onto the agents' policy variables.
+  Legislator, lobbyist and district aren't in the handoff yet, so they are demo
+  placeholders. Opened without a run, the page uses `fixtures/demo.json`.
+- **Agent graph:** proposal → persona synthesis → personas → voice agents,
+  streamed from `POST /api/pipeline` (server-sent events). Source is **Sample**
+  (pre-written Kentucky personas, no API cost) or **Claude** (Haiku, each
+  persona told to differ from the ones before it).
+- **Trace:** every pipeline step with real timing.
+- **Inspector:** persona, dynamic variables and the outbound-call payload, plus
+  **Call**, with live transcript, extracted fields and evaluation.
+
+Agents are saved to `console_agents.json` (gitignored), and each build replaces
+the previous roster. Calls still go through `place_call`, so
+`ALLOWED_TO_NUMBERS` applies. Set `VITE_VOICE_API_BASE_URL` in
+`frontend/.env` if the API isn't on port 8000.

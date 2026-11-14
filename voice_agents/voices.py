@@ -42,3 +42,12 @@ def pick_voice(gender: Gender, age_band: AgeBand, seed: str = "") -> str:
         return DEFAULT_VOICE_ID
     index = sum(map(ord, seed)) % len(options)
     return options[index][0]
+
+
+def voice_label(voice_id: str) -> str:
+    """Short display name for a palette voice, e.g. "Jessica"."""
+    for options in PALETTE.values():
+        for vid, description in options:
+            if vid == voice_id:
+                return description.split(" - ")[0]
+    return "Eric" if voice_id == DEFAULT_VOICE_ID else "agent default"
