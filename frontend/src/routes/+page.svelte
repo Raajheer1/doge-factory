@@ -1,139 +1,49 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { ArrowRight, CircleAlert, FilePenLine, FileSearch, FlaskConical, HeartPulse, House, Library, LoaderCircle, Megaphone, RotateCcw, Search, Sparkles, Zap } from '@lucide/svelte';
-  import type { Collection, Run } from '$lib/api';
-  import { hasLog } from '$lib/autopilot';
-  import { AnalysisOfflineError, loadQueue, startDemoRun, startRun } from '$lib/runs';
-  import { enterRun, journey, lastRun, mobilizePath, redlinePath, rememberRun, runPath } from '$lib/journey.svelte';
-
-  const COLLECTIONS: { key: Collection; label: string; hint: string }[] = [
-    { key: 'other', label: 'Problem library', hint: 'Identity, benefits, procurement & more' },
-    { key: 'healthcare', label: 'Healthcare', hint: 'Health & healthcare policy' },
-    { key: 'housing', label: 'Housing', hint: 'Housing & assistance policy' },
-  ];
-  const EXAMPLES: Record<Collection, string[]> = {
-    other: ['AI identity verification for private car sales in Kentucky, no notary visit', 'Payroll-connected income verification for public housing agencies'],
-    healthcare: ['Optimize healthcare in Iowa'],
-    housing: ['Reduce housing assistance paperwork'],
-  };
+  import { ArrowRight, CircleAlert, HeartPulse, House, Library, LoaderCircle, Search, Sparkles } from '@lucide/svelte';
+  import type { Collection } from '$lib/api';
+  import { startRun } from '$lib/runs';
+  import { enterRun, journey, rememberRun, runPath } from '$lib/journey.svelte';
 
   let query = $state('');
-  let collection = $state<Collection>('other');
-  let autopilot = true;
+  let collection = $state<Collection>('housing');
   let busy = $state(false);
   let error = $state('');
-  let recent = $state<Run[]>([]);
-  let continueId = $state<string | null>(null);
-  let apiOnline = $state(true);
-  let offline = $state(false); // the last pitch couldn't reach the analysis API
+  const examples: Record<Collection, string> = {
+    healthcare: 'Optimize healthcare in Iowa',
+    housing: 'Identify barriers to income verification in Texas LIHTC housing',
+    other: 'AI identity verification for private car sales in Kentucky',
+  };
+  $effect(() => { enterRun(null); journey.stage = 'audit'; });
 
-  onMount(async () => {
-    enterRun(null);
-    journey.stage = 'audit';
-    continueId = lastRun();
-    const queue = await loadQueue();
-    apiOnline = queue.apiOnline;
-    recent = queue.runs.slice(0, 4);
-  });
-
-  async function start(event: SubmitEvent) {
-    event.preventDefault();
-    autopilot = (event.submitter as HTMLButtonElement | null)?.value !== 'manual';
+  async function start() {
     if (busy) return;
-    const text = query.trim();
-    if (!text) { error = 'Describe what you are building to start.'; return; }
-    if (new TextEncoder().encode(text).length > 2000) { error = 'Keep the pitch under 2,000 characters.'; return; }
-    busy = true; error = ''; offline = false;
+    const goal = query.trim();
+    if (!goal) { error = 'Enter a policy goal to start an analysis.'; return; }
+    if (new TextEncoder().encode(goal).length > 2000) { error = 'The goal exceeds the 2,000-byte limit. Shorten it and try again.'; return; }
+    busy = true; error = '';
     try {
-      const id = await startRun(text, collection);
+      const id = await startRun(goal, collection);
       rememberRun(id);
-      await goto(autopilot ? `${runPath(id)}/autopilot?live=1` : runPath(id));
-    } catch (e) {
-      if (e instanceof AnalysisOfflineError) offline = true;
-      else error = e instanceof Error ? e.message : 'Unable to start the audit.';
-    }
+      await goto(runPath(id));
+    } catch (e) { error = e instanceof Error ? e.message : 'Unable to start the analysis.'; }
     finally { busy = false; }
   }
-
-  async function runDemo() {
-    const id = startDemoRun(query.trim());
-    rememberRun(id);
-    await goto(runPath(id));
-  }
-
-  const continueRun = $derived(recent.find((r) => r.id === continueId));
 </script>
 
-<svelte:head><title>DOGE Factory — Audit</title><meta name="description" content="Pitch a product, find the policy in the way, and mobilize support to change it." /></svelte:head>
-
-<div class="page-heading">
-  <div><div class="eyebrow"><span></span> STEP 1 · AUDIT</div><h1>Pitch a product. <em>Find the policy in the way.</em></h1>
-    <p>Describe what you want to build. We audit the policy that may block it, redline a fix, and help you mobilize support.</p></div>
-  <div class="heading-badge"><Sparkles size={15} /> FROM IDEA TO ACTION</div>
-</div>
-
+<svelte:head><title>DOGE Factory — Policy workbench</title><meta name="description" content="Explore policy barriers and review proposed amendments." /></svelte:head>
+<div class="page-heading"><div><div class="eyebrow"><span></span> POLICY WORKBENCH</div><h1>Make room for <em>better policy.</em></h1><p>Find opportunities to remove barriers to innovation, and move promising ideas forward.</p></div><div class="heading-badge"><Sparkles size={15}/> FROM IDEA TO ACTION</div></div>
 <section class="goal-card" aria-labelledby="goal-title">
-  <div class="goal-intro"><div><div class="section-kicker">YOUR PITCH</div><h2 id="goal-title">What are you building?</h2>
-    <p>A product, service or outcome. Plain language is best.</p></div><div class="goal-icon"><Search size={21} /></div></div>
-  <form onsubmit={start}>
-    <fieldset class="collection-picker">
-      <legend>Policy collection <span>Choose one</span></legend>
-      <div class="collection-options">
-        {#each COLLECTIONS as c}
-          <label class:collection-selected={collection === c.key} class="collection-option">
-            <input type="radio" name="collection" value={c.key} bind:group={collection} />
-            <span class="collection-icon">{#if c.key === 'healthcare'}<HeartPulse size={18} />{:else if c.key === 'housing'}<House size={18} />{:else}<Library size={18} />{/if}</span>
-            <span class="collection-copy"><strong>{c.label}</strong><small>{c.hint}</small></span>
-            <span class="collection-indicator" aria-hidden="true"></span>
-          </label>
-        {/each}
-      </div>
-    </fieldset>
-    <label class="sr-only" for="goal">What are you building?</label>
-    <div class="input-wrap"><Search size={19} />
-      <input id="goal" maxlength="2000" bind:value={query} placeholder={`e.g. ${EXAMPLES[collection][0]}`} />
-      <button class="ghost-button" name="mode" value="manual" disabled={busy}>Step through</button>
-      <button class="primary-button" name="mode" value="autopilot" disabled={busy}>{#if busy}<LoaderCircle class="spin" size={17} /> Starting{:else}<Zap size={16} /> Run on autopilot{/if}</button>
-    </div>
-    <div class="input-meta"><span class="examples">Try: {#each EXAMPLES[collection] as ex}<button type="button" class="example" onclick={() => (query = ex)}>“{ex}”</button>{/each}</span><span>{query.length} / 2,000</span></div>
+  <div class="goal-intro"><div><div class="section-kicker">01 / DEFINE YOUR GOAL</div><h2 id="goal-title">What would you like to improve?</h2><p>Describe an outcome. We’ll look for policy provisions that may be getting in the way.</p></div><div class="goal-icon"><Search size={21}/></div></div>
+  <form onsubmit={(e) => { e.preventDefault(); void start(); }}>
+    <fieldset class="collection-picker"><legend>Policy collection <span>Choose one</span></legend><div class="collection-options">
+      <label class:collection-selected={collection === 'healthcare'} class="collection-option"><input type="radio" name="collection" value="healthcare" bind:group={collection}/><span class="collection-icon"><HeartPulse size={18}/></span><span class="collection-copy"><strong>Healthcare</strong><small>Health &amp; healthcare policy</small></span><span class="collection-indicator" aria-hidden="true"></span></label>
+      <label class:collection-selected={collection === 'housing'} class="collection-option"><input type="radio" name="collection" value="housing" bind:group={collection}/><span class="collection-icon"><House size={18}/></span><span class="collection-copy"><strong>Housing</strong><small>Housing &amp; assistance policy</small></span><span class="collection-indicator" aria-hidden="true"></span></label>
+      <label class:collection-selected={collection === 'other'} class="collection-option"><input type="radio" name="collection" value="other" bind:group={collection}/><span class="collection-icon"><Library size={18}/></span><span class="collection-copy"><strong>Problem library</strong><small>Identity, benefits, procurement &amp; more</small></span><span class="collection-indicator" aria-hidden="true"></span></label>
+    </div></fieldset>
+    <label class="sr-only" for="goal">Policy goal</label><div class="input-wrap"><Search size={19}/><input id="goal" maxlength="2000" bind:value={query} placeholder={'e.g. ' + examples[collection]}/><button class="primary-button" disabled={busy}>{#if busy}<LoaderCircle class="spin" size={17}/> Starting{:else}Analyze goal <ArrowRight size={17}/>{/if}</button></div>
+    <div class="input-meta"><span>Try: <button type="button" class="example" onclick={() => query = examples[collection]}>“{examples[collection]}”</button></span><span>{new TextEncoder().encode(query).length} / 2,000 bytes</span></div>
   </form>
-  <div class="scope-note"><span class="scope-dot"></span> Analysis considers a bounded set of retrieved provisions, not all applicable laws.
-    {#if !apiOnline}<span class="offline-note">· Analysis API offline</span>{/if}</div>
+  <div class="scope-note"><span class="scope-dot"></span> Analysis searches a bounded set of sources. Runs are saved locally and continue while the backend is running; find them in Problem queue.</div>
 </section>
-
-{#if offline}
-  <div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>The analysis API isn't reachable</strong>
-    <p>Start the Go API and try again, or replay a prepared demo audit. The demo is clearly labeled and won't analyze your pitch.</p></div>
-    <button onclick={runDemo}><FlaskConical size={14} /> Run demo audit</button></div>
-{/if}
-{#if error}<div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>Something needs attention</strong><p>{error}</p></div></div>{/if}
-
-{#if continueRun}
-  <a class="continue-card" href={continueRun.selected_finding_id ? mobilizePath(continueRun.id) : continueRun.findings.length ? redlinePath(continueRun.id) : runPath(continueRun.id)}>
-    <RotateCcw size={16} /><span><small>CONTINUE WHERE YOU LEFT OFF</small><strong>{continueRun.query}</strong></span><ArrowRight size={16} />
-  </a>
-{/if}
-
-<section class="welcome-section">
-  <div class="section-heading"><div><div class="section-kicker">HOW IT WORKS</div><h2>Audit, redline, mobilize</h2><p>Every run moves through the same three steps; the sidebar tracks where you are.</p></div></div>
-  <div class="welcome-grid">
-    <div><span class="welcome-icon"><FileSearch size={19} /></span><strong>Audit</strong><p>We retrieve relevant provisions and flag the ones that may block your product.</p></div>
-    <div><span class="welcome-icon"><FilePenLine size={19} /></span><strong>Redline</strong><p>Compare the original text with a drafted amendment, check its safeguards, and approve it.</p></div>
-    <div><span class="welcome-icon"><Megaphone size={19} /></span><strong>Mobilize</strong><p>Build synthetic constituent, survey and lobbyist voice agents and call to build support.</p></div>
-  </div>
-</section>
-
-{#if recent.length}
-  <section class="welcome-section">
-    <div class="section-heading"><div><div class="section-kicker">PROBLEM QUEUE</div><h2>Pick up a queued problem</h2></div><a class="back-link" href="/runs">See all <ArrowRight size={14} /></a></div>
-    <div class="recent-grid">
-      {#each recent as r}
-        <a class="finding-card" href={r.selected_finding_id ? mobilizePath(r.id) : r.findings.length ? redlinePath(r.id) : runPath(r.id)}>
-          <div class="finding-top"><span>{r.status.replaceAll('_', ' ').toUpperCase()}</span>{#if r.selected_finding_id}<span class="approved-small">APPROVED</span>{/if}</div>
-          <strong>{r.query}</strong><span class="finding-citation">{r.findings.length} finding{r.findings.length === 1 ? '' : 's'}{r.id.startsWith('demo-') ? ' · demo' : ''}{hasLog(r.id) ? ' · autopilot recorded' : ''}</span>
-        </a>
-      {/each}
-    </div>
-  </section>
-{/if}
+{#if error}<div class="alert-error" role="alert"><CircleAlert size={18}/><div><strong>Could not start analysis</strong><p>{error}</p></div><button onclick={start}>Try again</button></div>{/if}

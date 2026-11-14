@@ -131,7 +131,7 @@
 
 {#if error}<div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>Autopilot stopped</strong><p>{error}</p></div></div>{/if}
 {#if mode === 'idle' && !events.length}
-  <div class="empty-state"><Zap size={22} /><h3>No autopilot record for this run yet</h3><p>Start autopilot to audit, redline, approve, build agents and place the call without clicking through.</p></div>
+  <div class="empty-state"><Zap size={22} /><h3>No autopilot record for this run yet</h3><p>Start autopilot to audit, draft and build agents. You will be asked to confirm approval and any real call.</p></div>
 {/if}
 
 <ol class="ap-timeline">

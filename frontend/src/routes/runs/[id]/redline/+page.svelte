@@ -2,9 +2,10 @@
   import { untrack } from 'svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
-  import { ArrowLeft, ArrowRight, ArrowUpRight, Check, CircleAlert, FlaskConical, LoaderCircle, ShieldCheck } from '@lucide/svelte';
+  import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronDown, CircleAlert, FlaskConical, LoaderCircle, ShieldCheck } from '@lucide/svelte';
   import type { Run } from '$lib/api';
   import RunHeader from '$lib/RunHeader.svelte';
+  import ExpandableText from '$lib/ExpandableText.svelte';
   import { approveFinding, TERMINAL_STATUSES, watchRun } from '$lib/runs';
   import { enterRun, journey, mobilizePath, redlinePath, rememberRun, runPath } from '$lib/journey.svelte';
 
@@ -12,6 +13,7 @@
   const requested = $derived(page.url.searchParams.get('finding'));
   let run = $state<Run | null>(null);
   let error = $state('');
+  let retry = $state(0);
   let actionError = $state('');
   let actionBusy = $state(false);
 
@@ -23,6 +25,7 @@
 
   $effect(() => {
     const id = runId;
+    void retry;
     return untrack(() => {
       run = null; error = ''; actionError = '';
       enterRun(id);
@@ -62,7 +65,7 @@
   <a class="back-link" href={runPath(runId)}><ArrowLeft size={14} /> Back to audit</a>
 </div>
 
-{#if error}<div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>Something needs attention</strong><p>{error}</p></div></div>{/if}
+{#if error}<div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>Something needs attention</strong><p>{error}</p></div><button onclick={() => retry++}>Retry</button></div>{/if}
 {#if !run && !error}<div class="loading-panel"><LoaderCircle class="spin" size={20} /> Loading redline…</div>{/if}
 
 {#if run}
@@ -84,20 +87,20 @@
 
       <div class="detail-column">
         <div class="detail-header"><div><div class="mini-label">REDLINE</div><h3>{selected.provision.title}</h3>
-          <div class="detail-meta"><span>{selected.provision.jurisdiction || 'Jurisdiction unavailable'}</span><span>·</span><span>{selected.provision.citation || 'Citation unavailable'}</span><span>·</span><span>Effective {displayDate(selected.provision.effective_date)}</span></div></div>
+          <div class="detail-meta"><span>{selected.provision.jurisdiction || 'Jurisdiction unavailable'}</span><span>·</span><span>{selected.provision.citation || 'Citation unavailable'}</span><span>·</span><span>Effective {displayDate(selected.provision.effective_date)}</span>{#if selected.provision.document_type}<span>·</span><span>{selected.provision.document_type.replaceAll('_', ' ')}</span>{/if}{#if selected.provision.source_status}<span>·</span><span>{selected.provision.source_status.replaceAll('_', ' ')}</span>{/if}</div></div>
           <span class="proposal-pill">FOR REVIEW</span></div>
         {#if selected.provision.synthetic}<div class="synthetic-banner"><FlaskConical size={17} /><span><strong>Synthetic demo data.</strong> This source and its generated outputs are synthetic.</span></div>{/if}
         <div class="detail-body">
-          <div class="compare-heading first"><div><span class="mini-label">THE REDLINE</span><h4>Original &amp; proposed text</h4><p>The full provision beside the drafted amendment.</p></div></div>
-          <div class="comparison"><div class="text-block original"><div class="text-label"><span></span> ORIGINAL PROVISION</div><p>{selected.provision.text}</p></div>
-            <div class="text-block proposed"><div class="text-label"><span></span> PROPOSED AMENDMENT</div><p>{selected.amendment}</p></div></div>
-          <div class="insight-grid"><div><span class="number-icon">01</span><h4>Potential barrier</h4><p>{selected.barrier}</p></div><div><span class="number-icon green">02</span><h4>Desired change</h4><p>{selected.desired_change}</p></div></div>
-          <div class="rationale"><h4>Why this change?</h4><p>{selected.justification}</p></div>
-          <div class="source-line evidence"><span class="mini-label">EVIDENCE</span>{#if selected.provision.source_url && /^https?:\/\//i.test(selected.provision.source_url)}<a href={selected.provision.source_url} target="_blank" rel="noopener noreferrer">View source <ArrowUpRight size={14} /></a>{:else}<span>Source URL unavailable</span>{/if}</div>
+          <div class="source-line"><span class="mini-label">SOURCE EVIDENCE</span>{#if selected.provision.source_url && /^https?:\/\//i.test(selected.provision.source_url)}<a href={selected.provision.source_url} target="_blank" rel="noopener noreferrer">View source <ArrowUpRight size={14} /></a>{:else}<span>Source URL unavailable</span>{/if}</div>
           <div class="passage"><div class="passage-label">SOURCE PASSAGE</div><p>{selected.source_passage || 'Source passage unavailable.'}</p></div>
-          <div class="considerations"><div><h4><ShieldCheck size={17} /> Safeguards</h4>{#if list(selected.safeguards).length}<ul>{#each list(selected.safeguards) as item}<li>{item}</li>{/each}</ul>{:else}<p>None provided.</p>{/if}</div>
-            <div><h4><CircleAlert size={17} /> Uncertainties</h4>{#if list(selected.uncertainties).length}<ul>{#each list(selected.uncertainties) as item}<li>{item}</li>{/each}</ul>{:else}<p>None provided.</p>{/if}</div></div>
-          <details class="scenario"><summary><span class="mini-label">BEHAVIORAL SCENARIO</span> Gherkin accompanying the amendment</summary><pre>{selected.gherkin || 'No scenario provided.'}</pre></details>
+          <div class="insight-grid"><div><span class="number-icon">01</span><h4>Potential barrier</h4><ExpandableText text={selected.barrier}/></div><div><span class="number-icon green">02</span><h4>Desired change</h4><ExpandableText text={selected.desired_change}/></div></div>
+          <div class="rationale"><h4>Why this change?</h4><ExpandableText text={selected.justification}/></div>
+          <div class="detail-sections">
+            <details class="detail-disclosure"><summary><span><strong>Proposed amendment</strong><small>Review the draft replacement text</small></span><ChevronDown size={17}/></summary><div class="disclosure-content"><div class="text-block proposed"><div class="text-label"><span></span> PROPOSED AMENDMENT</div><p>{selected.amendment}</p></div></div></details>
+            <details class="detail-disclosure"><summary><span><strong>Full source text</strong><small>Read the complete retrieved provision</small></span><ChevronDown size={17}/></summary><div class="disclosure-content"><div class="text-block original"><div class="text-label"><span></span> ORIGINAL PROVISION</div><p>{selected.provision.text}</p></div></div></details>
+            <details class="detail-disclosure"><summary><span><strong>Safeguards &amp; uncertainties</strong><small>{list(selected.safeguards).length} safeguards · {list(selected.uncertainties).length} uncertainties</small></span><ChevronDown size={17}/></summary><div class="disclosure-content"><div class="considerations"><div><h4><ShieldCheck size={17}/> Safeguards</h4>{#if list(selected.safeguards).length}<ul>{#each list(selected.safeguards) as item}<li>{item}</li>{/each}</ul>{:else}<p>None provided.</p>{/if}</div><div><h4><CircleAlert size={17}/> Uncertainties</h4>{#if list(selected.uncertainties).length}<ul>{#each list(selected.uncertainties) as item}<li>{item}</li>{/each}</ul>{:else}<p>None provided.</p>{/if}</div></div></div></details>
+            <details class="detail-disclosure"><summary><span><strong>Behavioral scenario</strong><small>Gherkin accompanying the amendment</small></span><ChevronDown size={17}/></summary><div class="disclosure-content"><div class="scenario"><pre>{selected.gherkin || 'No scenario provided.'}</pre></div></div></details>
+          </div>
         </div>
         <div class="review-panel">
           <div><span class="mini-label">NEXT · MOBILIZE</span><h4>{approved ? 'Redline approved for mobilization' : 'Ready to move this redline forward?'}</h4>

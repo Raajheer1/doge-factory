@@ -39,8 +39,11 @@
 {#if !runs}
   <div class="loading-panel"><LoaderCircle class="spin" size={20} /> Loading problems…</div>
 {:else}
+  {#each [{ title: 'Saved analyses', items: runs.filter((r) => !isDemo(r.id)) }, { title: 'Built-in demos', items: runs.filter((r) => isDemo(r.id)) }] as group}
+  <div class="section-heading"><div><h2>{group.title}</h2><p>{group.title === 'Built-in demos' ? 'Prepared examples, not analyses of your queries.' : 'Your locally saved runs.'}</p></div></div>
+  {#if !group.items.length}<div class="empty-state"><p>No saved analyses yet. Start a new analysis to see it here.</p></div>{:else}
   <div class="queue">
-    {#each runs as r}
+    {#each group.items as r}
       <div class="queue-item"><a class="queue-row" href={nextHref(r)}>
         <span class="queue-state" class:approved={!!r.selected_finding_id} class:running={['queued', 'running'].includes(r.status)}>
           {#if r.selected_finding_id}<Megaphone size={15} />{:else if ['queued', 'running'].includes(r.status)}<LoaderCircle class="spin" size={15} />{:else}<Check size={15} />{/if}
@@ -56,4 +59,6 @@
         {#if hasLog(r.id)}<RotateCcw size={14} /> Replay{:else}<Zap size={14} /> Autopilot{/if}</a></div>
     {/each}
   </div>
+  {/if}
+  {/each}
 {/if}

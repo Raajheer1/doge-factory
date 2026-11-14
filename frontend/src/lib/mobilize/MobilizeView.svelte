@@ -67,7 +67,7 @@
   onDestroy(() => { clearInterval(ticker); clearTimeout(poll); journey.health = null; });
 
   async function build() {
-    if (building) return;
+    if (building || (runId && !handoff)) return;
     buildError = '';
     clearTimeout(poll);
     call = null;
@@ -100,6 +100,7 @@
   }
 
   async function dial(agent: VoiceAgent) {
+    if (!window.confirm(`Place a real call to ${agent.request.to_number}? The caller is synthetic; verify the target, consent and applicable disclosure requirements first.`)) return;
     clearTimeout(poll);
     call = { agentId: agent.id, conversationId: null, data: null, error: '' };
     try {
@@ -153,8 +154,9 @@
             {/if}
           {:else if runId && !handoffError}
             <p class="mz-muted"><LoaderCircle class="spin" size={15} /> Loading the approved proposal…</p>
+          {:else if runId && handoffError}
+            <p class="mz-error">{handoffError}</p><p class="mz-note">An approved handoff is required to build agents for this run. Return to the redline and try again.</p>
           {:else if demo}
-            {#if handoffError}<p class="mz-error">{handoffError}</p>{/if}
             <h2>{demo.policy.title}</h2>
             <p class="mz-meta">{demo.policy.state} · demo input</p>
             <p class="mz-prose">{demo.policy.summary}</p>
@@ -184,7 +186,7 @@
               <button role="radio" aria-checked={source === 'sample'} class:on={source === 'sample'} disabled={building} onclick={() => (source = 'sample')} title="Pre-written personas, no API cost">Sample</button>
               <button role="radio" aria-checked={source === 'claude'} class:on={source === 'claude'} disabled={building} onclick={() => (source = 'claude')} title="Generate personas live; uses API credits">Claude</button>
             </div>
-            <button class="primary-button" disabled={building || !demo} onclick={build}>
+            <button class="primary-button" disabled={building || !demo || (!!runId && !handoff)} onclick={build}>
               {#if building}<LoaderCircle class="spin" size={16} /> Building…{:else}<Hammer size={16} /> Build voice agents{/if}
             </button>
           </div>
