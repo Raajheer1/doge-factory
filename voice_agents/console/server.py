@@ -10,7 +10,7 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 
 from .. import calls
 from ..cli import load_demo
@@ -90,6 +90,8 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
     def run_pipeline(body: PipelineRun):
         try:
             data = pipeline.input_from_handoff(body.handoff, demo) if body.handoff else demo
+        except ValidationError as exc:
+            raise HTTPException(422, f"Invalid mobilize.v1 handoff: {exc}")
         except (KeyError, TypeError) as exc:
             raise HTTPException(422, f"Handoff is missing {exc}")
         if body.source == "claude":

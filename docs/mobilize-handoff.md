@@ -124,8 +124,10 @@ and rejects it with a field-level error if something required is missing.
 ### `people`: who Mobilize may call
 
 Only include people the analysis thinks are relevant, ordered most relevant first. Mobilize builds:
-- for each `official`, constituent callers from that official's `state`;
-- for each `lobbyist`, a pitch tailored to their `clients`.
+- for the first `official` with a `state`, constituent callers from that state;
+- for the first `lobbyist`, a pitch tailored to their `clients`.
+
+Later people are carried for context; the console targets one of each for now.
 
 | Field | Type | Notes |
 | --- | --- | --- |

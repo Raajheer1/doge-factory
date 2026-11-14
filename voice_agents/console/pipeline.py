@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 
 from .. import agents
 from ..calls import build_payload
+from ..handoff import MobilizeHandoff
 from ..models import AgentType, CallRequest, Legislator, Lobbyist, Persona, Policy
 from ..personas import MODEL as PERSONA_MODEL
 from ..voices import DEFAULT_VOICE_ID, pick_voice, voice_label
@@ -136,10 +137,68 @@ def run(demo: dict, *, persona_count: int, next_persona: PersonaSource,
 
 
 def input_from_handoff(handoff: dict, demo: dict) -> dict:
-    """Turn the Go API's mobilization handoff (an approved finding) into
-    pipeline input. The finding supplies the policy; legislator, lobbyist and
-    district are not in the handoff yet, so they stay demo targets (the user
-    plays all of them)."""
+    """Turn a handoff into pipeline input: `mobilize.v1` (docs/mobilize-handoff.md)
+    or the Go API's older `{finding: ...}` shape, which carries no people."""
+    if handoff.get("version") == "mobilize.v1":
+        return input_from_mobilize_v1(MobilizeHandoff.model_validate(handoff), demo)
+    return _input_from_finding(handoff, demo)
+
+
+def input_from_mobilize_v1(h: MobilizeHandoff, demo: dict) -> dict:
+    """Targets come from `people`, most relevant first: the first official with a
+    state and the first lobbyist. Missing roles fall back to demo targets. Every
+    call still goes to the demo number (the user plays each role)."""
+    state = h.policy.jurisdiction.name
+    legislators, lobbyists = h.legislators, h.lobbyists
+    savings = h.impact.estimated_annual_savings
+    if savings is None:
+        # Mobilize never invents a number the analysis didn't supply.
+        fiscal = "No fiscal estimate yet; the DOGE Factory team is still preparing one."
+    else:
+        fiscal = f"About ${savings:,.0f} a year" + (f" ({h.impact.savings_basis})" if h.impact.savings_basis else "")
+    legislator = demo["legislator"]
+    if legislators:
+        official = legislators[0]
+        state = official.state
+        legislator = {"title": official.title, "name": official.name,
+                      "district": official.district or f"{official.state} (statewide)"}
+    lobbyist = demo["lobbyist"]
+    if lobbyists:
+        lead = lobbyists[0]
+        lobbyist = {"name": lead.name, "firm": lead.organization or lead.clients[0],
+                    "client_name": ", ".join(lead.clients),
+                    "client_benefit": f"Their clients run into this directly: {h.change.barrier}"}
+    groups = ", ".join(h.impact.affected_groups)
+    return {
+        **demo,
+        "source": "handoff",
+        "run_id": h.run_id,
+        "query": h.query,
+        "synthetic": h.policy.synthetic,
+        "policy": {
+            "title": h.policy.spoken_title,
+            "summary": h.change.summary,
+            "fiscal_impact": fiscal,
+            "state": state,
+            "pain_point": h.change.barrier,
+            "key_legislators": ", ".join(f"{p.title} {p.name}" for p in legislators)
+                               or demo["policy"]["key_legislators"],
+        },
+        "legislator": legislator,
+        "district_profile": f"Residents of {state} affected by "
+                            f"{h.policy.spoken_title}, including {groups}.",
+        "lobbyist": lobbyist,
+        "asks": {
+            "legislator": f"Ask the {legislator['title'].lower()} to support this change: {h.change.summary}",
+            "lobbyist": "Get them to raise this change with their client and agree to a 20-minute "
+                        "meeting with the DOGE Factory team to review the proposed amendment.",
+        },
+    }
+
+
+def _input_from_finding(handoff: dict, demo: dict) -> dict:
+    """The Go API's current handoff (an approved finding). The finding supplies
+    the policy; legislator, lobbyist and district stay demo targets."""
     finding = handoff["finding"]
     provision = finding["provision"]
     jurisdiction = provision.get("jurisdiction") or "the state"
