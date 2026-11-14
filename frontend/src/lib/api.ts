@@ -2,7 +2,17 @@ export type Collection = 'healthcare' | 'housing' | 'other';
 export interface Provision { id: string; title: string; citation?: string; jurisdiction?: string; topic?: string; text: string; source_url?: string; effective_date?: string; related_context?: string[]; synthetic?: boolean }
 export interface Finding { title?: string; description?: string; policy_change?: string; diff?: { original: string; proposed: string }; lobby_targets?: { name: string; role: string; source_url: string; verification_status?: string }[]; id: string; provision: Provision; source_passage: string; barrier: string; desired_change: string; justification: string; safeguards?: string[]; uncertainties?: string[]; amendment: string; gherkin: string }
 export interface Run { id: string; query: string; collection?: Collection; status: 'queued' | 'running' | 'completed' | 'completed_with_errors' | 'failed'; stage: string; retrieved: number; reviewed: number; findings: Finding[]; errors?: string[]; coverage?: string; created_at?: string; selected_finding_id?: string }
-export interface Handoff { status: string; message: string; run_id: string; query: string; finding: Finding }
+export interface HandoffPerson { id: string; name: string; type: 'official' | 'lobbyist' | 'organization'; title?: string; role?: string; organization?: string; state?: string; district?: string; clients?: string[]; relevance: string; verified_at: string; source_url?: string }
+/** mobilize.v1 (docs/mobilize-handoff.md) plus the earlier simulated-handoff fields. */
+export interface Handoff {
+  status: string; message: string; run_id: string; query: string; finding: Finding;
+  version?: 'mobilize.v1';
+  policy?: { id: string; title: string; spoken_title: string; citation?: string; jurisdiction: { name: string; level: string }; issuing_agency?: string; source_url?: string; synthetic: boolean };
+  change?: { summary: string; barrier: string; evidence_quote?: string; proposed_text?: string; justification?: string; safeguards: string[]; uncertainties: string[] };
+  impact?: { estimated_annual_savings: number | null; savings_basis?: string; affected_groups: string[] };
+  people?: HandoffPerson[];
+  notes?: string;
+}
 const base = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8080').replace(/\/$/, '');
 const statuses = ['queued', 'running', 'completed', 'completed_with_errors', 'failed'];
 function isObject(x: unknown): x is Record<string, unknown> { return typeof x === 'object' && x !== null && !Array.isArray(x); }
