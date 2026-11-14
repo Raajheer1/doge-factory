@@ -26,7 +26,7 @@ fixed in code (`housing_graph/graph.py`), not provided as Cypher parameters.
 | `Jurisdiction` | `id`, `name`, `level` (`federal`, `state`, `local`) | Issuing legal jurisdiction, not an agency or committee. |
 | `PolicyDocument` | `id`, `title`, **full** `text`, `source_url`; optional `citation`, `document_type`, `issuing_agency`, `publication_date`, `status`, `topics` | An official source. Types accepted by the application: `statute`, `regulation`, `notice`, `guidance`, `form`, `evidence`. Statuses: `current`, `historical_snapshot`, `superseded`, `verify_current_status`. A date records the source edition/publication, **not necessarily its effective date**. Topics are a comma-separated string, not an enumerated taxonomy. |
 | `PolicySection` | `id`, `title`, `text`, `citation`, positive `order`, `source_url` | An ordered retrieval passage within a document; the CFR pilot uses XML paragraphs, the notice uses PDF pages. A passage is **not** asserted to be a distinct legal section. |
-| `Actor` | `id`, `name`, `type` (`official`, `lobbyist`, `organization`); optional `role`, `organization`, `source_url`, `verified_at`, `public_contact` | Public role metadata; `verified_at` is a source date/status string, **not** a guarantee of current employment. |
+| `Actor` | `id`, `name`, `type` (`official`, `lobbyist`, `organization`); optional `role`, `organization`, `source_url`, `verified_at`, `public_contact`, and for officials `title` (how to address them), `state` (home state of a legislator) and `district` | Public role metadata; `verified_at` is a source date/status string, **not** a guarantee of current employment. |
 | `PolicyFinding` | `id`, `description`, `evidence_quote` | A reviewable interpretation tied to its source document. |
 | `RedlineProposal` | `id`, `proposed_text`, `estimated_annual_savings` | Draft, not adopted text; savings is a nonnegative number or `null` when unmeasured. |
 
@@ -47,6 +47,7 @@ Directed edges (the application checks endpoint labels and role constraints):
 | `PolicyDocument-[:CITES {source_url}]->PolicyDocument` | Source-backed cross-reference. |
 | `Actor(organization)-[:ADMINISTERS {source_url}]->PolicyDocument` | Agency administers a source; **not** individual amendment authority. |
 | `Actor(official)-[:WORKS_FOR {source_url}]->Actor(organization)` | Sourced agency affiliation; **not** authority over a document. |
+| `Actor-[:RELEVANT_TO {source_url, relevance}]->PolicyDocument` | A weaker, sourced connection: `relevance` is `committee_jurisdiction`, `represents_affected_client` or `other` (e.g. a bill sponsor). Use it instead of `HAS_AUTHORITY_OVER` / `LOBBIED_ON` when the source does not establish authority over, or lobbying on, that document. |
 
 The last five edges and `PolicySection` extend the earlier minimal housing
 fixture for this pilot. No government-body, published-version, or

@@ -14,7 +14,7 @@ NODE_FIELDS = {
                        "issuing_agency", "publication_date", "status", "topics"),
     "PolicySection": ("id", "title", "text", "citation", "order", "source_url"),
     "Actor": ("id", "name", "type", "role", "organization", "source_url",
-              "verified_at", "public_contact"),
+              "verified_at", "public_contact", "title", "state", "district"),
     "PolicyFinding": ("id", "description", "evidence_quote"),
     "RedlineProposal": ("id", "proposed_text", "estimated_annual_savings"),
 }
@@ -33,15 +33,20 @@ RELATIONSHIPS = {
     "CITES": ("PolicyDocument", "PolicyDocument"),
     "ADMINISTERS": ("Actor", "PolicyDocument"),
     "WORKS_FOR": ("Actor", "Actor"),
+    # Weaker than HAS_AUTHORITY_OVER / LOBBIED_ON: e.g. a committee with jurisdiction.
+    "RELEVANT_TO": ("Actor", "PolicyDocument"),
 }
+
+RELEVANCE = {"committee_jurisdiction", "represents_affected_client", "other"}
 
 OPTIONAL_NODE_FIELDS = {
     "PolicyDocument": {"citation", "document_type", "issuing_agency", "publication_date",
                        "status", "topics"},
-    "Actor": {"role", "organization", "source_url", "verified_at", "public_contact"},
+    "Actor": {"role", "organization", "source_url", "verified_at", "public_contact",
+              "title", "state", "district"},
 }
 SOURCED_RELATIONSHIPS = {
-    "LOBBIED_ON", "HAS_AUTHORITY_OVER", "CITES", "ADMINISTERS", "WORKS_FOR",
+    "LOBBIED_ON", "HAS_AUTHORITY_OVER", "CITES", "ADMINISTERS", "WORKS_FOR", "RELEVANT_TO",
 }
 
 
@@ -123,6 +128,10 @@ def validate_fixture(fixture):
         expected = {"type", "src", "dst"}
         if kind in SOURCED_RELATIONSHIPS:
             expected.add("source_url")
+        if kind == "RELEVANT_TO":
+            expected.add("relevance")
+            if edge.get("relevance") not in RELEVANCE:
+                raise ValueError("invalid relevance")
         if (set(edge) != expected or not isinstance(src, str) or not isinstance(dst, str)
                 or src not in by_id or dst not in by_id):
             raise ValueError("relationship endpoints or properties invalid")
@@ -222,6 +231,8 @@ class HousingGraph:
             )
             if kind in SOURCED_RELATIONSHIPS:
                 cypher += " SET r.source_url = row.source_url"
+            if kind == "RELEVANT_TO":
+                cypher += ", r.relevance = row.relevance"
             for start in range(0, len(rows), 50):
                 self.query(cypher, {"rows": rows[start:start + 50]})
 

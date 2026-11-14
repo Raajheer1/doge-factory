@@ -1302,6 +1302,1735 @@
       "type": "organization",
       "role": "administering agency",
       "verified_at": "2026-11-14 research pass; verify before outreach"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:ben-hobbs",
+      "name": "Ben Hobbs",
+      "type": "official",
+      "role": "Assistant Secretary for Public and Indian Housing",
+      "organization": "HUD",
+      "verified_at": "2026-09-03 (HUD release naming him PIH Assistant Secretary); Senate confirmation 2025-12-18 per https://leadingage.org/congress-confirms-leadership-for-key-housing-agency-positions/",
+      "title": "Assistant Secretary",
+      "source_url": "https://www.hud.gov/news/hud-no-26-065"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:mike-flood",
+      "name": "Mike Flood",
+      "type": "official",
+      "role": "Chair, Subcommittee on Housing and Insurance (R-NE)",
+      "organization": "House Committee on Financial Services",
+      "verified_at": "confirmed current 2026-11-14 (page lists as 119th Congress subcommittee chair)",
+      "title": "Representative",
+      "source_url": "https://financialservices.house.gov/119th-congress-subcommittees/subcommittee-on-housing-and-insurance.htm",
+      "state": "Nebraska"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:emanuel-cleaver",
+      "name": "Emanuel Cleaver II",
+      "type": "official",
+      "role": "Ranking Member, Subcommittee on Housing and Insurance (D-MO)",
+      "organization": "House Committee on Financial Services",
+      "verified_at": "confirmed current 2026-11-14 (page lists as 119th Congress ranking member)",
+      "title": "Representative",
+      "source_url": "https://financialservices.house.gov/119th-congress-subcommittees/subcommittee-on-housing-and-insurance.htm",
+      "state": "Missouri",
+      "district": "5"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:katie-britt",
+      "name": "Katie Britt",
+      "type": "official",
+      "role": "Chair, Subcommittee on Housing, Transportation, and Community Development (R-AL)",
+      "organization": "Senate Committee on Banking, Housing, and Urban Affairs",
+      "verified_at": "2025-01-24 (119th Congress appointment; no change found)",
+      "title": "Senator",
+      "source_url": "https://www.alreporter.com/2025/01/24/sen-britt-to-chair-banking-subcommittee-on-housing-transportation-and-community-development",
+      "state": "Alabama"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:tina-smith",
+      "name": "Tina Smith",
+      "type": "official",
+      "role": "Ranking Member, Subcommittee on Housing, Transportation, and Community Development (D-MN)",
+      "organization": "Senate Committee on Banking, Housing, and Urban Affairs",
+      "verified_at": "2025-01-24 (119th Congress appointment; no change found)",
+      "title": "Senator",
+      "source_url": "https://www.alreporter.com/2025/01/24/sen-britt-to-chair-banking-subcommittee-on-housing-transportation-and-community-development",
+      "state": "Minnesota"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:shiela-corley",
+      "name": "Shiela Corley",
+      "type": "official",
+      "role": "Acting Administrator, Food and Nutrition Administration (formerly FNS)",
+      "organization": "USDA",
+      "verified_at": "2026-06-17 (Civil Eats says FNA national office site lists her as acting administrator; a search snippet reported FNA leadership page updated 2026-10-07, which I could not open - 403)",
+      "title": "Acting Administrator",
+      "source_url": "https://civileats.com/2026/06/17/breaking-usda-food-and-nutrition-program-leader-leaves-role-amid-reorg/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:mitch-mcconnell",
+      "name": "Mitch McConnell",
+      "type": "official",
+      "role": "Chair, Subcommittee on Food and Nutrition, Specialty Crops, Organics, and Research (R-KY)",
+      "organization": "Senate Committee on Agriculture, Nutrition, and Forestry",
+      "verified_at": "2025 (119th Congress subcommittee leadership release; no change found)",
+      "title": "Senator",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "state": "Kentucky"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:ben-ray-lujan",
+      "name": "Ben Ray Lujan",
+      "type": "official",
+      "role": "Ranking Member, Subcommittee on Food and Nutrition, Specialty Crops, Organics, and Research (D-NM)",
+      "organization": "Senate Committee on Agriculture, Nutrition, and Forestry",
+      "verified_at": "2025 (119th Congress subcommittee leadership release; no change found)",
+      "title": "Senator",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "state": "New Mexico"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:john-boozman",
+      "name": "John Boozman",
+      "type": "official",
+      "role": "Chairman (R-AR)",
+      "organization": "Senate Committee on Agriculture, Nutrition, and Forestry",
+      "verified_at": "2025 (119th Congress; joint Boozman-Klobuchar release; page not independently read for chair title; 403 on his chairman release)",
+      "title": "Senator",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "state": "Arkansas"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:glenn-thompson",
+      "name": "Glenn 'GT' Thompson",
+      "type": "official",
+      "role": "Chairman (R-PA-15)",
+      "organization": "House Committee on Agriculture",
+      "verified_at": "2025-01-24 (119th Congress; news repost of committee announcement)",
+      "title": "Representative",
+      "source_url": "https://www.oklahomafarmreport.com/?p=133891",
+      "state": "Pennsylvania",
+      "district": "15"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:richard-lee",
+      "name": "Richard Lee",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Equifax, Inc. (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/99f083ff-b045-4eaf-8887-b44b9ae700ed/print/",
+      "verified_at": "LD-2 signed 2026-07-18"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:equifax",
+      "name": "Equifax, Inc.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/99f083ff-b045-4eaf-8887-b44b9ae700ed/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:brian-fitzpatrick",
+      "name": "Brian Fitzpatrick",
+      "type": "official",
+      "role": "Representative (R-PA-1); lead sponsor of MODERN WIC Act (H.R. 1464)",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "2025-02-21 (bill introduction); sitting member status not independently rechecked",
+      "title": "Representative",
+      "source_url": "https://www.congress.gov/119/bills/hr1464/BILLS-119hr1464ih.htm",
+      "state": "Pennsylvania",
+      "district": "1"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:suzanne-bonamici",
+      "name": "Suzanne Bonamici",
+      "type": "official",
+      "role": "Representative (D-OR-1); co-lead of MODERN WIC Act (H.R. 1464)",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "2025-02-21 (bill introduction); sitting member status not independently rechecked",
+      "title": "Representative",
+      "source_url": "https://www.congress.gov/119/bills/hr1464/BILLS-119hr1464ih.htm",
+      "state": "Oregon",
+      "district": "1"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:roger-marshall",
+      "name": "Roger Marshall",
+      "type": "official",
+      "role": "Senator (R-KS); sponsor of 21st Century WIC Act (S. 3842)",
+      "organization": "U.S. Senate",
+      "verified_at": "2026-02-11 (bill introduction)",
+      "title": "Senator",
+      "source_url": "https://www.govinfo.gov/app/details/BILLS-119s3842is",
+      "state": "Kansas"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:kirsten-gillibrand",
+      "name": "Kirsten Gillibrand",
+      "type": "official",
+      "role": "Senator (D-NY); cosponsor of 21st Century WIC Act (S. 3842)",
+      "organization": "U.S. Senate",
+      "verified_at": "2026-02-11 (bill introduction)",
+      "title": "Senator",
+      "source_url": "https://www.govinfo.gov/app/details/BILLS-119s3842is",
+      "state": "New York"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:ellen-teller",
+      "name": "Ellen Teller",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Food Research and Action Center (self-filed)",
+      "source_url": "https://lda.gov/filings/public/filing/a08deb01-14ff-4c58-9c64-759f90ecc21f/print/",
+      "verified_at": "LD-2 signed 2026-08-07"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:food-research-and-action-center",
+      "name": "Food Research and Action Center",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/a08deb01-14ff-4c58-9c64-759f90ecc21f/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:henry-mack",
+      "name": "Henry Mack III",
+      "type": "official",
+      "role": "Assistant Secretary for Employment and Training",
+      "organization": "U.S. Department of Labor, ETA",
+      "verified_at": "2026-03-31 (UIPL 10-26 signed 'FROM: HENRY MACK, ED.D., Assistant Secretary'); Senate confirmation 2025-12-18 per search results only",
+      "title": "Assistant Secretary",
+      "source_url": "https://www.dol.gov/sites/dolgov/files/ETA/advisories/UIPL/2026/UIPL%2010-26/UIPL%2010-26.pdf"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:darin-lahood",
+      "name": "Darin LaHood",
+      "type": "official",
+      "role": "Chairman, Subcommittee on Work and Welfare (R-IL-16)",
+      "organization": "House Committee on Ways and Means",
+      "verified_at": "2025-01-14 (119th Congress; no change found)",
+      "title": "Representative",
+      "source_url": "https://lahood.house.gov/2025/1/lahood-to-continue-serving-as-chairman-of-the-house-ways-and-means-subcommittee-on-work-and-welfare-in-119th-congress",
+      "state": "Illinois",
+      "district": "16"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:danny-davis",
+      "name": "Danny Davis",
+      "type": "official",
+      "role": "Ranking Member, Subcommittee on Work and Welfare (D-IL)",
+      "organization": "House Committee on Ways and Means",
+      "verified_at": "2025-01-14 (named as ranking member in LaHood release; not rechecked since)",
+      "title": "Representative",
+      "source_url": "https://lahood.house.gov/2025/1/lahood-to-continue-serving-as-chairman-of-the-house-ways-and-means-subcommittee-on-work-and-welfare-in-119th-congress",
+      "state": "Illinois",
+      "district": "7"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jason-smith",
+      "name": "Jason Smith",
+      "type": "official",
+      "role": "Chairman (R-MO-8)",
+      "organization": "House Committee on Ways and Means",
+      "verified_at": "2025-01-14 (119th Congress)",
+      "title": "Representative",
+      "source_url": "https://waysandmeans.house.gov/2025/01/14/smith-announces-119th-congress-ways-and-means-subcommittee-chairs/",
+      "state": "Missouri",
+      "district": "8"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:elizabeth-banicki",
+      "name": "Elizabeth (Liz) Banicki",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "ID.me, Inc. (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/341106ac-1daf-4097-b448-a1a1fd5e0b82/print/",
+      "verified_at": "LD-2 signed 2024-10-04 (older than 2026; recheck for 2026 filings)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:id-me",
+      "name": "ID.me, Inc.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/341106ac-1daf-4097-b448-a1a1fd5e0b82/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:mehmet-oz",
+      "name": "Mehmet Oz, M.D.",
+      "type": "official",
+      "role": "Administrator",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "verified_at": "AHA article 2026-04-20; Federal Register IFC (2026-06-03) names Oz as CMS Administrator",
+      "title": "Administrator",
+      "source_url": "https://www.aha.org/news/headline/2026-04-20-cms-administrator-oz-and-deputy-administrator-brillman-discuss-agencys-focus-innovation-reducing-waste"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:dan-brillman",
+      "name": "Dan Brillman",
+      "type": "official",
+      "role": "CMS Deputy Administrator and Director of Medicaid and CHIP (CMCS)",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "verified_at": "AHA article 2026-04-20 (not re-confirmed after that date)",
+      "title": "CMS Deputy Administrator and Director",
+      "source_url": "https://www.aha.org/news/headline/2026-04-20-cms-administrator-oz-and-deputy-administrator-brillman-discuss-agencys-focus-innovation-reducing-waste"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:mike-crapo",
+      "name": "Mike Crapo",
+      "type": "official",
+      "role": "Chairman, Senate Committee on Finance",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "state": "Idaho"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:ron-wyden",
+      "name": "Ron Wyden",
+      "type": "official",
+      "role": "Ranking Member, Senate Committee on Finance",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "state": "Oregon"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:morgan-griffith",
+      "name": "Morgan Griffith",
+      "type": "official",
+      "role": "Chairman, House Energy and Commerce Health Subcommittee",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "LeadingAge article dated 2026-01-15 names Griffith chair, DeGette ranking member (not re-confirmed on committee site)",
+      "title": "Representative",
+      "source_url": "https://leadingage.org/house-health-subcommittee-discusses-medicare-access-transparency-and-technology-safeguards/",
+      "state": "Virginia",
+      "district": "9"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:shannon-attanasio",
+      "name": "Shannon Attanasio",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Medicaid Health Plans of America (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/0326b496-11c9-4d78-89a2-025c1b4950bd/",
+      "verified_at": "LDA 2026 Q3 report (filed 2026)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:medicaid-health-plans-of-america",
+      "name": "Medicaid Health Plans of America",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/0326b496-11c9-4d78-89a2-025c1b4950bd/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:margaret-garikes",
+      "name": "Margaret D. Garikes",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "American Medical Association (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/ccff0e9d-4c23-4c7b-a1dc-e73fa1ee1242/",
+      "verified_at": "LDA 2026 Q3 report (posted 2026-10-19)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:american-medical-association",
+      "name": "American Medical Association",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/ccff0e9d-4c23-4c7b-a1dc-e73fa1ee1242/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:maria-ghazal",
+      "name": "Maria Ghazal",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Healthcare Leadership Council (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/4afc00f2-4ce2-4c75-ae31-c19a5d7cf7d9/",
+      "verified_at": "LDA 2026 Q3 report (filed 2026)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:healthcare-leadership-council",
+      "name": "Healthcare Leadership Council",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/4afc00f2-4ce2-4c75-ae31-c19a5d7cf7d9/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:timothy-clement",
+      "name": "Timothy Clement",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Mental Health America (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/53111570-8a2a-4a27-b0f6-63ba861324a2/",
+      "verified_at": "LDA 2026 Q1 report (posted 2026-05-04)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:mental-health-america",
+      "name": "Mental Health America",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/53111570-8a2a-4a27-b0f6-63ba861324a2/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:terrance-cole",
+      "name": "Terrance C. 'Terry' Cole",
+      "type": "official",
+      "role": "Administrator",
+      "organization": "Drug Enforcement Administration",
+      "verified_at": "letter dated 2026-06-04 addresses him as Administrator; ATA press release calls him newly appointed Administrator",
+      "title": "Administrator",
+      "source_url": "https://www.americantelemed.org/wp-content/uploads/2026/06/ATA_Action_DEA_Meeting_Request_Letter-6.4.26.pdf",
+      "public_contact": "DEA HQ, 700 Army Navy Drive, Arlington, VA 22202 (as printed in ATA letter)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:donald-norcross",
+      "name": "Donald Norcross",
+      "type": "official",
+      "role": "U.S. Representative (D-NJ), lead sponsor H.R. 1627 TREATS Act",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "bill text introduced 2025-02-26",
+      "title": "Representative",
+      "source_url": "https://www.congress.gov/119/bills/hr1627/BILLS-119hr1627ih.htm",
+      "state": "New Jersey",
+      "district": "1"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:bill-cassidy",
+      "name": "Bill Cassidy, M.D.",
+      "type": "official",
+      "role": "Chairman, Senate HELP Committee",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://www.help.senate.gov/about/members",
+      "state": "Louisiana"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:ryan-kane",
+      "name": "Ryan Kane",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "RK Strategies, Inc.",
+      "source_url": "https://lda.gov/api/v1/filings/154a42a4-c5a8-4dfb-b0a8-fe2873323903/",
+      "verified_at": "LDA 2026 Q3 report"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:the-recovery-platform",
+      "name": "The Recovery Platform",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/154a42a4-c5a8-4dfb-b0a8-fe2873323903/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:breaking-barriers-to-substance-use-recovery",
+      "name": "Breaking Barriers to Substance Use Recovery",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/154a42a4-c5a8-4dfb-b0a8-fe2873323903/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:kyle-zebley",
+      "name": "Kyle Zebley",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "ATA Action (in-house; American Telemedicine Association affiliate)",
+      "source_url": "https://lda.gov/api/v1/filings/59530b7d-4f88-4151-962b-dde08b7f6a94/",
+      "verified_at": "LDA 2026 Q1 report (posted 2026-04-17)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:ata-action",
+      "name": "ATA Action",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/59530b7d-4f88-4151-962b-dde08b7f6a94/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:frank-purcell",
+      "name": "Frank Purcell",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Indivior Inc (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/3cb92621-7da8-4e1b-b54d-200205d37081/",
+      "verified_at": "LDA 2025 Q3 report"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:indivior",
+      "name": "Indivior Inc",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/3cb92621-7da8-4e1b-b54d-200205d37081/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:maryanne-sapio",
+      "name": "Maryanne Sapio",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "American Association of Nurse Practitioners (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/3e406975-22d3-4e20-bce1-88984977adfc/",
+      "verified_at": "LDA 2026 Q3 report"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:american-association-of-nurse-practitioners",
+      "name": "American Association of Nurse Practitioners",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/3e406975-22d3-4e20-bce1-88984977adfc/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:reyna-taylor",
+      "name": "Reyna Taylor",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "National Council for Behavioral Health (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/024caab1-bae8-4d00-8504-2394b784b80e/",
+      "verified_at": "LDA 2025 Q1 report"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:national-council-for-behavioral-health",
+      "name": "National Council for Behavioral Health",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/024caab1-bae8-4d00-8504-2394b784b80e/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:tiffany-haverly",
+      "name": "Tiffany Haverly",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Humana Inc (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/a4a1698f-d62f-477c-b7bc-9859f0e60673/",
+      "verified_at": "LDA 2026 Q3 report"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:humana",
+      "name": "Humana Inc",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/a4a1698f-d62f-477c-b7bc-9859f0e60673/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:ronna-hauser",
+      "name": "Ronna Hauser",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "National Community Pharmacists Association (in-house)",
+      "source_url": "https://lda.gov/api/v1/filings/28469589-c436-4ea0-8163-918817f2f498/",
+      "verified_at": "LDA 2026 Q3 report"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:national-community-pharmacists-association",
+      "name": "National Community Pharmacists Association",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/api/v1/filings/28469589-c436-4ea0-8163-918817f2f498/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:sherif-zaafran",
+      "name": "Sherif Z. Zaafran, M.D.",
+      "type": "official",
+      "role": "Board President",
+      "organization": "Texas Medical Board",
+      "verified_at": "TMB strategic plan dated 2026-06-01",
+      "title": "Board President",
+      "source_url": "https://www.tmb.texas.gov/node/4225"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:stephen-brint-carlton",
+      "name": "Stephen 'Brint' Carlton, J.D.",
+      "type": "official",
+      "role": "Executive Director",
+      "organization": "Texas Medical Board",
+      "verified_at": "TMB strategic plan dated 2026-06-01",
+      "title": "Executive Director",
+      "source_url": "https://www.tmb.texas.gov/node/4225"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:lois-kolkhorst",
+      "name": "Lois Kolkhorst",
+      "type": "official",
+      "role": "Chair, Texas Senate Committee on Health and Human Services",
+      "organization": "Texas Senate",
+      "verified_at": "confirmed current 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://senate.texas.gov/cmte.php?c=610",
+      "public_contact": "Committee clerk Emilia Marroquin, (512) 463-0360, Sam Houston Bldg Room 420 (per committee page)",
+      "state": "Texas"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:gary-vandeaver",
+      "name": "Gary VanDeaver",
+      "type": "official",
+      "role": "Chair, Texas House Public Health Committee (89th Legislature)",
+      "organization": "Texas House of Representatives",
+      "verified_at": "TLO membership page accessed 2026-11-14",
+      "title": "Representative",
+      "source_url": "https://capitol.texas.gov/Committees/MembershipCmte.aspx?LegSess=89R&CmteCode=C410&Chamber=H",
+      "state": "Texas"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:rebecca-goodman",
+      "name": "Rebecca Goodman",
+      "type": "official",
+      "role": "Secretary, Kentucky Transportation Cabinet",
+      "organization": "Kentucky Transportation Cabinet",
+      "verified_at": "confirmed current 2026-11-14 (page lists her as Secretary, appointed April 2026)",
+      "title": "Secretary",
+      "source_url": "https://transportation.ky.gov/Secretary/Pages/default.aspx",
+      "public_contact": "Office of the Secretary: (502) 564-5102, KYTC.OfficeoftheSecretary@ky.gov, 200 Mero Street, Frankfort KY 40622"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jason-howell",
+      "name": "Jason Howell",
+      "type": "official",
+      "role": "State Senator (R-Murray, 1st District); primary sponsor of SB 110 (2026 RS)",
+      "organization": "Kentucky Senate",
+      "verified_at": "bill record shows final action 2026-04-13 (Acts ch. 135); current seat not separately verified",
+      "title": "Senator",
+      "source_url": "https://apps.legislature.ky.gov/record/26rs/sb110.html",
+      "state": "Kentucky",
+      "district": "1"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jimmy-higdon",
+      "name": "Jimmy Higdon",
+      "type": "official",
+      "role": "State Senator; Co-Chair, Interim Joint Committee on Transportation; chairs Senate Transportation (per 2026 GA directory via search snippet)",
+      "organization": "Kentucky Senate",
+      "verified_at": "2026-09-01 (committee minutes)",
+      "title": "Senator",
+      "source_url": "https://apps.legislature.ky.gov/minutes/transpor/260901OK.PDF",
+      "state": "Kentucky"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:john-blanton",
+      "name": "John Blanton",
+      "type": "official",
+      "role": "State Representative; Co-Chair, Interim Joint Committee on Transportation; sponsored House floor amendments to SB 110",
+      "organization": "Kentucky House of Representatives",
+      "verified_at": "2026-09-01 (committee minutes)",
+      "title": "Representative",
+      "source_url": "https://apps.legislature.ky.gov/minutes/transpor/260901OK.PDF",
+      "state": "Kentucky"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:audrey-jackson",
+      "name": "Audrey Jackson",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Carvana (in-house/employer-registered legislative agent)",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf",
+      "verified_at": "KLEC registered legislative agents list dated 2026-11-12"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:carvana",
+      "name": "Carvana",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:jason-r-wilson",
+      "name": "Jason R. Wilson",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "KY Automobile Dealers Assn. (KADA) (in-house/employer-registered legislative agent)",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf",
+      "verified_at": "KLEC registered legislative agents list dated 2026-11-12"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:kentucky-automobile-dealers-association",
+      "name": "KY Automobile Dealers Assn. (KADA)",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:dustin-s-miller",
+      "name": "Dustin S. Miller",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "KY Consumer Finance Assn. (in-house/employer-registered legislative agent)",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf",
+      "verified_at": "KLEC registered legislative agents list dated 2026-11-12"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:kentucky-consumer-finance-association",
+      "name": "KY Consumer Finance Assn.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:danetta-allen",
+      "name": "Danetta Allen",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "KY County Clerks' Association (in-house/employer-registered legislative agent)",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf",
+      "verified_at": "KLEC registered legislative agents list dated 2026-11-12"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:kentucky-county-clerks-association",
+      "name": "KY County Clerks' Association",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://klec.ky.gov/reports/reports/agents.pdf"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:holly-m-johnson",
+      "name": "Holly M. Johnson",
+      "type": "official",
+      "role": "Secretary, Finance and Administration Cabinet",
+      "organization": "Kentucky Finance and Administration Cabinet",
+      "verified_at": "confirmed current 2026-11-14 (page lists her; also named in May and Aug 2026 cabinet documents per search)",
+      "title": "Secretary",
+      "source_url": "https://finance.ky.gov/office-of-the-secretary/Pages/default.aspx",
+      "public_contact": "Office of the Secretary: 502-564-4240, 200 Mero Street, 5th Floor, Frankfort KY 40622"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:stacy-blank",
+      "name": "Stacy Blank",
+      "type": "official",
+      "role": "Executive Director, Office of Procurement Services",
+      "organization": "Kentucky Finance and Administration Cabinet",
+      "verified_at": "confirmed current 2026-11-14 (page as fetched; no page date)",
+      "title": "Executive Director",
+      "source_url": "https://finance.ky.gov/office-of-the-controller/office-of-procurement-services/Pages/default.aspx",
+      "public_contact": "502-564-4510, 200 Mero Street, 5th Floor, Frankfort KY 40622"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:michael-j-nemes",
+      "name": "Michael J. Nemes",
+      "type": "official",
+      "role": "State Senator; Co-Chair, Interim Joint Committee on State Government",
+      "organization": "Kentucky Senate",
+      "verified_at": "2026-09-15 (committee minutes)",
+      "title": "Senator",
+      "source_url": "https://apps.legislature.ky.gov/CommitteeDocuments/33/44466/St%20Gov%20Sept%2015%202026%20minutes.pdf",
+      "state": "Kentucky"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:david-hale",
+      "name": "David Hale",
+      "type": "official",
+      "role": "State Representative; Co-Chair, Interim Joint Committee on State Government",
+      "organization": "Kentucky House of Representatives",
+      "verified_at": "2026-09-15 (committee minutes)",
+      "title": "Representative",
+      "source_url": "https://apps.legislature.ky.gov/CommitteeDocuments/33/44466/St%20Gov%20Sept%2015%202026%20minutes.pdf",
+      "state": "Kentucky"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:mora-namdar",
+      "name": "Mora Namdar",
+      "type": "official",
+      "role": "Assistant Secretary of State for Consular Affairs",
+      "organization": "U.S. Department of State, Bureau of Consular Affairs",
+      "verified_at": "2025-12-29 (news article; state.gov page returned 403)",
+      "title": "Assistant Secretary",
+      "source_url": "https://www.ibtimes.co.uk/state-department-slams-daily-beast-over-sexist-attack-trumps-new-consular-chief-mora-namdar-1766820"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:brian-mast",
+      "name": "Brian Mast",
+      "type": "official",
+      "role": "Chairman, House Committee on Foreign Affairs",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "confirmed current 2026-11-14 (committee site lists 'Chairman Brian Mast')",
+      "title": "Representative",
+      "source_url": "http://foreignaffairs.house.gov/about",
+      "state": "Florida",
+      "district": "21"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:james-e-risch",
+      "name": "James E. Risch",
+      "type": "official",
+      "role": "Chairman, Senate Committee on Foreign Relations",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14 (committee homepage)",
+      "title": "Senator",
+      "source_url": "https://www.foreign.senate.gov/",
+      "state": "Idaho"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:oscar-longoria",
+      "name": "Oscar Longoria",
+      "type": "official",
+      "role": "State Representative, District 35; author of HB 3848 (2019) Electronic Wills Act",
+      "organization": "Texas House of Representatives",
+      "verified_at": "confirmed current 2026-11-14 (member page lists him for District 35)",
+      "title": "Representative",
+      "source_url": "http://house.texas.gov/members/member-page?district=35",
+      "public_contact": "Capitol office: Room 4N.4, P.O. Box 12910, Austin TX 78711; (512) 463-0645",
+      "state": "Texas",
+      "district": "35"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:tan-parker",
+      "name": "Tan Parker",
+      "type": "official",
+      "role": "State Senator, District 12; author of SB 1779 (2023) Uniform Electronic Estate Planning Documents Act",
+      "organization": "Texas Senate",
+      "verified_at": "confirmed current 2026-11-14 (member page; chairs Transportation, vice-chair Criminal Justice)",
+      "title": "Senator",
+      "source_url": "https://www.senate.texas.gov/member.php?d=12",
+      "public_contact": "Capitol office: P.O. Box 12068, Capitol Station, Austin TX 78711; (512) 463-0112",
+      "state": "Texas",
+      "district": "12"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jeff-leach",
+      "name": "Jeff Leach",
+      "type": "official",
+      "role": "State Representative; Chair, House Committee on Judiciary & Civil Jurisprudence (89th Legislature)",
+      "organization": "Texas House of Representatives",
+      "verified_at": "89th Legislature (2025) listing; 2026 chair status not independently confirmed",
+      "title": "Representative",
+      "source_url": "https://lrl.texas.gov/committees/standingcmtes.cfm",
+      "state": "Texas"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:joseph-gioeli-iii",
+      "name": "Joseph (Joe) Gioeli III",
+      "type": "official",
+      "role": "Acting Commissioner, Bureau of the Fiscal Service",
+      "organization": "U.S. Department of the Treasury, Bureau of the Fiscal Service",
+      "verified_at": "confirmed current 2026-11-14 (page lists him; named Acting Commissioner 2026-04-30)",
+      "title": "Acting Commissioner",
+      "source_url": "https://fiscal.treasury.gov/about/leadership.html"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:tim-scott",
+      "name": "Tim Scott",
+      "type": "official",
+      "role": "Chairman, Senate Committee on Banking, Housing, and Urban Affairs",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14 (committee page)",
+      "title": "Senator",
+      "source_url": "https://www.banking.senate.gov/about/jurisdiction",
+      "state": "South Carolina"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:joseph-b-edlow",
+      "name": "Joseph B. Edlow",
+      "type": "official",
+      "role": "Director, U.S. Citizenship and Immigration Services",
+      "organization": "U.S. Department of Homeland Security, USCIS",
+      "verified_at": "confirmed current 2026-11-14 (USCIS leadership page)",
+      "title": "Director",
+      "source_url": "https://www.uscis.gov/about-us/leadership"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:andrew-good",
+      "name": "Andrew Good",
+      "type": "official",
+      "role": "Chief, Office of Policy and Strategy, USCIS",
+      "organization": "U.S. Department of Homeland Security, USCIS",
+      "verified_at": "confirmed current 2026-11-14 (USCIS leadership page)",
+      "title": "Chief",
+      "source_url": "https://www.uscis.gov/about-us/leadership"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:chuck-grassley",
+      "name": "Chuck Grassley",
+      "type": "official",
+      "role": "Chairman, Senate Committee on the Judiciary",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14 (committee page)",
+      "title": "Senator",
+      "source_url": "https://www.judiciary.senate.gov/about/members",
+      "state": "Iowa"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:nancy-appleton",
+      "name": "Nancy Appleton",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Equifax, Inc. (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/0a3ed83f-b0ca-4ea5-a4bf-27c632bef1a8/print/",
+      "verified_at": "2025 Q4 LDA filing"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:stephanie-gunselman",
+      "name": "Stephanie Gunselman",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Equifax, Inc. (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/0a3ed83f-b0ca-4ea5-a4bf-27c632bef1a8/print/",
+      "verified_at": "2025 Q4 LDA filing"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:sarah-s-vance",
+      "name": "Sarah S. Vance",
+      "type": "official",
+      "role": "Chair, Advisory Committee on Civil Rules (U.S. District Judge, E.D. La.)",
+      "organization": "Judicial Conference of the United States",
+      "verified_at": "Jan 2026 agenda book; also May 2026 committee report (PDF text not machine-readable by my fetcher; chair name taken from search-engine excerpt of the PDFs)",
+      "title": "Judge",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/2026-01_standing_committee_agenda_book_final_0.pdf"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:ted-cruz",
+      "name": "Ted Cruz",
+      "type": "official",
+      "role": "Chair, Senate Judiciary Subcommittee on Federal Courts, Oversight, Agency Action and Federal Rights",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://www.judiciary.senate.gov/about/subcommittees",
+      "state": "Texas"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:rebecca-bauer-kahan",
+      "name": "Rebecca Bauer-Kahan",
+      "type": "official",
+      "role": "Chair, Assembly Privacy and Consumer Protection Committee",
+      "organization": "California State Assembly",
+      "verified_at": "confirmed current 2026-11-14",
+      "title": "Assemblymember",
+      "source_url": "https://apcp.assembly.ca.gov/",
+      "public_contact": "Committee office: 1020 N Street, Room 162, Sacramento; (916) 319-2200",
+      "state": "California"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:brendan-carr",
+      "name": "Brendan Carr",
+      "type": "official",
+      "role": "Chairman",
+      "organization": "Federal Communications Commission",
+      "verified_at": "released 2026-07-16",
+      "title": "Chairman",
+      "source_url": "https://docs.fcc.gov/public/attachments/DA-26-737A1.txt"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:olivia-trusty",
+      "name": "Olivia Trusty",
+      "type": "official",
+      "role": "Commissioner",
+      "organization": "Federal Communications Commission",
+      "verified_at": "article dated 2026-08-10",
+      "title": "Commissioner",
+      "source_url": "https://www.satellitetoday.com/government-military/2026/08/10/the-trump-administration-attempts-to-fill-an-empty-fcc-seat-ahead-of-midterm-elections/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:anna-gomez",
+      "name": "Anna Gomez",
+      "type": "official",
+      "role": "Commissioner (term expired 2026-06-30, holdover)",
+      "organization": "Federal Communications Commission",
+      "verified_at": "article dated Aug 2026",
+      "title": "Commissioner",
+      "source_url": "https://thedesk.net/2026/08/trump-nominates-daniele-thumann-severs-fcc-seat/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:scott-purcell",
+      "name": "Scott Purcell",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "ACA International (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/3e3bdf58-44d3-4aa2-be14-0005e5330d94/print/",
+      "verified_at": "LD-2 signed 2026-04-20"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:aca-international",
+      "name": "ACA International",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/3e3bdf58-44d3-4aa2-be14-0005e5330d94/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:laura-enderton-speed",
+      "name": "Laura Enderton-Speed",
+      "type": "official",
+      "role": "Executive Director",
+      "organization": "State Bar of California",
+      "verified_at": "release dated 2026-05-14 (Senate confirmation; started 2025-11-03)",
+      "title": "Executive Director",
+      "source_url": "https://www.calbar.ca.gov/news/california-state-senate-confirms-laura-enderton-speed-executive-director",
+      "public_contact": "State Bar main office 415-538-2000, 180 Howard St, San Francisco"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jose-cisneros",
+      "name": "Jos\u00e9 Cisneros",
+      "type": "official",
+      "role": "Chair, Board of Trustees (first public-member chair)",
+      "organization": "State Bar of California",
+      "verified_at": "page dated 2026-09-18 (sworn in for additional one-year term)",
+      "title": "Chair",
+      "source_url": "https://www.calbar.ca.gov/news/board-sends-community-justice-worker-program-recommendations-california-supreme-court",
+      "public_contact": "State Bar main office 415-538-2000"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:ash-kalra",
+      "name": "Ash Kalra",
+      "type": "official",
+      "role": "Chair, Assembly Judiciary Committee",
+      "organization": "California State Assembly",
+      "verified_at": "confirmed current 2026-11-14",
+      "title": "Assemblymember",
+      "source_url": "https://ajud.assembly.ca.gov/",
+      "public_contact": "Committee office: 1020 N Street, Room 104, Sacramento; (916) 319-2334",
+      "state": "California"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:bryan-bedford",
+      "name": "Bryan Bedford",
+      "type": "official",
+      "role": "Administrator",
+      "organization": "Federal Aviation Administration",
+      "verified_at": "confirmed by Senate 2025-07-09 (53-43); no 2026 departure found",
+      "title": "Administrator",
+      "source_url": "https://avweb.com/aviation-news/bedford-confirmed-as-faa-administrator/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jessica-jones",
+      "name": "Jessica Jones",
+      "type": "official",
+      "role": "Executive Director, Office of Advanced Aviation Technologies (successor to UAS Integration Office after Jan 2026 FAA reorganization)",
+      "organization": "Federal Aviation Administration",
+      "verified_at": "article dated 2026-09-02; also dronexl 2026-11-10",
+      "title": "Executive Director",
+      "source_url": "https://dronelife.com/2026/09/02/faa-drone-integration-bvlos-advanced-aviation/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:liam-mckenna",
+      "name": "Liam McKenna",
+      "type": "official",
+      "role": "Acting Deputy Administrator",
+      "organization": "Federal Aviation Administration",
+      "verified_at": "article dated 2026-11-10",
+      "title": "Acting Deputy Administrator",
+      "source_url": "https://dronexl.co/2026/11/10/faa-auvsi-utm-2-2-million-flights-part-108-type-certification/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jen-kiggans",
+      "name": "Jen Kiggans",
+      "type": "official",
+      "role": "U.S. Representative (VA-02), sponsor of LIFT Act",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "press release July 2025; current-status of bill not verified",
+      "title": "Representative",
+      "source_url": "https://kiggans.house.gov/posts/rep-kiggans-bill-clears-flight-path-for-civilian-drone-use",
+      "state": "Virginia",
+      "district": "2"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:dina-titus",
+      "name": "Dina Titus",
+      "type": "official",
+      "role": "U.S. Representative (D-NV), co-chair Congressional Unmanned Systems Caucus",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "press release 2026-10-29",
+      "title": "Representative",
+      "source_url": "https://www.auvsi.org/news/auvsi-drone-aam-policy-symposium-2026-lawmakers-regulators-and-industry-convene-in-washington-as-drone-and-aam-rules-take-shape/",
+      "state": "Nevada",
+      "district": "1"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:peter-welch",
+      "name": "Peter Welch",
+      "type": "official",
+      "role": "U.S. Senator (D-VT), lead Senate sponsor of Aviation Innovation and Global Competitiveness Act",
+      "organization": "U.S. Senate",
+      "verified_at": "press release 2026-10-29",
+      "title": "Senator",
+      "source_url": "https://www.auvsi.org/news/auvsi-drone-aam-policy-symposium-2026-lawmakers-regulators-and-industry-convene-in-washington-as-drone-and-aam-rules-take-shape/",
+      "state": "Vermont"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:benjamin-haas",
+      "name": "Benjamin Haas",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Association for Uncrewed Vehicle Systems International (in-house; 8 lobbyists listed incl. Scott Shtofman, Grant Baker, Lori Propst)",
+      "source_url": "https://lda.gov/filings/public/filing/0edb30e3-8e48-4813-8191-22bfc390c13d/print/",
+      "verified_at": "LD-2 signed 2026-07-17"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:auvsi",
+      "name": "AUVSI",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/0edb30e3-8e48-4813-8191-22bfc390c13d/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:joel-roberson",
+      "name": "Joel Roberson",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Holland & Knight LLP",
+      "source_url": "https://lda.gov/filings/public/filing/caea1b67-3d0f-4b02-8bd6-027a5b4c6a9a/print/",
+      "verified_at": "LD-2 signed 2025-10-20 (2026 filing not opened)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:skydio",
+      "name": "Skydio, Inc.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/caea1b67-3d0f-4b02-8bd6-027a5b4c6a9a/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jacquelyn-suarez",
+      "name": "Jacquelyn A. Suarez",
+      "type": "official",
+      "role": "Commissioner",
+      "organization": "NJ Department of Community Affairs",
+      "verified_at": "2026-03-19 article; Sherrill retained her Jan 2026",
+      "title": "Commissioner",
+      "source_url": "https://newjerseyglobe.com/legislature/senate-judiciary-panel-clears-trio-of-sherrill-nominees/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:edward-m-smith",
+      "name": "Edward M. Smith",
+      "type": "official",
+      "role": "Director, Division of Codes and Standards",
+      "organization": "NJ DCA",
+      "verified_at": "page undated; lists 2026 announcements",
+      "title": "Director",
+      "source_url": "https://www.nj.gov/dca/codes/about.shtml",
+      "public_contact": "Division of Codes and Standards, 101 South Broad St, Trenton NJ 08625-0802; (609) 292-7899"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:rachael-mcnitt",
+      "name": "Rachael McNitt",
+      "type": "official",
+      "role": "Chief of Staff, performing duties of Chair",
+      "organization": "White House Council on Environmental Quality",
+      "verified_at": "2026-07-07 article",
+      "title": "Chief",
+      "source_url": "https://www.eenews.net/articles/ceq-chair-leaving-the-administration/",
+      "public_contact": "CEQ via whitehouse.gov (no direct contact opened)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:shelley-moore-capito",
+      "name": "Shelley Moore Capito",
+      "type": "official",
+      "role": "Chair, Senate Environment and Public Works Committee",
+      "organization": "U.S. Senate",
+      "verified_at": "2026-09-30 article",
+      "title": "Senator",
+      "source_url": "https://www.pbs.org/newshour/amp/politics/senate-reaches-bipartisan-deal-on-permitting-bill-to-speed-approvals-of-new-energy-projects",
+      "state": "West Virginia"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:mike-lee",
+      "name": "Mike Lee",
+      "type": "official",
+      "role": "Chair, Senate Energy and Natural Resources Committee",
+      "organization": "U.S. Senate",
+      "verified_at": "2026-09-30 article",
+      "title": "Senator",
+      "source_url": "https://www.pbs.org/newshour/amp/politics/senate-reaches-bipartisan-deal-on-permitting-bill-to-speed-approvals-of-new-energy-projects",
+      "state": "Utah"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:laura-swett",
+      "name": "Laura V. Swett",
+      "type": "official",
+      "role": "Chairman",
+      "organization": "Federal Energy Regulatory Commission",
+      "verified_at": "2026-04-21 article; search results show still chair mid-2026",
+      "title": "Chairman",
+      "source_url": "https://www.tdworld.com/policy/news/55372177/ferc-targets-june-2026-action-on-large-load-interconnection-proceeding"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:david-rosner",
+      "name": "David Rosner",
+      "type": "official",
+      "role": "Commissioner",
+      "organization": "Federal Energy Regulatory Commission",
+      "verified_at": "Oct 2025 article; April 2026 FERC order lists him per search snippet only",
+      "title": "Commissioner",
+      "source_url": "https://www.utilitydive.com/news/senate-confirms-ferc-swett-lacerte/802321/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:dan-hereth",
+      "name": "Dan Hereth",
+      "type": "official",
+      "role": "Secretary",
+      "organization": "Wisconsin Department of Safety and Professional Services",
+      "verified_at": "appointed Aug 2022; page undated, no sign of departure",
+      "title": "Secretary",
+      "source_url": "https://dsps.wi.gov/Pages/AboutDSPS/Leadership.aspx",
+      "public_contact": "DSPS, 4822 Madison Yards Way, Madison WI 53705; (608) 266-2112"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jennifer-malak",
+      "name": "Jennifer L. Malak",
+      "type": "official",
+      "role": "Chairperson, Board of Nursing (RN member)",
+      "organization": "Wisconsin Board of Nursing",
+      "verified_at": "page undated; term shown as expiring 7/1/2026 (may serve until successor confirmed)",
+      "title": "Chairperson",
+      "source_url": "https://dsps.wi.gov/Pages/BoardsCouncils/Nursing/Default.aspx",
+      "public_contact": "Board of Nursing (608) 266-2112; dsps@wi.gov"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:tim-kraayenbrink",
+      "name": "Tim Kraayenbrink",
+      "type": "official",
+      "role": "State Senator (R-4), Chair, Senate Appropriations Committee",
+      "organization": "Iowa Senate",
+      "verified_at": "91st GA (2025-2027) roster fetched 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://www.legis.iowa.gov/legislators/senate",
+      "state": "Iowa"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:jesse-green",
+      "name": "Jesse Green",
+      "type": "official",
+      "role": "State Senator (R-24); member of SSB 3183 subcommittee",
+      "organization": "Iowa Senate",
+      "verified_at": "91st GA roster fetched 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://www.legis.iowa.gov/legislators/senate",
+      "state": "Iowa"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:scott-webster",
+      "name": "Scott Webster",
+      "type": "official",
+      "role": "State Senator (R-47), Chair, Senate Local Government Committee",
+      "organization": "Iowa Senate",
+      "verified_at": "91st GA committee page fetched 2026-11-14",
+      "title": "Senator",
+      "source_url": "https://www.legis.iowa.gov/committees/committee?ga=91&groupID=698",
+      "state": "Iowa"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:brad-epperly",
+      "name": "Brad Epperly",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Iowa Newspaper Association",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91",
+      "verified_at": "Iowa declarations page fetched 2026-11-14"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:iowa-newspaper-association",
+      "name": "Iowa Newspaper Association",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:dustin-miller",
+      "name": "Dustin Miller",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Iowa Newspaper Association",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91",
+      "verified_at": "Iowa declarations page fetched 2026-11-14"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:casey-nickel",
+      "name": "Casey Nickel",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Iowa Newspaper Association",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91",
+      "verified_at": "Iowa declarations page fetched 2026-11-14"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:cody-carlson",
+      "name": "Cody Carlson",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Iowa League of Cities",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91",
+      "verified_at": "Iowa declarations page fetched 2026-11-14"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:iowa-league-of-cities",
+      "name": "Iowa League of Cities",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:chelsea-hoye",
+      "name": "Chelsea Hoye",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Iowa League of Cities",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91",
+      "verified_at": "Iowa declarations page fetched 2026-11-14"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:heidi-hedberg",
+      "name": "Heidi Hedberg",
+      "type": "official",
+      "role": "Commissioner of Health",
+      "organization": "Alaska Department of Health",
+      "verified_at": "fetched 2026-11-14 (page undated)",
+      "title": "Commissioner",
+      "source_url": "https://health.alaska.gov/en/resources/department-contacts/",
+      "public_contact": "heidi.hedberg@alaska.gov; 907-269-7800; 3601 C Street Suite 902, Anchorage"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:abigail-newby-kew",
+      "name": "Abigail Newby-Kew",
+      "type": "official",
+      "role": "Section Chief, Health Analytics and Vital Records",
+      "organization": "Alaska Department of Health",
+      "verified_at": "fetched 2026-11-14 (page undated); signed records schedule Dec 2025 (https://archives.alaska.gov/documents/rims/schedules/hss/06-217-2.pdf)",
+      "title": "Section Chief",
+      "source_url": "https://health.alaska.gov/en/resources/department-contacts/",
+      "public_contact": "abigail.newby-kew@alaska.gov; 907-465-8643; doh.havrs.info@alaska.gov"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:pete-waterman",
+      "name": "Pete Waterman",
+      "type": "official",
+      "role": "Director, FedRAMP",
+      "organization": "GSA Technology Transformation Services / FedRAMP",
+      "verified_at": "2026-07-23 (Nextgov); Nextgov 2026-08-25 reports him back at work after administrative leave and also acting TTS deputy director",
+      "title": "Director",
+      "source_url": "https://nextgov.com/cybersecurity/2026/07/after-hugging-face-breach-fedramp-chief-tells-slow-patch-vendors-stay-out-government/414972"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:edward-forst",
+      "name": "Edward C. Forst",
+      "type": "official",
+      "role": "Administrator",
+      "organization": "U.S. General Services Administration",
+      "verified_at": "2026-05-13 (GSA testimony page); other 2026 news says still Administrator in Nov 2026 but page not opened",
+      "title": "Administrator",
+      "source_url": "https://www.gsa.gov/about-gsa/newsroom/congressional-testimony/statement-of-edward-c-forst-gsa-administrator-before-the-senate-committee-on-appropriations-subcommittee-on-financial-services-general-government-fsgg-05132026"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:sam-corcos",
+      "name": "Sam Corcos",
+      "type": "official",
+      "role": "Treasury CIO; acting Director of GSA TTS, acting Deputy Commissioner FAS, acting Assistant Administrator Login.gov",
+      "organization": "U.S. Department of the Treasury / GSA",
+      "verified_at": "2026-08-25 (Nextgov)",
+      "title": "Treasury CIO",
+      "source_url": "https://www.nextgov.com/people/2026/08/gsa-reinstate-fedramp-director-taps-treasury-cio-3-roles/415625/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:russell-vought",
+      "name": "Russell Vought",
+      "type": "official",
+      "role": "Director",
+      "organization": "Office of Management and Budget",
+      "verified_at": "confirmed by Senate Feb 2025 per source; still described as OMB Director in news through Oct 2026 (search results only, not independently opened); 2026-11-14 not re-verified on OMB site",
+      "title": "Director",
+      "source_url": "https://www.executivegov.com/?p=273037"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:craig-albright",
+      "name": "Craig Albright",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Business Software Alliance (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/391b60b5-fbc2-4269-b86a-fdcc6853578e/print/",
+      "verified_at": "LD-2 1st Quarter 2026, signed 2026-04-20"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:bsa-the-software-alliance",
+      "name": "Business Software Alliance",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/391b60b5-fbc2-4269-b86a-fdcc6853578e/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:bruce-mehlman",
+      "name": "Bruce Mehlman",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Mehlman Consulting, Inc.",
+      "source_url": "https://lda.gov/filings/public/filing/0adb66a7-7974-46a9-b90b-c4d7fe2868fa/print/",
+      "verified_at": "LD-1 registration 2026 (posted 2026-05-08)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:knox-systems",
+      "name": "Knox Systems, Inc.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/0adb66a7-7974-46a9-b90b-c4d7fe2868fa/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:nigel-stephens",
+      "name": "Nigel Stephens",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Phoenix Strategies Inc.",
+      "source_url": "https://lda.gov/filings/public/filing/76abd709-8d59-4922-8f41-6e2d27d24279/print/",
+      "verified_at": "LD-2 2nd Quarter 2026, posted 2026-07-16"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:shared-services-leadership-coalition",
+      "name": "Shared Services Leadership Coalition",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/76abd709-8d59-4922-8f41-6e2d27d24279/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:jack-schuler",
+      "name": "Jack Schuler",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Invariant LLC",
+      "source_url": "https://lda.gov/filings/public/filing/951e4c62-d383-4ebd-814e-1e888472f1e3/print/",
+      "verified_at": "LD-2 1st Quarter 2026, posted 2026-04-20"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:vanta",
+      "name": "Vanta Inc.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/951e4c62-d383-4ebd-814e-1e888472f1e3/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:thomas-gann",
+      "name": "Thomas Gann",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Trellix (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/aeb9d11e-62de-4dee-a339-db6ca2ec1ebf/print/",
+      "verified_at": "LD-2 1st Quarter 2026"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:trellix",
+      "name": "Trellix (formerly Musaruba US LLC)",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/aeb9d11e-62de-4dee-a339-db6ca2ec1ebf/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:shayne-woods",
+      "name": "Shayne Woods",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Alpine Group Partners, LLC",
+      "source_url": "https://lda.gov/filings/public/filing/1f791d35-0a05-420c-b920-7de188cc8645/print/",
+      "verified_at": "LD-2 2025 (signed 2025-10-19); 2026 report not checked"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:hitrust-services-corp",
+      "name": "HITRUST Services Corp.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/1f791d35-0a05-420c-b920-7de188cc8645/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:tony-sauerhoff",
+      "name": "Tony Sauerhoff",
+      "type": "official",
+      "role": "Executive Director and State Chief Information Officer",
+      "organization": "Texas Department of Information Resources",
+      "verified_at": "2026-03-13 (DIR board selection; interim since 2026-01-14)",
+      "title": "Executive Director and State Chief Information Officer",
+      "source_url": "https://dir.texas.gov/news/dir-board-selects-tony-sauerhoff-next-executive-director",
+      "public_contact": "TX-RAMP program office: tx-ramp@dir.texas.gov (https://dir.texas.gov/information-security/texas-risk-and-authorization-management-program-tx-ramp/tx-ramp-frequently)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:giovanni-capriglione",
+      "name": "Giovanni Capriglione",
+      "type": "official",
+      "role": "Chair, House Committee on Delivery of Government Efficiency; Representative (R-Southlake)",
+      "organization": "Texas House of Representatives",
+      "verified_at": "2026-08-19 hearing notice names him chair; not re-verified 2026-11-14",
+      "title": "Representative",
+      "source_url": "https://capitol.texas.gov/tlodocs/89R/schedules/html/C2332026081909001.htm",
+      "state": "Texas"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:tj-white",
+      "name": "Timothy 'TJ' White (VADM ret.)",
+      "type": "official",
+      "role": "Chief, Texas Cyber Command",
+      "organization": "Texas Cyber Command",
+      "verified_at": "appointed 2025-09-16; page read 2026-11-14",
+      "title": "Chief",
+      "source_url": "https://www.txcc.texas.gov/about"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:rand-paul",
+      "name": "Rand Paul",
+      "type": "official",
+      "role": "Chairman, Senate Committee on Homeland Security and Governmental Affairs",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14 (committee About page)",
+      "title": "Senator",
+      "source_url": "https://www.hsgac.senate.gov/about/",
+      "state": "Kentucky"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:gary-peters",
+      "name": "Gary Peters",
+      "type": "official",
+      "role": "Ranking Member, Senate Committee on Homeland Security and Governmental Affairs",
+      "organization": "U.S. Senate",
+      "verified_at": "confirmed current 2026-11-14 (committee About page)",
+      "title": "Senator",
+      "source_url": "https://www.hsgac.senate.gov/about/",
+      "state": "Michigan"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:thomas-flagg",
+      "name": "Thomas Flagg",
+      "type": "official",
+      "role": "Deputy Federal CIO (reported default acting Federal CIO)",
+      "organization": "Office of Management and Budget",
+      "verified_at": "2026-10-01 (ExecutiveGov); appointed deputy 'in May' (year not stated); acting status only reported",
+      "title": "Deputy Federal CIO",
+      "source_url": "https://www.executivegov.com/articles/epa-carter-farmer-federal-cio-pick"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:jonathan-pawlow-jr",
+      "name": "Jonathan Pawlow Jr.",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Information Technology Industry Council (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/b876a416-206e-4a6e-a122-f6af0b55269b/print/",
+      "verified_at": "LD-2 2026 (signed 2026-07-17)"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:information-technology-industry-council",
+      "name": "Information Technology Industry Council",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/b876a416-206e-4a6e-a122-f6af0b55269b/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:frank-bisignano",
+      "name": "Frank J. Bisignano",
+      "type": "official",
+      "role": "Chief Executive Officer",
+      "organization": "Internal Revenue Service",
+      "verified_at": "2026-04-15 (written testimony to Senate Finance); IR-2026-12 dated 2026-01-26",
+      "title": "Chief Executive Officer",
+      "source_url": "https://www.irs.gov/node/154686"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:brad-schneider",
+      "name": "Brad Schneider",
+      "type": "official",
+      "role": "U.S. Representative (D-IL)",
+      "organization": "U.S. House of Representatives",
+      "verified_at": "2026-04-27 (FedScoop)",
+      "title": "Representative",
+      "source_url": "https://fedscoop.com/house-passes-irs-tech-bills-barcode-act-taxpayer-improvement/",
+      "state": "Illinois",
+      "district": "10"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:thaddeus-inge",
+      "name": "Thaddeus Inge",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Van Scoyoc Associates",
+      "source_url": "https://lda.gov/filings/public/filing/ed12c597-ce69-45f9-ac2c-bbe870b3fedb/print/",
+      "verified_at": "LD-2 1st Quarter 2026, posted 2026-04-17"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:paychex",
+      "name": "Paychex",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/ed12c597-ce69-45f9-ac2c-bbe870b3fedb/print/"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:samantha-ford",
+      "name": "Samantha Ford",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Van Scoyoc Associates",
+      "source_url": "https://lda.gov/filings/public/filing/ed12c597-ce69-45f9-ac2c-bbe870b3fedb/print/",
+      "verified_at": "LD-2 1st Quarter 2026, posted 2026-04-17"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:official:gary-grippo",
+      "name": "Gary Grippo",
+      "type": "official",
+      "role": "Acting Fiscal Assistant Secretary",
+      "organization": "U.S. Department of the Treasury",
+      "verified_at": "2026-04-29 (Federal Register signature); current status not re-verified",
+      "title": "Acting Fiscal Assistant Secretary",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2026-04-29/html/2026-08278.htm",
+      "public_contact": "NPRM contact in Federal Register: Lisa Andre, Senior Advisor, lisa.andre@fiscal.treasury.gov"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:lobbyist:deron-hicks",
+      "name": "Deron Hicks",
+      "type": "lobbyist",
+      "role": "Registered lobbyist",
+      "organization": "Global Payments, Inc. (in-house)",
+      "source_url": "https://lda.gov/filings/public/filing/6e1b2e3c-55b3-411b-9a48-30b987cade08/print/",
+      "verified_at": "LD-2 2nd Quarter 2026, signed 2026-07-17"
+    },
+    {
+      "label": "Actor",
+      "id": "other:actor:org:global-payments",
+      "name": "Global Payments, Inc.",
+      "type": "organization",
+      "role": "lobbying client",
+      "source_url": "https://lda.gov/filings/public/filing/6e1b2e3c-55b3-411b-9a48-30b987cade08/print/"
     }
   ],
   "relationships": [
@@ -2010,6 +3739,1639 @@
       "src": "other:actor:faa",
       "dst": "other:faa-visual-line-of-sight",
       "source_url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.31"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:ben-hobbs",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:ben-hobbs",
+      "dst": "other:actor:hud-pih",
+      "source_url": "https://www.hud.gov/news/hud-no-26-065"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:mike-flood",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mike-flood",
+      "dst": "other:hud-two-paystubs",
+      "source_url": "https://financialservices.house.gov/about/jurisdiction.htm",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:emanuel-cleaver",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:emanuel-cleaver",
+      "dst": "other:hud-two-paystubs",
+      "source_url": "https://financialservices.house.gov/about/jurisdiction.htm",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:katie-britt",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:katie-britt",
+      "dst": "other:hud-two-paystubs",
+      "source_url": "https://www.alreporter.com/2025/01/24/sen-britt-to-chair-banking-subcommittee-on-housing-transportation-and-community-development",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:tina-smith",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:tina-smith",
+      "dst": "other:hud-two-paystubs",
+      "source_url": "https://www.alreporter.com/2025/01/24/sen-britt-to-chair-banking-subcommittee-on-housing-transportation-and-community-development",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:shiela-corley",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:shiela-corley",
+      "dst": "other:actor:usda-fns",
+      "source_url": "https://civileats.com/2026/06/17/breaking-usda-food-and-nutrition-program-leader-leaves-role-amid-reorg/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:mitch-mcconnell",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mitch-mcconnell",
+      "dst": "other:snap-interview",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:ben-ray-lujan",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ben-ray-lujan",
+      "dst": "other:snap-interview",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:john-boozman",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:john-boozman",
+      "dst": "other:snap-interview",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:glenn-thompson",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:glenn-thompson",
+      "dst": "other:snap-interview",
+      "source_url": "https://www.oklahomafarmreport.com/?p=133891",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mitch-mcconnell",
+      "dst": "other:snap-documentary-evidence",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ben-ray-lujan",
+      "dst": "other:snap-documentary-evidence",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:john-boozman",
+      "dst": "other:snap-documentary-evidence",
+      "source_url": "https://www.agriculture.senate.gov/newsroom/rep/press/release/boozman-klobuchar-announce-subcommittee-leadership-for-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:glenn-thompson",
+      "dst": "other:snap-documentary-evidence",
+      "source_url": "https://www.oklahomafarmreport.com/?p=133891",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:richard-lee",
+      "dst": "other:actor:org:equifax"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:lobbyist:richard-lee",
+      "dst": "other:snap-documentary-evidence",
+      "source_url": "https://lda.gov/filings/public/filing/99f083ff-b045-4eaf-8887-b44b9ae700ed/print/",
+      "relevance": "represents_affected_client"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:brian-fitzpatrick",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:brian-fitzpatrick",
+      "dst": "other:wic-physical-presence",
+      "source_url": "https://www.congress.gov/119/bills/hr1464/BILLS-119hr1464ih.htm",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:suzanne-bonamici",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:suzanne-bonamici",
+      "dst": "other:wic-physical-presence",
+      "source_url": "https://www.congress.gov/119/bills/hr1464/BILLS-119hr1464ih.htm",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:roger-marshall",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:roger-marshall",
+      "dst": "other:wic-physical-presence",
+      "source_url": "https://www.govinfo.gov/app/details/BILLS-119s3842is",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:kirsten-gillibrand",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:kirsten-gillibrand",
+      "dst": "other:wic-physical-presence",
+      "source_url": "https://www.marshall.senate.gov/newsroom/press-releases/senators-marshall-gillibrand-reintroduce-21st-century-wic-act-to-modernize-access-protect-program-integrity",
+      "relevance": "other"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:ellen-teller",
+      "dst": "other:actor:org:food-research-and-action-center"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:ellen-teller",
+      "dst": "other:wic-physical-presence",
+      "source_url": "https://lda.gov/filings/public/filing/a08deb01-14ff-4c58-9c64-759f90ecc21f/print/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:henry-mack",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "HAS_AUTHORITY_OVER",
+      "src": "other:actor:official:henry-mack",
+      "dst": "other:ui-nondigital-id",
+      "source_url": "https://www.dol.gov/sites/dolgov/files/ETA/advisories/UIPL/2026/UIPL%2010-26/UIPL%2010-26.pdf"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:darin-lahood",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:darin-lahood",
+      "dst": "other:ui-nondigital-id",
+      "source_url": "https://lahood.house.gov/2025/1/lahood-to-continue-serving-as-chairman-of-the-house-ways-and-means-subcommittee-on-work-and-welfare-in-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:danny-davis",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:danny-davis",
+      "dst": "other:ui-nondigital-id",
+      "source_url": "https://lahood.house.gov/2025/1/lahood-to-continue-serving-as-chairman-of-the-house-ways-and-means-subcommittee-on-work-and-welfare-in-119th-congress",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jason-smith",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:jason-smith",
+      "dst": "other:ui-nondigital-id",
+      "source_url": "https://waysandmeans.house.gov/2025/01/14/smith-announces-119th-congress-ways-and-means-subcommittee-chairs/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:elizabeth-banicki",
+      "dst": "other:actor:org:id-me"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:lobbyist:elizabeth-banicki",
+      "dst": "other:ui-nondigital-id",
+      "source_url": "https://lda.gov/filings/public/filing/341106ac-1daf-4097-b448-a1a1fd5e0b82/print/",
+      "relevance": "represents_affected_client"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:mehmet-oz",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "HAS_AUTHORITY_OVER",
+      "src": "other:actor:official:mehmet-oz",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2026-06-03/pdf/2026-11094.pdf"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:dan-brillman",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:dan-brillman",
+      "dst": "other:actor:hhs-cms",
+      "source_url": "https://www.aha.org/news/headline/2026-04-20-cms-administrator-oz-and-deputy-administrator-brillman-discuss-agencys-focus-innovation-reducing-waste"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:mike-crapo",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mike-crapo",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:ron-wyden",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ron-wyden",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:morgan-griffith",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:morgan-griffith",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://leadingage.org/house-health-subcommittee-discusses-medicare-access-transparency-and-technology-safeguards/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:shannon-attanasio",
+      "dst": "other:actor:org:medicaid-health-plans-of-america"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:shannon-attanasio",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://lda.gov/api/v1/filings/0326b496-11c9-4d78-89a2-025c1b4950bd/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:margaret-garikes",
+      "dst": "other:actor:org:american-medical-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:margaret-garikes",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://lda.gov/api/v1/filings/ccff0e9d-4c23-4c7b-a1dc-e73fa1ee1242/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:maria-ghazal",
+      "dst": "other:actor:org:healthcare-leadership-council"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:maria-ghazal",
+      "dst": "other:medicaid-work-docs",
+      "source_url": "https://lda.gov/api/v1/filings/4afc00f2-4ce2-4c75-ae31-c19a5d7cf7d9/"
+    },
+    {
+      "type": "HAS_AUTHORITY_OVER",
+      "src": "other:actor:official:mehmet-oz",
+      "dst": "other:medicaid-ex-parte",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2026-06-03/pdf/2026-11094.pdf"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mike-crapo",
+      "dst": "other:medicaid-ex-parte",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ron-wyden",
+      "dst": "other:medicaid-ex-parte",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:timothy-clement",
+      "dst": "other:actor:org:mental-health-america"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:lobbyist:timothy-clement",
+      "dst": "other:medicaid-ex-parte",
+      "source_url": "https://lda.gov/api/v1/filings/53111570-8a2a-4a27-b0f6-63ba861324a2/",
+      "relevance": "represents_affected_client"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:terrance-cole",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:terrance-cole",
+      "dst": "other:actor:doj-dea",
+      "source_url": "https://www.americantelemed.org/wp-content/uploads/2026/06/ATA_Action_DEA_Meeting_Request_Letter-6.4.26.pdf"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:donald-norcross",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:donald-norcross",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://www.congress.gov/119/bills/hr1627/BILLS-119hr1627ih.htm",
+      "relevance": "other"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:brian-fitzpatrick",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://www.congress.gov/119/bills/hr1627/BILLS-119hr1627ih.htm",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:bill-cassidy",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:bill-cassidy",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://www.help.senate.gov/about/members",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:ryan-kane",
+      "dst": "other:actor:org:the-recovery-platform"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:ryan-kane",
+      "dst": "other:actor:org:breaking-barriers-to-substance-use-recovery"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:ryan-kane",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://lda.gov/api/v1/filings/154a42a4-c5a8-4dfb-b0a8-fe2873323903/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:kyle-zebley",
+      "dst": "other:actor:org:ata-action"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:kyle-zebley",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://lda.gov/api/v1/filings/59530b7d-4f88-4151-962b-dde08b7f6a94/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:frank-purcell",
+      "dst": "other:actor:org:indivior"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:frank-purcell",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://lda.gov/api/v1/filings/3cb92621-7da8-4e1b-b54d-200205d37081/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:maryanne-sapio",
+      "dst": "other:actor:org:american-association-of-nurse-practitioners"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:maryanne-sapio",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://lda.gov/api/v1/filings/3e406975-22d3-4e20-bce1-88984977adfc/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:reyna-taylor",
+      "dst": "other:actor:org:national-council-for-behavioral-health"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:reyna-taylor",
+      "dst": "other:dea-in-person-exam",
+      "source_url": "https://lda.gov/api/v1/filings/024caab1-bae8-4d00-8504-2394b784b80e/"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:mehmet-oz",
+      "dst": "other:actor:hhs-cms",
+      "source_url": "https://www.aha.org/news/headline/2026-04-20-cms-administrator-oz-and-deputy-administrator-brillman-discuss-agencys-focus-innovation-reducing-waste"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:roger-marshall",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://www.congress.gov/119/bills/s1816/BILLS-119s1816is.htm",
+      "relevance": "other"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mike-crapo",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ron-wyden",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:morgan-griffith",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://leadingage.org/house-health-subcommittee-discusses-medicare-access-transparency-and-technology-safeguards/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:margaret-garikes",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://lda.gov/api/v1/filings/1e564ae9-b779-4f20-8542-f82327aafc29/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:tiffany-haverly",
+      "dst": "other:actor:org:humana"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:tiffany-haverly",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://lda.gov/api/v1/filings/a4a1698f-d62f-477c-b7bc-9859f0e60673/"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:maria-ghazal",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://lda.gov/api/v1/filings/c3c1e310-c7a1-4469-a81c-71705b9d056e/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:ronna-hauser",
+      "dst": "other:actor:org:national-community-pharmacists-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:ronna-hauser",
+      "dst": "other:cms-prior-auth",
+      "source_url": "https://lda.gov/api/v1/filings/28469589-c436-4ea0-8163-918817f2f498/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:sherif-zaafran",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:sherif-zaafran",
+      "dst": "other:actor:tx-medical-board",
+      "source_url": "https://www.tmb.texas.gov/node/4225"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:stephen-brint-carlton",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:stephen-brint-carlton",
+      "dst": "other:actor:tx-medical-board",
+      "source_url": "https://www.tmb.texas.gov/node/4225"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:lois-kolkhorst",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:lois-kolkhorst",
+      "dst": "other:tx-medical-license",
+      "source_url": "https://senate.texas.gov/cmte.php?c=610",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:gary-vandeaver",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:gary-vandeaver",
+      "dst": "other:tx-medical-license",
+      "source_url": "https://capitol.texas.gov/Committees/MembershipCmte.aspx?LegSess=89R&CmteCode=C410&Chamber=H",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:rebecca-goodman",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:rebecca-goodman",
+      "dst": "other:actor:ky-transportation-cabinet",
+      "source_url": "https://transportation.ky.gov/Secretary/Pages/default.aspx"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jason-howell",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:jason-howell",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://apps.legislature.ky.gov/record/26rs/sb110.html",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jimmy-higdon",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:jimmy-higdon",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://apps.legislature.ky.gov/minutes/transpor/260901OK.PDF",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:john-blanton",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:john-blanton",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://apps.legislature.ky.gov/minutes/transpor/260901OK.PDF",
+      "relevance": "other"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:audrey-jackson",
+      "dst": "other:actor:org:carvana"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:audrey-jackson",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://klec.ky.gov/Reports/Reports/lecbills2026.pdf"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:jason-r-wilson",
+      "dst": "other:actor:org:kentucky-automobile-dealers-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:jason-r-wilson",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://klec.ky.gov/Reports/Reports/lecbills2026.pdf"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:dustin-s-miller",
+      "dst": "other:actor:org:kentucky-consumer-finance-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:dustin-s-miller",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://klec.ky.gov/Reports/Reports/lecbills2026.pdf"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:danetta-allen",
+      "dst": "other:actor:org:kentucky-county-clerks-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:danetta-allen",
+      "dst": "other:ky-title-affidavit",
+      "source_url": "https://klec.ky.gov/Reports/Reports/lecbills2026.pdf"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:holly-m-johnson",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "HAS_AUTHORITY_OVER",
+      "src": "other:actor:official:holly-m-johnson",
+      "dst": "other:ky-vendor-affidavit",
+      "source_url": "https://finance.ky.gov:443/eProcurement/ResourcesSupport/FrequentlyAskedQuestionsabouttheRequiredAffidavitforBiddersRevisedAugust2020.pdf"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:stacy-blank",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:stacy-blank",
+      "dst": "other:actor:ky-finance-cabinet",
+      "source_url": "https://finance.ky.gov/office-of-the-controller/office-of-procurement-services/Pages/default.aspx"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:michael-j-nemes",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:michael-j-nemes",
+      "dst": "other:ky-vendor-affidavit",
+      "source_url": "https://apps.legislature.ky.gov/CommitteeDocuments/33/44466/St%20Gov%20Sept%2015%202026%20minutes.pdf",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:david-hale",
+      "dst": "other:jurisdiction:us-ky"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:david-hale",
+      "dst": "other:ky-vendor-affidavit",
+      "source_url": "https://apps.legislature.ky.gov/CommitteeDocuments/33/44466/St%20Gov%20Sept%2015%202026%20minutes.pdf",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:mora-namdar",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mora-namdar",
+      "dst": "other:fed-passport-consent",
+      "source_url": "https://www.ibtimes.co.uk/state-department-slams-daily-beast-over-sexist-attack-trumps-new-consular-chief-mora-namdar-1766820",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:brian-mast",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:brian-mast",
+      "dst": "other:fed-passport-consent",
+      "source_url": "http://foreignaffairs.house.gov/about",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:james-e-risch",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:james-e-risch",
+      "dst": "other:fed-passport-consent",
+      "source_url": "https://www.foreign.senate.gov/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:oscar-longoria",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:oscar-longoria",
+      "dst": "other:tx-will-handwriting",
+      "source_url": "https://capitol.texas.gov/BillLookup/History.aspx?LegSess=86R&Bill=HB3848",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:tan-parker",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:tan-parker",
+      "dst": "other:tx-will-handwriting",
+      "source_url": "https://capitol.texas.gov/BillLookup/History.aspx?LegSess=88R&Bill=SB1779",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jeff-leach",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:jeff-leach",
+      "dst": "other:tx-will-handwriting",
+      "source_url": "https://capitol.texas.gov/BillLookup/History.aspx?LegSess=86R&Bill=HB3848",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:joseph-gioeli-iii",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:joseph-gioeli-iii",
+      "dst": "other:actor:treasury-fiscal-service",
+      "source_url": "https://fiscal.treasury.gov/about/leadership.html"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mike-crapo",
+      "dst": "other:fed-treasurydirect-ink",
+      "source_url": "https://www.finance.senate.gov/about/membership",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:tim-scott",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:tim-scott",
+      "dst": "other:fed-treasurydirect-ink",
+      "source_url": "https://www.banking.senate.gov/about/jurisdiction",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:joseph-b-edlow",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:joseph-b-edlow",
+      "dst": "other:actor:dhs-uscis",
+      "source_url": "https://www.uscis.gov/about-us/leadership"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:andrew-good",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:andrew-good",
+      "dst": "other:actor:dhs-uscis",
+      "source_url": "https://www.uscis.gov/about-us/leadership"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:chuck-grassley",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:chuck-grassley",
+      "dst": "other:fed-i9-physical-exam",
+      "source_url": "https://www.judiciary.senate.gov/about/members",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:nancy-appleton",
+      "dst": "other:actor:org:equifax"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:nancy-appleton",
+      "dst": "other:fed-i9-physical-exam",
+      "source_url": "https://lda.gov/filings/public/filing/0a3ed83f-b0ca-4ea5-a4bf-27c632bef1a8/print/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:stephanie-gunselman",
+      "dst": "other:actor:org:equifax"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:stephanie-gunselman",
+      "dst": "other:fed-i9-physical-exam",
+      "source_url": "https://lda.gov/filings/public/filing/0a3ed83f-b0ca-4ea5-a4bf-27c632bef1a8/print/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:sarah-s-vance",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:sarah-s-vance",
+      "dst": "other:frcp-pro-se-efiling",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/2026-01_standing_committee_agenda_book_final_0.pdf",
+      "relevance": "other"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:chuck-grassley",
+      "dst": "other:frcp-pro-se-efiling",
+      "source_url": "https://www.judiciary.senate.gov/about/members",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:ted-cruz",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ted-cruz",
+      "dst": "other:frcp-pro-se-efiling",
+      "source_url": "https://www.judiciary.senate.gov/about/subcommittees",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:rebecca-bauer-kahan",
+      "dst": "other:jurisdiction:us-ca"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:rebecca-bauer-kahan",
+      "dst": "other:ca-all-party-consent",
+      "source_url": "https://apcp.assembly.ca.gov/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:brendan-carr",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:brendan-carr",
+      "dst": "other:tcpa-ai-voice",
+      "source_url": "https://docs.fcc.gov/public/attachments/DA-26-737A1.txt",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:olivia-trusty",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:olivia-trusty",
+      "dst": "other:tcpa-ai-voice",
+      "source_url": "https://www.satellitetoday.com/government-military/2026/08/10/the-trump-administration-attempts-to-fill-an-empty-fcc-seat-ahead-of-midterm-elections/",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:anna-gomez",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:anna-gomez",
+      "dst": "other:tcpa-ai-voice",
+      "source_url": "https://thedesk.net/2026/08/trump-nominates-daniele-thumann-severs-fcc-seat/",
+      "relevance": "other"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:scott-purcell",
+      "dst": "other:actor:org:aca-international"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:scott-purcell",
+      "dst": "other:tcpa-ai-voice",
+      "source_url": "https://lda.gov/filings/public/filing/3e3bdf58-44d3-4aa2-be14-0005e5330d94/print/"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:chuck-grassley",
+      "dst": "other:jury-mail",
+      "source_url": "https://www.judiciary.senate.gov/about/members",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ted-cruz",
+      "dst": "other:jury-mail",
+      "source_url": "https://www.judiciary.senate.gov/about/subcommittees",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:laura-enderton-speed",
+      "dst": "other:jurisdiction:us-ca"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:laura-enderton-speed",
+      "dst": "other:actor:ca-state-bar",
+      "source_url": "https://www.calbar.ca.gov/news/california-state-senate-confirms-laura-enderton-speed-executive-director"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jose-cisneros",
+      "dst": "other:jurisdiction:us-ca"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:jose-cisneros",
+      "dst": "other:actor:ca-state-bar",
+      "source_url": "https://www.calbar.ca.gov/news/board-sends-community-justice-worker-program-recommendations-california-supreme-court"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:ash-kalra",
+      "dst": "other:jurisdiction:us-ca"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ash-kalra",
+      "dst": "other:ca-upl",
+      "source_url": "https://ajud.assembly.ca.gov/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:bryan-bedford",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:bryan-bedford",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://avweb.com/aviation-news/bedford-confirmed-as-faa-administrator/",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jessica-jones",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:jessica-jones",
+      "dst": "other:actor:faa",
+      "source_url": "https://dronexl.co/2026/11/10/faa-auvsi-utm-2-2-million-flights-part-108-type-certification/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:liam-mckenna",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:liam-mckenna",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://dronexl.co/2026/11/10/faa-auvsi-utm-2-2-million-flights-part-108-type-certification/",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jen-kiggans",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:jen-kiggans",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://kiggans.house.gov/posts/rep-kiggans-bill-clears-flight-path-for-civilian-drone-use",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:dina-titus",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:dina-titus",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://www.auvsi.org/news/auvsi-drone-aam-policy-symposium-2026-lawmakers-regulators-and-industry-convene-in-washington-as-drone-and-aam-rules-take-shape/",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:peter-welch",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:peter-welch",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://www.auvsi.org/news/auvsi-drone-aam-policy-symposium-2026-lawmakers-regulators-and-industry-convene-in-washington-as-drone-and-aam-rules-take-shape/",
+      "relevance": "other"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:benjamin-haas",
+      "dst": "other:actor:org:auvsi"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:benjamin-haas",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://lda.gov/filings/public/filing/0edb30e3-8e48-4813-8191-22bfc390c13d/print/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:joel-roberson",
+      "dst": "other:actor:org:skydio"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:joel-roberson",
+      "dst": "other:faa-visual-line-of-sight",
+      "source_url": "https://lda.gov/filings/public/filing/caea1b67-3d0f-4b02-8bd6-027a5b4c6a9a/print/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jacquelyn-suarez",
+      "dst": "other:jurisdiction:us-nj"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:jacquelyn-suarez",
+      "dst": "other:actor:nj-dca-codes",
+      "source_url": "https://www.nj.gov/dca/codes/about.shtml"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:edward-m-smith",
+      "dst": "other:jurisdiction:us-nj"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:edward-m-smith",
+      "dst": "other:actor:nj-dca-codes",
+      "source_url": "https://www.nj.gov/dca/codes/about.shtml"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:rachael-mcnitt",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:rachael-mcnitt",
+      "dst": "other:actor:ceq",
+      "source_url": "https://www.eenews.net/articles/ceq-chair-leaving-the-administration/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:shelley-moore-capito",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:shelley-moore-capito",
+      "dst": "other:nepa-eis",
+      "source_url": "https://www.pbs.org/newshour/amp/politics/senate-reaches-bipartisan-deal-on-permitting-bill-to-speed-approvals-of-new-energy-projects",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:mike-lee",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mike-lee",
+      "dst": "other:nepa-eis",
+      "source_url": "https://www.pbs.org/newshour/amp/politics/senate-reaches-bipartisan-deal-on-permitting-bill-to-speed-approvals-of-new-energy-projects",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:laura-swett",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:laura-swett",
+      "dst": "other:ferc-cluster-study",
+      "source_url": "https://www.tdworld.com/policy/news/55372177/ferc-targets-june-2026-action-on-large-load-interconnection-proceeding",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:david-rosner",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:david-rosner",
+      "dst": "other:ferc-cluster-study",
+      "source_url": "https://www.utilitydive.com/news/senate-confirms-ferc-swett-lacerte/802321/",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:dan-hereth",
+      "dst": "other:jurisdiction:us-wi"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:dan-hereth",
+      "dst": "other:actor:wi-dsps",
+      "source_url": "https://dsps.wi.gov/Pages/AboutDSPS/Leadership.aspx"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jennifer-malak",
+      "dst": "other:jurisdiction:us-wi"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:jennifer-malak",
+      "dst": "other:actor:wi-dsps",
+      "source_url": "https://dsps.wi.gov/Pages/BoardsCouncils/Nursing/Default.aspx"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:tim-kraayenbrink",
+      "dst": "other:jurisdiction:us-ia"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:tim-kraayenbrink",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/docs/publications/LGI/91/attachments/SSB3183.html",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:jesse-green",
+      "dst": "other:jurisdiction:us-ia"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:jesse-green",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://fastdemocracy.com/bill-search/ia/2025-2026/bills/IAB00023469",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:scott-webster",
+      "dst": "other:jurisdiction:us-ia"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:scott-webster",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/committees/committee?ga=91&groupID=698",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:brad-epperly",
+      "dst": "other:actor:org:iowa-newspaper-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:brad-epperly",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:dustin-miller",
+      "dst": "other:actor:org:iowa-newspaper-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:dustin-miller",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:casey-nickel",
+      "dst": "other:actor:org:iowa-newspaper-association"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:casey-nickel",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:cody-carlson",
+      "dst": "other:actor:org:iowa-league-of-cities"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:cody-carlson",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:chelsea-hoye",
+      "dst": "other:actor:org:iowa-league-of-cities"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:chelsea-hoye",
+      "dst": "other:ia-newspaper-notices",
+      "source_url": "https://www.legis.iowa.gov/lobbyist/reports/declarations?ba=SSB3183&ga=91"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:heidi-hedberg",
+      "dst": "other:jurisdiction:us-ak"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:heidi-hedberg",
+      "dst": "other:actor:ak-vital-records",
+      "source_url": "https://health.alaska.gov/en/resources/department-contacts/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:abigail-newby-kew",
+      "dst": "other:jurisdiction:us-ak"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:abigail-newby-kew",
+      "dst": "other:actor:ak-vital-records",
+      "source_url": "https://health.alaska.gov/en/resources/department-contacts/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:pete-waterman",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "HAS_AUTHORITY_OVER",
+      "src": "other:actor:official:pete-waterman",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://nextgov.com/cybersecurity/2026/07/after-hugging-face-breach-fedramp-chief-tells-slow-patch-vendors-stay-out-government/414972"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:edward-forst",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "HAS_AUTHORITY_OVER",
+      "src": "other:actor:official:edward-forst",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://fedramp.gov/2026/authority/law/gsa/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:sam-corcos",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:sam-corcos",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://www.nextgov.com/people/2026/08/gsa-reinstate-fedramp-director-taps-treasury-cio-3-roles/415625/",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:russell-vought",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:russell-vought",
+      "dst": "other:actor:omb",
+      "source_url": "https://www.executivegov.com/?p=273037"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:craig-albright",
+      "dst": "other:actor:org:bsa-the-software-alliance"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:craig-albright",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://lda.gov/filings/public/filing/391b60b5-fbc2-4269-b86a-fdcc6853578e/print/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:bruce-mehlman",
+      "dst": "other:actor:org:knox-systems"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:bruce-mehlman",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://lda.gov/filings/public/filing/0adb66a7-7974-46a9-b90b-c4d7fe2868fa/print/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:nigel-stephens",
+      "dst": "other:actor:org:shared-services-leadership-coalition"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:nigel-stephens",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://lda.gov/filings/public/filing/76abd709-8d59-4922-8f41-6e2d27d24279/print/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:jack-schuler",
+      "dst": "other:actor:org:vanta"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:jack-schuler",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://lda.gov/filings/public/filing/951e4c62-d383-4ebd-814e-1e888472f1e3/print/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:thomas-gann",
+      "dst": "other:actor:org:trellix"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:thomas-gann",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://lda.gov/filings/public/filing/aeb9d11e-62de-4dee-a339-db6ca2ec1ebf/print/"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:shayne-woods",
+      "dst": "other:actor:org:hitrust-services-corp"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:shayne-woods",
+      "dst": "other:fedramp-scope",
+      "source_url": "https://lda.gov/filings/public/filing/1f791d35-0a05-420c-b920-7de188cc8645/print/"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:tony-sauerhoff",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:tony-sauerhoff",
+      "dst": "other:actor:tx-dir",
+      "source_url": "https://dir.texas.gov/news/dir-board-selects-tony-sauerhoff-next-executive-director"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:giovanni-capriglione",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:giovanni-capriglione",
+      "dst": "other:tx-ramp",
+      "source_url": "https://www.house.texas.gov/committees/committee/233",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:tj-white",
+      "dst": "other:jurisdiction:us-tx"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:tj-white",
+      "dst": "other:tx-ramp",
+      "source_url": "https://www.txcc.texas.gov/about",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:rand-paul",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:rand-paul",
+      "dst": "other:fed-advance-payment",
+      "source_url": "https://www.hsgac.senate.gov/about/jurisdiction-and-rules/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:gary-peters",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:gary-peters",
+      "dst": "other:fed-advance-payment",
+      "source_url": "https://www.hsgac.senate.gov/about/",
+      "relevance": "committee_jurisdiction"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:thomas-flagg",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:thomas-flagg",
+      "dst": "other:actor:omb",
+      "source_url": "https://www.executivegov.com/articles/epa-carter-farmer-federal-cio-pick"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:jonathan-pawlow-jr",
+      "dst": "other:actor:org:information-technology-industry-council"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:lobbyist:jonathan-pawlow-jr",
+      "dst": "other:omb-ai-ato",
+      "source_url": "https://lda.gov/filings/public/filing/b876a416-206e-4a6e-a122-f6af0b55269b/print/",
+      "relevance": "represents_affected_client"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:frank-bisignano",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "WORKS_FOR",
+      "src": "other:actor:official:frank-bisignano",
+      "dst": "other:actor:irs",
+      "source_url": "https://www.irs.gov/newsroom/written-testimony-of-the-honorable-frank-j-bisignano-chief-executive-officer-internal-revenue-service-before-the-senate-finance-committee-2026-tax-filing-season-and-irs-operations"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:mike-crapo",
+      "dst": "other:irs-paper-returns",
+      "source_url": "https://www.finance.senate.gov/chairmans-news/crapo-wyden-introduce-bipartisan-irs-administration-reform-package",
+      "relevance": "other"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:ron-wyden",
+      "dst": "other:irs-paper-returns",
+      "source_url": "https://www.finance.senate.gov/chairmans-news/crapo-wyden-introduce-bipartisan-irs-administration-reform-package",
+      "relevance": "other"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:brad-schneider",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:official:brad-schneider",
+      "dst": "other:irs-paper-returns",
+      "source_url": "https://fedscoop.com/house-passes-irs-tech-bills-barcode-act-taxpayer-improvement/",
+      "relevance": "other"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:thaddeus-inge",
+      "dst": "other:actor:org:paychex"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:lobbyist:thaddeus-inge",
+      "dst": "other:irs-paper-returns",
+      "source_url": "https://lda.gov/filings/public/filing/ed12c597-ce69-45f9-ac2c-bbe870b3fedb/print/",
+      "relevance": "represents_affected_client"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:samantha-ford",
+      "dst": "other:actor:org:paychex"
+    },
+    {
+      "type": "RELEVANT_TO",
+      "src": "other:actor:lobbyist:samantha-ford",
+      "dst": "other:irs-paper-returns",
+      "source_url": "https://lda.gov/filings/public/filing/ed12c597-ce69-45f9-ac2c-bbe870b3fedb/print/",
+      "relevance": "represents_affected_client"
+    },
+    {
+      "type": "HOLDS_OFFICE_IN",
+      "src": "other:actor:official:gary-grippo",
+      "dst": "other:jurisdiction:us"
+    },
+    {
+      "type": "HAS_AUTHORITY_OVER",
+      "src": "other:actor:official:gary-grippo",
+      "dst": "other:treasury-eft-waiver",
+      "source_url": "https://www.govinfo.gov/content/pkg/FR-2026-04-29/html/2026-08278.htm"
+    },
+    {
+      "type": "REPRESENTS",
+      "src": "other:actor:lobbyist:deron-hicks",
+      "dst": "other:actor:org:global-payments"
+    },
+    {
+      "type": "LOBBIED_ON",
+      "src": "other:actor:lobbyist:deron-hicks",
+      "dst": "other:treasury-eft-waiver",
+      "source_url": "https://lda.gov/filings/public/filing/6e1b2e3c-55b3-411b-9a48-30b987cade08/print/"
     }
   ]
 }
