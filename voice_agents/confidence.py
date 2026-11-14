@@ -1,16 +1,19 @@
-"""Confidence that a proposed change actually happens, rescored after every call.
+"""Confidence that a proposed change actually happens: before the calls and after them.
 
-A small model reads each finished transcript into structured facts (reached,
+Before calls, the planner's read of each person (where they likely stand, from their
+role and interests) moves the score as each agent is built. After a call, a model
+reads each finished transcript into structured facts (reached,
 position, commitment, sentiment, objections, quotes). Code turns those facts into
 the score with fixed weights, so every point traces back to a factor and a quote:
 
     prior      how hard the change is to make (guidance < regulation < statute)
-    stance     each reached person's stance, mostly call sentiment, weighted by
-               their leverage over the document and how sure the read is
+    stance     each person's stance, weighted by their leverage over the document:
+               from their call (mostly sentiment) once reached, else the planner's
+               expectation at a fraction of the weight
     evidence   few calls barely move the score; more reached people move it more
 
 Each run keeps its state in call_logs/confidence/<run>.json and appends one
-`confidence.v1` snapshot per call. With SUPABASE_URL and SUPABASE_SECRET_KEY set,
+`confidence.v1` snapshot per planned agent and per call. With SUPABASE_URL and SUPABASE_SECRET_KEY set,
 reads go to `call_reads` and snapshots to `confidence_scores`. See docs/confidence.md.
 """
 
@@ -39,7 +42,8 @@ POSITION = {"support": 1.0, "lean_support": 0.5, "undecided": 0.0, "lean_oppose"
 COMMITMENT = {"none": 0.0, "will_consider": 0.1, "follow_up": 0.2, "committed": 0.35}
 # Sentiment carries the most weight while there are only a few calls.
 W_SENTIMENT, W_POSITION = 0.55, 0.45
-EVIDENCE_HALF = 0.6  # reached leverage at which calls get half their full pull
+EVIDENCE_HALF = 0.6  # stance weight at which stances get half their full pull
+EXPECTED_WEIGHT = 0.2  # a pre-call guess counts this much next to a clear call (read_confidence 1)
 FLOOR, CEILING = 5.0, 95.0
 BANDS = [(75, "likely"), (55, "promising"), (40, "toss-up"), (25, "uphill"), (0, "long shot")]
 
@@ -98,12 +102,27 @@ def start(handoff: dict) -> dict:
     MobilizeHandoff.model_validate(handoff)
     key = current_key = run_key(handoff)
     with _lock:
-        state = load(key) or {"key": key, "reads": {}, "history": []}
+        state = load(key) or {"key": key, "reads": {}, "expected": {}, "history": []}
         state["handoff"] = handoff
+        state.setdefault("expected", {})
         if not state["history"]:
             _append(state, {"type": "baseline", "summary": "Before any calls: path difficulty only"})
         _store(state)
     return state
+
+
+def expect(handoff: dict, person_id: str, position: str, reason: str) -> dict | None:
+    """Record the planner's pre-call read of one person and rescore."""
+    with _lock:
+        state = load(run_key(handoff))
+        if not state:
+            return None
+        state["expected"][person_id] = {"position": position, "reason": reason}
+        person = next((p for p in handoff["people"] if p["id"] == person_id), {})
+        snap = _append(state, {"type": "plan", "person_id": person_id,
+                               "summary": f"Planned {person.get('name', 'a call')}: expected {position.replace('_', ' ')}"})
+        _store(state)
+    return snap
 
 
 def read_call(saved: dict, client: openai.OpenAI | None = None) -> CallRead:
@@ -169,8 +188,8 @@ def on_call_async(saved: dict) -> None:
     threading.Thread(target=work, daemon=True).start()
 
 
-def score(handoff: dict, reads: dict) -> dict:
-    """The confidence.v1 body for a handoff and the calls read so far."""
+def score(handoff: dict, reads: dict, expected: dict | None = None) -> dict:
+    """The confidence.v1 body for a handoff, the planner's expectations and the calls read so far."""
     h = MobilizeHandoff.model_validate(handoff)
     doc = h.policy.document_type.lower()
     prior = next((v for k, v in PATH.items() if k in doc), 0.4)
@@ -194,7 +213,8 @@ def score(handoff: dict, reads: dict) -> dict:
         r = latest.get(p.id)
         t = {"person_id": p.id, "name": f"{p.title} {p.name}".strip() if p.title else p.name, "type": p.type,
              "relevance": p.relevance, "leverage": w, "called": r is not None,
-             "reached": bool(r and r["reached"]), "stance": None, "weight": 0.0}
+             "reached": bool(r and r["reached"]), "stance": None, "weight": 0.0, "source": None,
+             "expected": (expected or {}).get(p.id)}
         if r:
             t.update({k: r[k] for k in ("position", "commitment", "sentiment", "engagement", "read_confidence",
                                         "objections", "evidence", "rationale", "conversation_id")})
@@ -202,8 +222,11 @@ def score(handoff: dict, reads: dict) -> dict:
         if r and r["reached"]:
             stance = W_SENTIMENT * r["sentiment"] + W_POSITION * POSITION[r["position"]] + COMMITMENT[r["commitment"]]
             stance = max(-1.0, min(1.0, stance))
-            t["stance"], t["weight"] = round(stance, 3), round(w * r["read_confidence"], 3)
-            weighted += stance * t["weight"]
+            t["stance"], t["weight"], t["source"] = round(stance, 3), round(w * r["read_confidence"], 3), "call"
+        elif t["expected"]:  # not reached yet: the planner's guess, at a fraction of a call's weight
+            t["stance"], t["weight"], t["source"] = POSITION[t["expected"]["position"]], round(w * EXPECTED_WEIGHT, 3), "expected"
+        if t["stance"] is not None:
+            weighted += t["stance"] * t["weight"]
             mass += t["weight"]
         targets.append(t)
 
@@ -214,6 +237,7 @@ def score(handoff: dict, reads: dict) -> dict:
     for t in targets:  # each person's share of the shift, in points
         t["points"] = round(shift * (t["stance"] * t["weight"]) / weighted, 1) if t["stance"] is not None and weighted else 0.0
     reached = sum(t["reached"] for t in targets)
+    by_source = {src: round(sum(t["points"] for t in targets if t["source"] == src), 1) for src in ("expected", "call")}
     objections = sorted({o for t in targets for o in t.get("objections") or []})
     return {
         "version": VERSION,
@@ -223,20 +247,24 @@ def score(handoff: dict, reads: dict) -> dict:
         "score": value, "band": next(b for floor, b in BANDS if value >= floor),
         "factors": [
             {"key": "path", "label": "Path difficulty", "points": prior, "detail": ", ".join(path_notes)},
-            {"key": "stance", "label": "Stance on calls", "points": round(shift, 1),
-             "detail": f"support {support:+.2f} across {reached} reached, at {pull:.0%} pull"},
+            {"key": "expected", "label": "Expected stance", "points": by_source["expected"],
+             "detail": f"{sum(t['source'] == 'expected' for t in targets)} people not reached yet, planner's read"},
+            {"key": "calls", "label": "Stance on calls", "points": by_source["call"],
+             "detail": f"{reached} reached; overall support {support:+.2f} at {pull:.0%} pull"},
         ],
+        "phase": "after_calls" if reads else "before_calls",
         "support": round(support, 3), "evidence_pull": round(pull, 3),
         "coverage": {"people": len(targets), "called": sum(t["called"] for t in targets), "reached": reached},
         "objections": objections,
         "targets": targets,
-        "weights": {"sentiment": W_SENTIMENT, "position": W_POSITION, "evidence_half": EVIDENCE_HALF},
+        "weights": {"sentiment": W_SENTIMENT, "position": W_POSITION, "evidence_half": EVIDENCE_HALF,
+                    "expected": EXPECTED_WEIGHT},
         "reader_model": MODEL,
     }
 
 
 def _append(state: dict, trigger: dict) -> dict:
-    snap = score(state["handoff"], state["reads"])
+    snap = score(state["handoff"], state["reads"], state.get("expected"))
     prev = state["history"][-1]["score"] if state["history"] else None
     snap.update({"seq": len(state["history"]), "trigger": trigger, "computed_at": _now(),
                  "delta": round(snap["score"] - prev, 1) if prev is not None else 0.0})
@@ -251,8 +279,13 @@ def view(key: str | None = None) -> dict | None:
     if not state:
         return None
     hist = state["history"]
+    before = [s for s in hist if s.get("phase", "before_calls") == "before_calls"]
+    after = [s for s in hist if s.get("phase") == "after_calls"]
+    brief = lambda s: {k: s.get(k) for k in ("seq", "score", "band", "delta", "phase", "trigger", "computed_at")}
     return {"key": state["key"], "current": hist[-1] if hist else None,
-            "history": [{k: s[k] for k in ("seq", "score", "band", "delta", "trigger", "computed_at")} for s in hist],
+            "before": brief(before[-1]) if before else None,  # where we stood once every agent was planned
+            "after": brief(after[-1]) if after else None,  # where we stand after the calls so far
+            "history": [brief(s) for s in hist],
             "reading": sorted(_reading)}
 
 
@@ -271,7 +304,8 @@ def _push_snapshot(key: str, snap: dict) -> None:
     _upsert("confidence_scores", {
         "run_key": key, "seq": snap["seq"], "version": VERSION, "run_id": snap["run_id"] or None,
         "policy_id": snap["policy_id"], "policy_title": snap["policy_title"], "jurisdiction": snap["jurisdiction"],
-        "score": snap["score"], "band": snap["band"], "delta": snap["delta"], "support": snap["support"],
+        "score": snap["score"], "band": snap["band"], "delta": snap["delta"], "phase": snap["phase"],
+        "support": snap["support"],
         "coverage": snap["coverage"], "factors": snap["factors"], "targets": snap["targets"],
         "objections": snap["objections"], "trigger": snap["trigger"], "snapshot": snap,
         "computed_at": snap["computed_at"],

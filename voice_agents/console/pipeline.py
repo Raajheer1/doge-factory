@@ -2,8 +2,11 @@
 event at every step so the UI can show what is happening."""
 
 import json
+import os
+import queue
 import time
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 from collections.abc import Callable, Iterator
 from datetime import datetime, timezone
 from importlib import resources
@@ -19,6 +22,7 @@ from ..voices import DEFAULT_VOICE_ID, pick_voice, voice_label
 
 STAGES = ("input", "plan", "persona", "think", "voice", "assemble", "ready")
 THINK_FLUSH = 0.4  # seconds between streamed thinking updates
+PLANNER_WORKERS = int(os.environ.get("PLANNER_WORKERS", "12"))  # call plans written at once
 
 
 class ConsoleAgent(BaseModel):
@@ -140,7 +144,7 @@ def run(demo: dict, *, persona_count: int, next_persona: PersonaSource,
 
 def run_campaign(demo: dict) -> Iterator[dict]:
     """One purpose-built agent per person in a mobilize.v1 handoff, in handoff
-    order (most relevant first). Plans are written one at a time and the model's
+    order (most relevant first). Plans are written in parallel and each model's
     reasoning streams out as `think` events, so the build can be watched."""
     from .. import planner
 
@@ -158,65 +162,91 @@ def run_campaign(demo: dict) -> Iterator[dict]:
                     f"{n} {a}" for a, n in _counts(t["archetype"] for t in targets)),
                 data={"targets": targets, "model": planner.MODEL})
 
-    built = 0
-    for i, person in enumerate(people, start=1):
-        name, role = planner.target_label(person)
-        archetype = planner.archetype_for(person).label
-        yield event("persona", "running", f"Planning call {i}/{len(people)}: {archetype} to {name}",
-                    data={"index": i, "target": name, "archetype": archetype})
-        started = time.monotonic()
-        planned = None
+    # Every plan is written at once; thinking streams out as it happens, and each
+    # finished agent is emitted in handoff order so the graph fills in top to bottom.
+    out: queue.Queue = queue.Queue()
+
+    def work(i: int, person) -> None:
+        started, phase, buffer, flushed = time.monotonic(), "thinking", "", time.monotonic()
         try:
-            # Forward the model's thinking and writing in batches so the UI can follow along.
-            phase, buffer, flushed = "thinking", "", time.monotonic()
             for item in planner.plan_agent(h, person, i - 1):
                 if isinstance(item, planner.PlannedAgent):
-                    planned = item
-                    break
+                    if buffer:
+                        out.put(("think", i, phase, buffer))
+                    out.put(("done", i, item, time.monotonic() - started))
+                    return
                 kind, text = item
                 if kind != phase and buffer:
-                    yield _think(i, name, phase, buffer)
+                    out.put(("think", i, phase, buffer))
                     buffer = ""
                 phase, buffer = kind, buffer + text
                 if time.monotonic() - flushed > THINK_FLUSH:
-                    yield _think(i, name, phase, buffer)
+                    out.put(("think", i, phase, buffer))
                     buffer, flushed = "", time.monotonic()
-            if buffer:
-                yield _think(i, name, phase, buffer)
+            out.put(("done", i, RuntimeError("no plan returned"), 0.0))
         except Exception as exc:  # one bad plan skips that target, not the run
-            yield event("persona", "done", f"Skipped {name}: {exc}", data={"index": i, "skipped": True})
-            continue
-        if planned is None:
-            yield event("persona", "done", f"Skipped {name}: no plan returned", data={"index": i, "skipped": True})
-            continue
-        persona, plan = planned.persona, planned.plan
-        yield event("persona", "done", f"{persona.name}, {plan.caller_role}",
-                    data={"index": i, "seconds": round(time.monotonic() - started, 2),
-                          "persona": persona.model_dump(mode="json"), "plan": plan.model_dump()})
-        yield event("voice", "done",
-                    f"Cast voice {voice_label(persona.voice_id)} for "
-                    f"{persona.gender.value}/{persona.age_band.value}",
-                    data={"voice_id": persona.voice_id})
-        request = agents.generated_call(
-            to_number=to_number, persona=persona, caller_role=plan.caller_role,
-            target_name=name, target_role=role, policy=policy, goal=plan.goal,
-            talking_points=plan.talking_points, objections=plan.objections,
-            first_message=plan.first_message,
-        )
-        request.metadata = {"person_id": person.id, "run_id": h.run_id, "query": h.query,
-                            "policy_id": h.policy.id, "jurisdiction": h.policy.jurisdiction.name}
-        agent = _agent(AgentType.GENERATED, persona.name, name, request, persona,
-                       archetype=planned.archetype.label)
-        built += 1
-        yield event("assemble", "done",
-                    f"Bound {len(request.dynamic_variables)} variables onto "
-                    f"'{agent.template}' as {agent.archetype} for {name}",
-                    agent=agent.model_dump(mode="json"))
+            out.put(("done", i, exc, 0.0))
+
+    for i, person in enumerate(people, start=1):
+        name, _ = planner.target_label(person)
+        yield event("persona", "running", f"Planning call {i}/{len(people)}: {targets[i - 1]['archetype']} to {name}",
+                    data={"index": i, "target": name, "archetype": targets[i - 1]["archetype"]})
+    with ThreadPoolExecutor(max_workers=min(PLANNER_WORKERS, len(people) or 1)) as pool:
+        for i, person in enumerate(people, start=1):
+            pool.submit(work, i, person)
+        finished: dict[int, tuple] = {}
+        built, next_i = 0, 1
+        while next_i <= len(people):
+            kind, i, *rest = out.get()
+            if kind == "think":
+                yield _think(i, planner.target_label(people[i - 1])[0], *rest)
+                continue
+            finished[i] = tuple(rest)
+            while next_i in finished:
+                result, seconds = finished.pop(next_i)
+                person = people[next_i - 1]
+                if isinstance(result, planner.PlannedAgent):
+                    yield from _assemble(h, policy, to_number, next_i, person, result, seconds)
+                    built += 1
+                else:
+                    name = planner.target_label(person)[0]
+                    yield event("persona", "done", f"Skipped {name}: {result}", data={"index": next_i, "skipped": True})
+                next_i += 1
 
     if not built:
         yield event("ready", "error", "No agents were built")
         return
     yield event("ready", "done", f"{built} agents ready to dial {to_number}")
+
+
+def _assemble(h: MobilizeHandoff, policy: Policy, to_number: str, i: int, person, planned,
+              seconds: float) -> Iterator[dict]:
+    """The events for one planned agent: its persona, voice and bound ElevenLabs agent."""
+    from .. import planner
+
+    name, role = planner.target_label(person)
+    persona, plan = planned.persona, planned.plan
+    yield event("persona", "done", f"{persona.name}, {plan.caller_role}",
+                data={"index": i, "person_id": person.id, "seconds": round(seconds, 2),
+                      "persona": persona.model_dump(mode="json"), "plan": plan.model_dump()})
+    yield event("voice", "done",
+                f"Cast voice {voice_label(persona.voice_id)} for "
+                f"{persona.gender.value}/{persona.age_band.value}",
+                data={"voice_id": persona.voice_id})
+    request = agents.generated_call(
+        to_number=to_number, persona=persona, caller_role=plan.caller_role,
+        target_name=name, target_role=role, policy=policy, goal=plan.goal,
+        talking_points=plan.talking_points, objections=plan.objections,
+        first_message=plan.first_message,
+    )
+    request.metadata = {"person_id": person.id, "run_id": h.run_id, "query": h.query,
+                        "policy_id": h.policy.id, "jurisdiction": h.policy.jurisdiction.name}
+    agent = _agent(AgentType.GENERATED, persona.name, name, request, persona,
+                   archetype=planned.archetype.label)
+    yield event("assemble", "done",
+                f"Bound {len(request.dynamic_variables)} variables onto "
+                f"'{agent.template}' as {agent.archetype} for {name}",
+                agent=agent.model_dump(mode="json"))
 
 
 def _think(index: int, name: str, phase: str, text: str) -> dict:

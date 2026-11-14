@@ -7,6 +7,7 @@ the caller, goal and script for that archetype. Everything lands in the fixed
 
 from collections.abc import Iterator
 from dataclasses import dataclass
+from typing import Literal
 
 import os
 
@@ -19,7 +20,7 @@ from .voices import pick_voice
 
 # One tier above the small models; override with PLANNER_MODEL.
 MODEL = os.environ.get("PLANNER_MODEL", "gpt-6.1-terra")
-EFFORT = os.environ.get("PLANNER_EFFORT", "high")  # real reasoning per agent; the build is meant to be watched
+EFFORT = os.environ.get("PLANNER_EFFORT", "medium")  # ~8s per plan; plans run in parallel
 
 
 @dataclass(frozen=True)
@@ -102,6 +103,8 @@ Rules:
 - first_message: one short, casual spoken sentence, under 20 words: first name, who they are, and a
   quick "got a minute?". Example: "Hi, this is Dana, I sell used cars over in Bowling Green, got a quick
   minute?". Save the details for later in the call. Do not mention being an AI.
+- expected_position: an honest pre-call read of this person, not wishful thinking. Agencies that
+  administer a rule often defend it; groups whose members pay the cost of the barrier often back the fix.
 - Everything is spoken aloud on a phone: write it the way a person talks (contractions, plain words),
   never like a memo."""
 
@@ -117,6 +120,10 @@ class CallPlan(BaseModel):
     talking_points: list[str]
     objections: list[str]
     first_message: str
+    expected_position: Literal["support", "lean_support", "undecided", "lean_oppose", "oppose"] = Field(
+        description="before the call, where this person most likely stands on the change, judged from their "
+                    "role, authority and interests (or their clients')")
+    expected_reason: str = Field(description="one sentence on why you expect that")
 
 
 @dataclass

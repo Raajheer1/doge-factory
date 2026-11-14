@@ -114,6 +114,11 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
             for ev in events:
                 if "agent" in ev:
                     store.add(ConsoleAgent(**ev["agent"]))
+                plan = (ev.get("data") or {}).get("plan")
+                if campaign and plan and ev["stage"] == "persona":
+                    # Each planned agent adds the planner's pre-call read of its person to the score.
+                    confidence.expect(data["handoff"], ev["data"]["person_id"],
+                                      plan["expected_position"], plan["expected_reason"])
                 yield f"data: {json.dumps(ev)}\n\n"
 
         return StreamingResponse(stream(), media_type="text/event-stream")

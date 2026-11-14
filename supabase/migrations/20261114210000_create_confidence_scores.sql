@@ -31,6 +31,7 @@ create table public.confidence_scores (
   score double precision not null,
   band text not null,
   delta double precision not null default 0,
+  phase text not null default 'before_calls',  -- before_calls (planner's reads) or after_calls
   support double precision,
   coverage jsonb not null default '{}',
   factors jsonb not null default '[]',
