@@ -30,7 +30,7 @@ export function allAgents(r: RunState): VoiceAgent[] {
 export function restoreRun(agents: VoiceAgent[]): RunState {
   const r = emptyRun();
   for (const a of agents) {
-    if (a.kind === 'legislator') {
+    if (a.kind === 'legislator' || a.kind === 'generated') {
       r.legislators.push(a);
       if (a.persona) r.personas.push({ state: 'done', persona: a.persona, voice: a.voice });
     } else r[a.kind] = a;
@@ -62,12 +62,13 @@ export function applyEvent(r: RunState, ev: PipelineEvent) {
   } else if (ev.stage === 'persona') {
     const open = r.rows.find((row) => row.stage === 'persona' && row.end === null);
     if (open) Object.assign(open, { end: t, message: ev.message, status: 'done' });
-    r.personas[ev.data!.index - 1] = { state: 'running', persona: ev.data!.persona };
+    r.personas[ev.data!.index - 1] = ev.data!.skipped ? { state: 'error' } : { state: 'running', persona: ev.data!.persona };
   } else {
     r.rows.push({ stage: ev.stage, start: t, end: t, message: ev.message, status: ev.status });
   }
 
   if (ev.stage === 'input') r.inputState = 'done';
+  if (ev.stage === 'plan') r.n = ev.data!.targets.length; // one generated agent per person
   if (ev.stage === 'voice') {
     const slot = r.personas.find((p) => p.persona && !p.voice);
     if (slot) {
@@ -76,9 +77,9 @@ export function applyEvent(r: RunState, ev: PipelineEvent) {
     }
   }
   if (ev.agent) {
-    if (ev.agent.kind === 'legislator') r.legislators.push(ev.agent);
+    if (ev.agent.kind === 'legislator' || ev.agent.kind === 'generated') r.legislators.push(ev.agent);
     else r[ev.agent.kind] = ev.agent;
-    if (r.personas.length === r.n && r.personas.every((p) => p.state === 'done')) r.synthState = 'done';
+    if (r.personas.length === r.n && r.personas.every((p) => p.state === 'done' || p.state === 'error')) r.synthState = 'done';
   }
   if (ev.stage === 'ready') {
     r.phase = 'done';

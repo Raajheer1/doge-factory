@@ -5,6 +5,7 @@ import json
 import time
 import uuid
 from collections.abc import Callable, Iterator
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from importlib import resources
 
@@ -17,13 +18,15 @@ from ..models import AgentType, CallRequest, Legislator, Lobbyist, Persona, Poli
 from ..personas import MODEL as PERSONA_MODEL
 from ..voices import DEFAULT_VOICE_ID, pick_voice, voice_label
 
-STAGES = ("input", "persona", "voice", "assemble", "ready")
+STAGES = ("input", "plan", "persona", "voice", "assemble", "ready")
+PLAN_WORKERS = 4  # call plans drafted in parallel
 
 
 class ConsoleAgent(BaseModel):
     id: str
     kind: AgentType
     template: str  # the ElevenLabs agent this one is built on
+    archetype: str = ""  # for generated agents: the kind of call the planner wrote
     caller: str
     target: str
     persona: Persona | None = None
@@ -54,10 +57,10 @@ def sample_personas() -> list[Persona]:
 
 
 def _agent(kind: AgentType, caller: str, target: str, request: CallRequest,
-           persona: Persona | None = None) -> ConsoleAgent:
+           persona: Persona | None = None, archetype: str = "") -> ConsoleAgent:
     voice_id = request.voice_id or DEFAULT_VOICE_ID
     return ConsoleAgent(
-        id=uuid.uuid4().hex[:8], kind=kind, template=agents.AGENTS[kind].name,
+        id=uuid.uuid4().hex[:8], kind=kind, template=agents.AGENTS[kind].name, archetype=archetype,
         caller=caller, target=target, persona=persona,
         voice_id=voice_id, voice=voice_label(voice_id), request=request,
         payload=build_payload(request, "<ELEVENLABS_PHONE_NUMBER_ID>"), created_at=now(),
@@ -136,6 +139,75 @@ def run(demo: dict, *, persona_count: int, next_persona: PersonaSource,
     yield event("ready", "done", f"{persona_count + 2} agents ready to dial {to_number}")
 
 
+def run_campaign(demo: dict) -> Iterator[dict]:
+    """One purpose-built agent per person in a mobilize.v1 handoff, in handoff
+    order (most relevant first). Plans are drafted in parallel but emitted in
+    order, so the roster and the trace line up."""
+    from .. import planner
+
+    h = MobilizeHandoff.model_validate(demo["handoff"])
+    policy = Policy(**demo["policy"])
+    to_number = demo["to_number"]
+    people = h.people
+    targets = [{"id": p.id, "name": planner.target_label(p)[0], "role": planner.target_label(p)[1],
+                "archetype": planner.archetype_for(p).label, "relevance": p.relevance} for p in people]
+
+    yield event("input", "done", f"Received handoff: {policy.title} ({policy.state}), {len(people)} people",
+                data={"policy": policy.model_dump(), "targets": targets})
+    yield event("plan", "done",
+                f"Planned {len(people)} agents: " + ", ".join(
+                    f"{n} {a}" for a, n in _counts(t["archetype"] for t in targets)),
+                data={"targets": targets})
+
+    built = 0
+    with ThreadPoolExecutor(PLAN_WORKERS) as pool:
+        futures = [pool.submit(planner.plan_agent, h, p, i) for i, p in enumerate(people)]
+        for i, (person, future) in enumerate(zip(people, futures), start=1):
+            name, role = planner.target_label(person)
+            yield event("persona", "running", f"Writing call {i}/{len(people)}: "
+                        f"{planner.archetype_for(person).label} to {name}", data={"index": i})
+            started = time.monotonic()
+            try:
+                planned = future.result()
+            except Exception as exc:  # one bad plan skips that target, not the run
+                yield event("persona", "done", f"Skipped {name}: {exc}", data={"index": i, "skipped": True})
+                continue
+            persona, plan = planned.persona, planned.plan
+            yield event("persona", "done", f"{persona.name}, {plan.caller_role}",
+                        data={"index": i, "seconds": round(time.monotonic() - started, 2),
+                              "persona": persona.model_dump(mode="json"), "plan": plan.model_dump()})
+            yield event("voice", "done",
+                        f"Cast voice {voice_label(persona.voice_id)} for "
+                        f"{persona.gender.value}/{persona.age_band.value}",
+                        data={"voice_id": persona.voice_id})
+            request = agents.generated_call(
+                to_number=to_number, persona=persona, caller_role=plan.caller_role,
+                target_name=name, target_role=role, policy=policy, goal=plan.goal,
+                talking_points=plan.talking_points, objections=plan.objections,
+                first_message=plan.first_message,
+            )
+            request.metadata = {"person_id": person.id, "run_id": h.run_id}
+            agent = _agent(AgentType.GENERATED, persona.name, name, request, persona,
+                           archetype=planned.archetype.label)
+            built += 1
+            yield event("assemble", "done",
+                        f"Bound {len(request.dynamic_variables)} variables onto "
+                        f"'{agent.template}' as {agent.archetype} for {name}",
+                        agent=agent.model_dump(mode="json"))
+
+    if not built:
+        yield event("ready", "error", "No agents were built")
+        return
+    yield event("ready", "done", f"{built} agents ready to dial {to_number}")
+
+
+def _counts(items) -> list[tuple[str, int]]:
+    out: dict[str, int] = {}
+    for x in items:
+        out[x] = out.get(x, 0) + 1
+    return list(out.items())
+
+
 def input_from_handoff(handoff: dict, demo: dict) -> dict:
     """Turn a handoff into pipeline input: `mobilize.v1` (docs/mobilize-handoff.md)
     or the Go API's older `{finding: ...}` shape, which carries no people."""
@@ -172,6 +244,7 @@ def input_from_mobilize_v1(h: MobilizeHandoff, demo: dict) -> dict:
     return {
         **demo,
         "source": "handoff",
+        "handoff": h.model_dump(mode="json"),
         "run_id": h.run_id,
         "query": h.query,
         "synthetic": h.policy.synthetic,

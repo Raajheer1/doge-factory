@@ -44,10 +44,15 @@
   const finding = $derived(handoff?.finding ?? null);
   const proposalTitle = $derived(finding?.provision.title ?? demo?.policy.title ?? '');
   const jurisdiction = $derived(finding?.provision.jurisdiction || demo?.policy.state || '');
+  // A handoff with people gets one generated agent per person instead of the fixed set.
+  const people = $derived(handoff?.people ?? []);
+  const campaign = $derived(source === 'claude' && people.length > 0);
   const official = $derived(handoff?.people?.find((p) => p.type === 'official' && p.state));
   const lobbyist = $derived(handoff?.people?.find((p) => p.type === 'lobbyist' && p.clients?.length));
-  const target = $derived(official ? `${official.title || ''} ${official.name}`.trim() : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
+  // A campaign targets everyone in the handoff; otherwise the first official, else the demo target.
+  const target = $derived(campaign ? `${people.length} people` : official ? `${official.title || ''} ${official.name}`.trim() : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
   const sourceLabel = $derived(source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
+  const planned = $derived(campaign ? people.length : count);
   const totalCalls = $derived(agents.reduce((sum, a) => sum + a.conversations.length, 0));
 
   $effect(() => { journey.agentsBuilt = agents.length > 0; });
@@ -76,7 +81,7 @@
     clearTimeout(poll);
     call = null;
     selectedId = null;
-    run = { ...emptyRun(count), phase: 'running' };
+    run = { ...emptyRun(planned), phase: 'running' };
     setRosterOwner(runId ?? 'demo');
     ticker = setInterval(() => (now = Date.now()), 120);
     try {
@@ -177,7 +182,16 @@
             <a class="mz-link" href="/">Pitch a product to mobilize a real proposal <ArrowRight size={14} /></a>
           {/if}
         </div>
-        {#if demo}
+        {#if people.length}
+          <div class="mz-card">
+            <div class="section-kicker">CALL TARGETS <span class="mz-pill">{people.length} FROM THE GRAPH</span></div>
+            <dl class="mz-kv">
+              {#each people as p}<dt>{p.type}</dt><dd>{p.title ? `${p.title} ` : ''}{p.name}<small>{p.relevance.replaceAll('_', ' ')}{p.clients?.length ? ` · for ${p.clients.join(', ')}` : ''}</small></dd>{/each}
+              <dt>Every call rings</dt><dd>{status?.allowed_numbers.join(', ') || demo?.to_number}</dd>
+            </dl>
+            <p class="mz-note">With Claude, each person gets a purpose-built agent. Every call rings your phone and you play them.</p>
+          </div>
+        {:else if demo}
           <div class="mz-card">
             <div class="section-kicker">CALL ROLES <span class="mz-pill">LOCAL DEMO</span></div>
             <dl class="mz-kv">
@@ -194,8 +208,9 @@
         <div class="section-heading mz-build-head">
           <div><div class="section-kicker">BUILD VOICE AGENTS</div><h2>Agent graph</h2><p>Each persona becomes a caller built on an ElevenLabs agent template. Select one to call.</p></div>
           <div class="mz-controls">
-            <div class="mz-field"><span>Personas</span>
-              <div class="mz-stepper"><button aria-label="Fewer personas" disabled={building} onclick={() => (count = Math.max(1, count - 1))}>−</button><output>{count}</output><button aria-label="More personas" disabled={building} onclick={() => (count = Math.min(status?.max_personas ?? 4, count + 1))}>+</button></div></div>
+            {#if campaign}<div class="mz-field"><span>Agents</span><output class="mz-fixed">{people.length}, one per person</output></div>
+            {:else}<div class="mz-field"><span>Personas</span>
+              <div class="mz-stepper"><button aria-label="Fewer personas" disabled={building} onclick={() => (count = Math.max(1, count - 1))}>−</button><output>{count}</output><button aria-label="More personas" disabled={building} onclick={() => (count = Math.min(status?.max_personas ?? 4, count + 1))}>+</button></div></div>{/if}
             <div class="mz-seg" role="radiogroup" aria-label="Persona source">
               <button role="radio" aria-checked={source === 'sample'} class:on={source === 'sample'} disabled={building} onclick={() => (source = 'sample')} title="Pre-written personas, no API cost">Sample</button>
               <button role="radio" aria-checked={source === 'claude'} class:on={source === 'claude'} disabled={building} onclick={() => (source = 'claude')} title="Generate personas live; uses API credits">Claude</button>
@@ -215,7 +230,7 @@
               {#if run.start}<span class="mz-runmeta"><span class="status-dot" class:active-dot={building}></span>{building ? 'Building' : run.phase === 'error' ? 'Failed' : 'Complete'} · {fmtDuration((run.end ?? now) - run.start)} · {run.rows.length} events · {agents.length} agents</span>{/if}
             </div>
             {#if demo}
-              <AgentGraph {run} planned={count} {sourceLabel} {proposalTitle} {jurisdiction} {target} {selectedId} {liveAgentId} onselect={select} />
+              <AgentGraph {run} {planned} {campaign} {sourceLabel} {proposalTitle} {jurisdiction} {target} {selectedId} {liveAgentId} onselect={select} />
             {/if}
           </div>
           <aside class="mz-card mz-inspector">

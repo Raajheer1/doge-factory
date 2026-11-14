@@ -2,16 +2,16 @@
 // persona voice agents and places calls through ElevenLabs.
 import type { Handoff } from './api';
 
-export type AgentKind = 'legislator' | 'survey' | 'lobbyist';
+export type AgentKind = 'legislator' | 'survey' | 'lobbyist' | 'generated';
 export interface Persona { name: string; age: number; gender: string; age_band: string; occupation: string; background: string; personal_impact: string; voice_id: string; synthetic: boolean }
 export interface VoiceAgent {
-  id: string; kind: AgentKind; template: string; caller: string; target: string;
+  id: string; kind: AgentKind; template: string; archetype?: string; caller: string; target: string;
   persona: Persona | null; voice_id: string; voice: string;
   request: { to_number: string; dynamic_variables: Record<string, string> };
   payload: Record<string, unknown> & { agent_id: string };
   created_at: string; conversations: string[];
 }
-export type Stage = 'input' | 'persona' | 'voice' | 'assemble' | 'ready';
+export type Stage = 'input' | 'plan' | 'persona' | 'voice' | 'assemble' | 'ready';
 export interface PipelineEvent { t: string; stage: Stage; status: 'running' | 'done' | 'error'; message: string; data?: Record<string, any>; agent?: VoiceAgent }
 export interface VoiceStatus { elevenlabs_key: boolean; phone_number: boolean; allowed_numbers: string[]; persona_model: string; max_personas: number }
 export interface DemoInput {

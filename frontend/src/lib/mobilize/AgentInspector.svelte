@@ -10,7 +10,7 @@
     ondial: (agent: VoiceAgent) => void; onwatch: (agent: VoiceAgent, conversationId: string) => void;
   } = $props();
 
-  const KIND_LABEL: Record<AgentKind, string> = { legislator: 'Constituent → Legislator', survey: 'Constituent survey', lobbyist: 'Lobbyist pitch' };
+  const KIND_LABEL: Record<AgentKind, string> = { legislator: 'Constituent → Legislator', survey: 'Constituent survey', lobbyist: 'Lobbyist pitch', generated: 'Generated caller' };
   const STATUS: Record<string, string> = { initiated: 'Ringing…', 'in-progress': 'Live', processing: 'Analyzing call…', done: 'Call complete', failed: 'Call failed' };
 
   type Tab = 'call' | 'persona' | 'variables' | 'payload';
@@ -30,9 +30,9 @@
 
 <div class="mz-insp" data-kind={agent.kind}>
   <div class="mz-insp-head">
-    <div class="mz-kind">{KIND_LABEL[agent.kind]}</div>
+    <div class="mz-kind">{agent.archetype || KIND_LABEL[agent.kind]}</div>
     <div class="mz-insp-title">
-      <span class="mz-avatar lg" style="background:{agent.kind === 'legislator' ? avatarColor(agent.caller) : 'var(--k)'}">{initials(agent.caller)}</span>
+      <span class="mz-avatar lg" style="background:{agent.persona ? avatarColor(agent.caller) : 'var(--k)'}">{initials(agent.caller)}</span>
       <div class="mz-min"><strong>{agent.caller}</strong><small>calls {agent.target}</small></div>
       <button class="primary-button mz-call" disabled={live} onclick={() => ondial(agent)}><Phone size={14} />{live ? 'On call' : 'Call'}</button>
     </div>

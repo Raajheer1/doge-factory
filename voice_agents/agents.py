@@ -47,6 +47,15 @@ AGENTS: dict[AgentType, AgentSpec] = {
             "key_legislators", "ask", "disclose_ai",
         ),
     ),
+    AgentType.GENERATED: AgentSpec(
+        agent_id="agent_3301m7dmyfnreghty1h21sxack3z",
+        name="Generated Caller",
+        required_variables=(
+            "caller_name", "caller_role", "caller_background", "personal_stake",
+            "target_name", "target_role", "policy_title", "policy_summary", "fiscal_impact",
+            "goal", "talking_points", "objections", "disclose_ai",
+        ),
+    ),
 }
 
 ORG_NAME = "DOGE Factory"
@@ -128,3 +137,29 @@ def lobbyist_call(
         "disclose_ai": str(disclose_ai).lower(),
     }
     return _finalize(AgentType.LOBBYIST, to_number, variables)
+
+
+def generated_call(
+    *, to_number: str, persona: Persona, caller_role: str, target_name: str, target_role: str,
+    policy: Policy, goal: str, talking_points: list[str], objections: list[str],
+    first_message: str = "", disclose_ai: bool = False,
+) -> CallRequest:
+    variables = {
+        **_policy_vars(policy),
+        "caller_name": persona.name,
+        "caller_role": caller_role,
+        "caller_background": persona.background,
+        "personal_stake": persona.personal_impact,
+        "target_name": target_name,
+        "target_role": target_role,
+        "goal": goal,
+        "talking_points": "\n".join(f"- {t}" for t in talking_points),
+        "objections": "\n".join(f"- {o}" for o in objections),
+        "disclose_ai": str(disclose_ai).lower(),
+    }
+    return _finalize(
+        AgentType.GENERATED, to_number, variables,
+        voice_id=persona.voice_id or None,
+        # The planner's opener only fits when the caller speaks as themselves.
+        first_message=first_message if first_message and not disclose_ai else None,
+    )

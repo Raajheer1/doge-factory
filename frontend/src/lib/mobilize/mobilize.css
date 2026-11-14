@@ -29,6 +29,7 @@
 .mz-field{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700;color:#809087;letter-spacing:.04em}
 .mz-stepper{display:flex;align-items:center;background:#fff;border:1px solid #dfe8e0;border-radius:7px;overflow:hidden}
 .mz-stepper button{border:0;background:none;width:30px;height:32px;color:#566a5d;font-size:15px}
+.mz-fixed{font-size:12px;font-weight:600;color:#3b5546;letter-spacing:0}
 .mz-stepper button:hover:not(:disabled){background:#f4f8f3}
 .mz-stepper output{width:24px;text-align:center;font-weight:700;color:#25392d;font-size:13px}
 .mz-seg{display:inline-flex;background:#eef2ee;border-radius:8px;padding:3px}

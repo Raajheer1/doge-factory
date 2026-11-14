@@ -1,11 +1,11 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { Briefcase, Check, ClipboardList, FileText, Landmark, Mic, Phone, Sparkles } from '@lucide/svelte';
+  import { Briefcase, Check, ClipboardList, FileText, Landmark, Mic, Phone, Sparkles, Wand } from '@lucide/svelte';
   import type { AgentKind, VoiceAgent } from '$lib/voice';
   import { avatarColor, initials, type NodeState, type RunState } from './run';
 
-  let { run, planned, sourceLabel, proposalTitle, jurisdiction, target, selectedId, liveAgentId, onselect }: {
-    run: RunState; planned: number; sourceLabel: string; proposalTitle: string; jurisdiction: string; target: string;
+  let { run, planned, campaign = false, sourceLabel, proposalTitle, jurisdiction, target, selectedId, liveAgentId, onselect }: {
+    run: RunState; planned: number; campaign?: boolean; sourceLabel: string; proposalTitle: string; jurisdiction: string; target: string;
     selectedId: string | null; liveAgentId: string | null; onselect: (id: string) => void;
   } = $props();
 
@@ -13,6 +13,7 @@
     legislator: { label: 'Constituent → Legislator', placeholder: 'Constituent caller', icon: Landmark },
     survey: { label: 'Constituent survey', placeholder: 'Survey caller', icon: ClipboardList },
     lobbyist: { label: 'Lobbyist pitch', placeholder: 'Lobbyist caller', icon: Briefcase },
+    generated: { label: 'Generated caller', placeholder: 'Planned caller', icon: Wand },
   };
 
   let canvas: HTMLDivElement;
@@ -20,7 +21,8 @@
 
   const n = $derived(run.phase === 'idle' && !run.legislators.length ? planned : run.n);
   const doneCount = $derived(run.personas.filter((p) => p.state === 'done').length);
-  const orgRows = $derived<{ kind: AgentKind; agent: VoiceAgent | null; row: number }[]>([
+  // A campaign builds one generated agent per person, with no fixed survey or lobbyist rows.
+  const orgRows = $derived<{ kind: AgentKind; agent: VoiceAgent | null; row: number }[]>(campaign ? [] : [
     { kind: 'survey', agent: run.survey, row: n + 2 },
     { kind: 'lobbyist', agent: run.lobbyist, row: n + 3 },
   ]);
@@ -40,8 +42,10 @@
       list.push([`p${i}`, `a${i}`, run.legislators[i] ? 'done' : slot?.state === 'done' ? 'active' : '']);
     }
     const personasDone = run.personas.length === n && run.personas.every((p) => p.state === 'done') && run.phase === 'running';
-    list.push(['input', 'survey', run.survey ? 'done' : personasDone ? 'active' : '']);
-    list.push(['input', 'lobbyist', run.lobbyist ? 'done' : personasDone && run.survey ? 'active' : '']);
+    if (!campaign) {
+      list.push(['input', 'survey', run.survey ? 'done' : personasDone ? 'active' : '']);
+      list.push(['input', 'lobbyist', run.lobbyist ? 'done' : personasDone && run.survey ? 'active' : '']);
+    }
 
     const box = canvas.getBoundingClientRect();
     const rect = (key: string) => canvas.querySelector<HTMLElement>(`[data-node="${key}"]`)?.getBoundingClientRect();
@@ -71,7 +75,7 @@
   <div class="mz-graph">
     <div class="mz-col-label" style="grid-column:1">Input</div>
     <div class="mz-col-label" style="grid-column:2">Synthesis</div>
-    <div class="mz-col-label" style="grid-column:3">Personas</div>
+    <div class="mz-col-label" style="grid-column:3">{campaign ? 'Callers' : 'Personas'}</div>
     <div class="mz-col-label" style="grid-column:4">Voice agents</div>
 
     <div class="mz-node {run.inputState}" data-node="input" style="grid-column:1;grid-row:2/{n + 4}">
@@ -84,8 +88,8 @@
     <div class="mz-node {run.synthState}" data-node="synth" style="grid-column:2;grid-row:2/{n + 2}">
       {@render badge(run.synthState)}
       <div class="mz-node-head"><span class="mz-ic"><Sparkles size={15} /></span>
-        <div class="mz-min"><div class="mz-name">Persona synthesis</div><div class="mz-sub">{sourceLabel}</div></div></div>
-      <div class="mz-tags"><span class="mz-tag">{doneCount}/{n} personas</span><span class="mz-tag">varied by role, age, gender</span></div>
+        <div class="mz-min"><div class="mz-name">{campaign ? 'Call planner' : 'Persona synthesis'}</div><div class="mz-sub">{sourceLabel}</div></div></div>
+      <div class="mz-tags"><span class="mz-tag">{doneCount}/{n} {campaign ? 'calls' : 'personas'}</span><span class="mz-tag">{campaign ? 'one per person in the handoff' : 'varied by role, age, gender'}</span></div>
       <div class="mz-progress"><i style="width:{n ? (doneCount / n) * 100 : 0}%"></i></div>
     </div>
 
@@ -109,7 +113,7 @@
     {/each}
 
     {#each Array(n) as _, i}
-      {@render agentNode('legislator', run.legislators[i] ?? null, `a${i}`, i + 2)}
+      {@render agentNode(campaign ? 'generated' : 'legislator', run.legislators[i] ?? null, `a${i}`, i + 2)}
     {/each}
     {#each orgRows as o}
       {@render agentNode(o.kind, o.agent, o.kind, o.row)}
@@ -129,9 +133,9 @@
     <button class="mz-node clickable mz-appear" class:selected={selectedId === agent.id} data-node={key} data-kind={kind}
       style="grid-column:4;grid-row:{row}" onclick={() => onselect(agent.id)}>
       {@render badge(liveAgentId === agent.id ? 'live' : 'done')}
-      <div class="mz-kind">{KIND[kind].label}</div>
+      <div class="mz-kind">{agent.archetype || KIND[kind].label}</div>
       <div class="mz-node-head">
-        <span class="mz-avatar" style="background:{kind === 'legislator' ? avatarColor(agent.caller) : 'var(--k)'}">{initials(agent.caller)}</span>
+        <span class="mz-avatar" style="background:{agent.persona ? avatarColor(agent.caller) : 'var(--k)'}">{initials(agent.caller)}</span>
         <div class="mz-min"><div class="mz-name">{agent.caller}</div><div class="mz-sub">→ {agent.target}</div></div>
       </div>
       <div class="mz-tags"><span class="mz-tag"><Mic size={11} />{agent.voice}</span>
