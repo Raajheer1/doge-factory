@@ -1,0 +1,38 @@
+{
+  "_note": "Demo data. All figures and names are placeholders until replaced with real DOGE Factory output.",
+  "to_number": "+19727652721",
+  "policy": {
+    "title": "permit renewal e-signature modernization",
+    "summary": "Kentucky currently requires wet-ink signatures and in-person notarization for many state business permit renewals. The proposed change would allow secure electronic signatures and remote online notarization, while keeping identity verification and audit trails in place to prevent fraud.",
+    "fiscal_impact": "An estimated $2.1 million per year in reduced state processing costs (placeholder).",
+    "state": "Kentucky",
+    "pain_point": "getting a form notarized in person or mailing a wet-ink signature for a state permit or license",
+    "key_legislators": "Senator Smith, who chairs the State Government Committee"
+  },
+  "legislator": {
+    "title": "Senator",
+    "name": "Harsh",
+    "district": "Kentucky's 13th Senate District"
+  },
+  "district_profile": "Covers parts of Lexington and surrounding Fayette County. Mix of university staff, healthcare workers, small food and retail businesses, and horse-farm and agricultural operations on the outskirts.",
+  "persona": {
+    "name": "Maya Thompson",
+    "age": 34,
+    "gender": "female",
+    "age_band": "young",
+    "occupation": "food truck owner",
+    "background": "Maya owns a small food truck business in Lexington, Kentucky and has three employees. She renews several state permits every year and has to take a full day off each time to get forms notarized in person and dropped off with wet-ink signatures.",
+    "personal_impact": "Every renewal costs Maya a full day of lost sales, roughly $800, plus the drive to Frankfort.",
+    "voice_id": "cgSgspJ2msm6clMCkdW9"
+  },
+  "lobbyist": {
+    "name": "Harsh",
+    "firm": "Bluegrass Strategies",
+    "client_name": "the Kentucky Restaurant Association",
+    "client_benefit": "Restaurant owners renew health, food-service, and alcohol permits every year. Each renewal currently costs an owner roughly a day of lost operating time for notarization and paperwork. E-signature renewals would be a concrete, visible win the association can deliver to its members."
+  },
+  "asks": {
+    "legislator": "Ask the senator to co-sponsor or publicly support the permit e-signature modernization bill this session.",
+    "lobbyist": "Get them to raise the e-signature bill with their client and agree to a 20-minute meeting with the DOGE Factory team to review the redline and fiscal brief."
+  }
+}
