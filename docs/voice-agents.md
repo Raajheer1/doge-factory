@@ -87,6 +87,8 @@ constituent data).
 
 ## Call logs
 
+Each finished call also rescores how likely the change is to happen; see [confidence.md](confidence.md).
+
 Finished calls are saved locally in `call_logs/` (gitignored) for analysis:
 
 - `call_logs/<conversation_id>.json`: the full ElevenLabs conversation (transcript with

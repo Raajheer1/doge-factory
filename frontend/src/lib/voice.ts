@@ -13,7 +13,7 @@ export interface VoiceAgent {
 }
 export type Stage = 'input' | 'plan' | 'persona' | 'think' | 'voice' | 'assemble' | 'ready';
 export interface PipelineEvent { t: string; stage: Stage; status: 'running' | 'done' | 'error'; message: string; data?: Record<string, any>; agent?: VoiceAgent }
-export interface VoiceStatus { elevenlabs_key: boolean; phone_number: boolean; allowed_numbers: string[]; persona_model: string; planner_model?: string; max_personas: number }
+export interface VoiceStatus { elevenlabs_key: boolean; phone_number: boolean; allowed_numbers: string[]; persona_model: string; planner_model?: string; confidence_model?: string; max_personas: number }
 export interface DemoInput {
   to_number: string;
   policy: { title: string; summary: string; fiscal_impact: string; state: string; pain_point: string };
@@ -25,6 +25,26 @@ export interface Conversation {
   status: string; duration: number | null; summary: string | null;
   transcript: { role: string; message: string; at: number | null }[];
   data_collection: Record<string, unknown>; evaluation: Record<string, string>;
+}
+
+/** confidence.v1 (docs/confidence.md): how likely the change is, rescored after every call. */
+export interface ConfidenceTarget {
+  person_id: string; name: string; type: string; relevance: string; leverage: number;
+  called: boolean; reached: boolean; stance: number | null; weight: number; points: number; calls?: number;
+  position?: string; commitment?: string; sentiment?: number; engagement?: number; read_confidence?: number;
+  objections?: string[]; evidence?: string[]; rationale?: string; conversation_id?: string;
+}
+export interface ConfidenceTrigger { type: 'baseline' | 'call'; summary: string; conversation_id?: string; person_id?: string }
+export interface ConfidenceSnapshot {
+  version: 'confidence.v1'; seq: number; run_id: string; policy_id: string; policy_title: string; jurisdiction: string;
+  score: number; band: string; delta: number; support: number; evidence_pull: number;
+  factors: { key: string; label: string; points: number; detail: string }[];
+  coverage: { people: number; called: number; reached: number }; objections: string[];
+  targets: ConfidenceTarget[]; trigger: ConfidenceTrigger; computed_at: string; reader_model: string;
+}
+export interface ConfidenceView {
+  key: string | null; current: ConfidenceSnapshot | null; reading: string[];
+  history: Pick<ConfidenceSnapshot, 'seq' | 'score' | 'band' | 'delta' | 'trigger' | 'computed_at'>[];
 }
 
 const base = (import.meta.env.VITE_VOICE_API_BASE_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');
@@ -42,6 +62,7 @@ export const getDemoInput = () => request<DemoInput>('/api/input');
 export const listAgents = () => request<VoiceAgent[]>('/api/agents');
 export const placeCall = (agentId: string) => request<{ conversation_id: string }>(`/api/agents/${encodeURIComponent(agentId)}/call`, { method: 'POST' });
 export const getConversation = (id: string) => request<Conversation>(`/api/conversations/${encodeURIComponent(id)}`);
+export const getConfidence = (run?: string | null) => request<ConfidenceView>(`/api/confidence${run ? `?run=${encodeURIComponent(run)}` : ''}`);
 
 /** Run the pipeline, calling `onEvent` for each streamed trace event. */
 export async function runPipeline(body: { personas: number; source: 'sample' | 'claude'; handoff: Handoff | null }, onEvent: (e: PipelineEvent) => void) {
