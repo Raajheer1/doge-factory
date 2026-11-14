@@ -1,7 +1,7 @@
 """Sourced HUD EIV pilot in a dedicated HydraDB BYOG collection.
 
-Input is a reviewed manifest of official source URLs, not the research notes or
-actor CSV themselves. PDF extraction requires pypdf; CFR sections use govinfo XML.
+Input is official source URLs and an actor CSV whose selected entries are
+cross-checked against official listings. PDF extraction requires pypdf.
 """
 
 import csv
@@ -29,6 +29,8 @@ SOURCES = (
 NOTICE_URL = "https://www.hud.gov/sites/dfiles/OCHCO/documents/18-18pihn.pdf"
 DIRECTORY_URL = "https://www.hud.gov/contactus/principal-directory"
 TEAM_URL = "https://www.hud.gov/sites/dfiles/PIH/documents/EIV%20TEAM%20CONTACTS.pdf"
+HOUSE_URL = "https://financialservices.house.gov/119th-congress-subcommittees/subcommittee-on-housing-and-insurance.htm"
+SENATE_URL = "https://www.senate.gov/general/committee_membership/committee_memberships_SSBK.htm"
 NOTICE_ID = "hud-eiv:notice:pih-2018-18"
 JURISDICTION_ID = "hud-eiv:jurisdiction:us"
 HUD_ID = "hud-eiv:actor:hud"
@@ -94,6 +96,90 @@ def _node(label, node_id, **properties):
 
 def _edge(kind, src, dst, **properties):
     return {"type": kind, "src": src, "dst": dst, **properties}
+
+
+def _actor_id(name):
+    return "hud-eiv:actor:" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+def _senate_listing(name, state):
+    """The official Senate listing prints 'Last, First (ST)', not the roster order."""
+    surname_parts = {"Chris Van Hollen": 2, "Lisa Blunt Rochester": 2}
+    parts = name.split()
+    n = surname_parts.get(name, 1)
+    given, last = " ".join(parts[:-n]), " ".join(parts[-n:])
+    return f"{last}, {given} ({state})"
+
+
+def _add_public_actors(nodes, edges, sources, roster, download):
+    house_rows = [row for row in roster if row["organization"] == "U.S. House of Representatives"]
+    senate_rows = [row for row in roster if row["organization"] == "U.S. Senate"]
+    lobbyist_rows = [row for row in roster if row["actor_type"] == "lobbyist"]
+
+    house_bytes, senate_bytes = download(HOUSE_URL), download(SENATE_URL)
+    house = _directory_names(house_bytes)
+    senate = _directory_names(senate_bytes)
+    if "119th CONGRESS" not in house or "Subcommittee on Housing and Insurance" not in house:
+        raise ValueError("House source does not identify the expected subcommittee")
+    if "Subcommittee on Housing, Transportation, and Community Development" not in senate:
+        raise ValueError("Senate source does not identify the expected subcommittee")
+    # Limit membership checks to the subcommittee, not the entire chamber or committee.
+    house = house.split("119th CONGRESS", 1)[1].split("Subscribe", 1)[0]
+    senate = senate.rsplit("Subcommittee on Housing, Transportation, and Community Development", 1)[1]
+    senate = senate.split("Subcommittee on National Security", 1)[0]
+    for row in house_rows:
+        if row["source_url"] != HOUSE_URL or row["name"].casefold() not in house.casefold():
+            raise ValueError(f"House roster member not confirmed: {row['name']}")
+    for row in senate_rows:
+        # The page lists both the committee and its subcommittee. Strip the
+        # header before matching, then check the 'Last, First (state)' entry.
+        listing = _senate_listing(row["name"], row["jurisdiction"])
+        if row["source_url"] != SENATE_URL or listing.casefold() not in senate.casefold():
+            raise ValueError(f"Senate roster member not confirmed: {row['name']}")
+
+    filings = {}
+    filing_bytes = {}
+    for row in lobbyist_rows:
+        url = row["source_url"]
+        if url not in filings:
+            if not url.startswith("https://lda.gov/filings/public/filing/"):
+                raise ValueError(f"unexpected lobbying disclosure URL: {url}")
+            filing_bytes[url] = download(url)
+            filing = _directory_names(filing_bytes[url])
+            if "LOBBYING REPORT" not in filing or "LOBBYING ACTIVITY" not in filing:
+                raise ValueError(f"unexpected lobbying disclosure: {url}")
+            filings[url] = filing
+        filing = filings[url]
+        if row["organization"].casefold() not in filing.casefold() or not re.search(
+            r"\b" + r"\s+".join(map(re.escape, row["name"].casefold().split())) + r"\b",
+            filing.casefold(),
+        ):
+            raise ValueError(f"lobbyist/client not confirmed in filing: {row['name']}")
+
+    for url, raw in ((HOUSE_URL, house_bytes), (SENATE_URL, senate_bytes), *filing_bytes.items()):
+        sources[url] = hashlib.sha256(raw).hexdigest()
+
+    for row in (*house_rows, *senate_rows, *lobbyist_rows):
+        nodes.append(_node(
+            "Actor", _actor_id(row["name"]), name=row["name"], type=row["actor_type"],
+            role=row["role"], organization=row["organization"],
+            source_url=row["source_url"], verified_at=row["source_date_or_status"],
+            public_contact=row["public_email"] or row["public_phone"],
+        ))
+
+    for organization in sorted({row["organization"] for row in lobbyist_rows}):
+        example = next(row for row in lobbyist_rows if row["organization"] == organization)
+        nodes.append(_node(
+            "Actor", _actor_id(organization), name=organization, type="organization",
+            role="Historical lobbying registrant/client", organization=organization,
+            source_url=example["source_url"], verified_at=example["source_date_or_status"],
+            public_contact="",
+        ))
+    for row in lobbyist_rows:
+        edges.append(_edge("REPRESENTS", _actor_id(row["name"]), _actor_id(row["organization"])))
+    # The filings predate this HUD notice. Committee membership concerns a
+    # legislative route, not authority to amend an agency notice. No LOBBIED_ON
+    # or HAS_AUTHORITY_OVER edge is supported by these sources.
 
 
 def build_hud_pilot(roster_path=None, download=None):
@@ -208,7 +294,7 @@ def build_hud_pilot(roster_path=None, download=None):
             elif row["name"].casefold() not in team_text:
                 continue
             source_url = DIRECTORY_URL if row["organization"] == "HUD" else TEAM_URL
-            actor_id = "hud-eiv:actor:" + re.sub(r"[^a-z0-9]+", "-", row["name"].lower()).strip("-")
+            actor_id = _actor_id(row["name"])
             nodes.append(_node("Actor", actor_id, name=row["name"], type=row["actor_type"],
                                role=row["role"], organization=row["organization"],
                                source_url=source_url, verified_at=row["source_date_or_status"],
@@ -218,6 +304,7 @@ def build_hud_pilot(roster_path=None, download=None):
             if row["actor_type"] == "official" and row["organization"] == "HUD":
                 edges.append(_edge("HOLDS_OFFICE_IN", actor_id, JURISDICTION_ID))
                 edges.append(_edge("WORKS_FOR", actor_id, HUD_ID, source_url=DIRECTORY_URL))
+        _add_public_actors(nodes, edges, sources, roster, download)
     fixture = validate_fixture({"nodes": nodes, "relationships": edges})
     return fixture, sources
 
@@ -231,7 +318,7 @@ def import_hud_pilot(graph, roster_path):
 def main():
     parser = argparse.ArgumentParser(description="Import the verified HUD EIV pilot to HydraDB")
     parser.add_argument("--roster", type=Path, required=True,
-                        help="Path to HUD-EIV-Actor-Roster.csv; only independently verified HUD rows are loaded")
+                        help="Path to HUD-EIV-Actor-Roster.csv; verified HUD, congressional and historical filing rows are loaded")
     parser.add_argument("--collection", default="hud_eiv_pilot")
     args = parser.parse_args()
     graph = HousingGraph(
