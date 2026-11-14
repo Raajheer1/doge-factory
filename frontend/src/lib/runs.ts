@@ -13,12 +13,13 @@ export async function loadRun(id: string): Promise<Run> {
 }
 
 /** Real runs (if the API is up) plus demo problems. `apiOnline` is false when the Go API is unreachable. */
-export async function loadQueue(): Promise<{ runs: Run[]; apiOnline: boolean }> {
+export async function loadQueue(): Promise<{ runs: Run[]; apiOnline: boolean; loadError: string }> {
   let real: Run[] = [];
   let apiOnline = true;
-  try { real = await listRuns(); } catch { apiOnline = false; }
+  let loadError = '';
+  try { real = await listRuns(); } catch (e) { apiOnline = false; loadError = e instanceof Error ? e.message : 'Could not load saved runs.'; }
   const runs = [...real, ...listDemoRuns()].sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
-  return { runs, apiOnline };
+  return { runs, apiOnline, loadError };
 }
 
 export async function approveFinding(runId: string, findingId: string) {

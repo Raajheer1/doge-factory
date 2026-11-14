@@ -7,6 +7,8 @@
   import AgentGraph from '$lib/mobilize/AgentGraph.svelte';
   import { applyEvent, emptyRun } from '$lib/mobilize/run';
   import '$lib/mobilize/mobilize.css';
+  import { loadRun, TERMINAL_STATUSES } from '$lib/runs';
+  import type { Run } from '$lib/api';
   import './autopilot.css';
 
   let { runId, live }: { runId: string; live: boolean } = $props();
@@ -19,16 +21,25 @@
   let error = $state('');
   let replayTimer: ReturnType<typeof setTimeout> | undefined;
   let recorded = $state<APEvent[]>([]);
+  let actualRun = $state<Run | null>(null);
+  let runError = $state('');
+  let disposed = false;
+
+  async function refreshRun() {
+    try { const next = await loadRun(runId); if (!disposed) { actualRun = next; runError = ''; } }
+    catch (e) { if (!disposed) runError = e instanceof Error ? e.message : 'Could not load this run.'; }
+  }
 
   onMount(() => {
     enterRun(runId);
-    journey.stage = 'audit';
+    journey.stage = 'autopilot';
+    void refreshRun();
     recorded = loadLog(runId);
     // A live start only when asked (?live=1) and nothing was recorded yet; otherwise show the record.
     if (live && !recorded.length) startLive();
     else if (recorded.length) startReplay();
   });
-  onDestroy(() => { stopped = true; clearTimeout(replayTimer); });
+  onDestroy(() => { disposed = true; stopped = true; clearTimeout(replayTimer); });
 
   async function startLive() {
     clearTimeout(replayTimer);
@@ -44,6 +55,7 @@
     } finally {
       recorded = loadLog(runId);
       mode = 'idle';
+      void refreshRun();
     }
   }
 
@@ -93,18 +105,19 @@
     return r;
   });
   const liveAgentId = $derived(callAgent && stateOf('call') === 'running' ? callAgent.id : null);
-  const query = $derived(audit?.query ?? '');
+  const query = $derived(actualRun?.query ?? audit?.query ?? '');
 
-  // Mirror progress into the shared journey so the sidebar stepper follows along.
+  // Replay describes historical events; navigation reflects the current run,
+  // never the progressively replayed approval state.
   $effect(() => {
-    const st = (k: APStage) => stateOf(k);
     journey.query = query;
-    journey.analysisDone = st('audit') === 'done' || st('audit') === 'error';
-    journey.hasFindings = !!audit?.findings?.length;
-    journey.findingId = chosen?.id ?? null;
-    journey.approved = st('redline') === 'done';
-    journey.agentsBuilt = agents.length > 0;
-    journey.stage = st('mobilize') !== 'pending' ? 'mobilize' : st('select') !== 'pending' ? 'redline' : 'audit';
+    if (actualRun) {
+      journey.analysisDone = TERMINAL_STATUSES.includes(actualRun.status);
+      journey.hasFindings = actualRun.findings.length > 0;
+      journey.findingId = actualRun.selected_finding_id ?? null;
+      journey.approved = !!actualRun.selected_finding_id;
+    }
+    journey.stage = 'autopilot';
   });
 
   const offset = (e: APEvent) => `+${((e.t - start) / 1000).toFixed(1)}s`;
@@ -141,6 +154,7 @@
   <section class="ap-goal" aria-label="Analysis goal"><span class="mini-label">ANALYSIS GOAL</span><ExpandableText text={query} limit={240}/></section>
 {/if}
 
+{#if runError}<div class="alert-error" role="alert"><CircleAlert size={18}/><div><strong>Could not load current run</strong><p>{runError} Recorded events may be out of date.</p></div><button onclick={refreshRun}>Retry</button></div>{/if}
 {#if error}<div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>Autopilot stopped</strong><p>{error}</p></div></div>{/if}
 {#if mode === 'idle' && !events.length}
   <div class="empty-state"><Zap size={22} /><h3>No autopilot record for this run yet</h3><p>Start autopilot to audit, draft and build agents. You will be asked to confirm approval and any real call.</p></div>
@@ -199,8 +213,8 @@
 </ol>
 
 {#if finished}
-  <div class="ap-links">
-    {#if chosen}<a class="ghost-button" href={redlinePath(runId, chosen.id)}>Open Redline <ArrowRight size={14} /></a>{/if}
+  <div class="ap-links" aria-label="Continue reviewing this run">
+    {#if chosen}<a class="ghost-button" href={redlinePath(runId, chosen.id)}>Review in Redline <ArrowRight size={14} /></a>{/if}
     {#if agents.length}<a class="ghost-button" href={mobilizePath(runId)}>Open Mobilize console <ArrowRight size={14} /></a>{/if}
   </div>
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Check, Inbox, Layers3, Lock, ShieldCheck } from '@lucide/svelte';
-  import { STAGES, journey, mobilizePath, redlinePath, runPath, type StageKey } from '$lib/journey.svelte';
+  import { Check, Inbox, Layers3, Lock, ShieldCheck, Zap } from '@lucide/svelte';
+  import { STAGES, autopilotPath, journey, mobilizePath, redlinePath, runPath, type StageKey } from '$lib/journey.svelte';
 
   const order: string[] = STAGES.map((s) => s.key);
   const currentIndex = $derived(order.indexOf(journey.stage));
@@ -40,7 +40,7 @@
     {#each STAGES as stage, i}
       {@const link = href(stage.key)}
       {@const current = stage.key === journey.stage}
-      {@const done = !current && i < currentIndex && !!link && !!journey.runId}
+      {@const done = journey.stage === 'autopilot' ? (stage.key === 'audit' && journey.analysisDone || stage.key === 'redline' && journey.approved) : !current && i < currentIndex && !!link && !!journey.runId}
       {#if link}
         <li><a class="step" class:current class:done href={link} aria-current={current ? 'step' : undefined}>
           <span class="step-dot">{#if done}<Check size={11} strokeWidth={3} />{:else}{i + 1}{/if}</span>
@@ -54,6 +54,11 @@
       {/if}
     {/each}
   </ol>
+
+  {#if journey.runId}
+    <div class="side-section">AUTOMATION</div>
+    <a class="side-link" class:side-current={journey.stage === 'autopilot'} href={autopilotPath(journey.runId)} aria-current={journey.stage === 'autopilot' ? 'page' : undefined}><Zap size={17} /> Autopilot</a>
+  {/if}
 
   <div class="side-bottom">
     <div class="side-note"><span class="note-icon"><ShieldCheck size={17} /></span>
