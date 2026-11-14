@@ -1,0 +1,24 @@
+export interface Provision { id: string; title: string; citation?: string; jurisdiction?: string; topic?: string; text: string; source_url?: string; effective_date?: string; related_context?: string[]; synthetic?: boolean }
+export interface Finding { id: string; provision: Provision; source_passage: string; barrier: string; desired_change: string; justification: string; safeguards?: string[]; uncertainties?: string[]; amendment: string; gherkin: string }
+export interface Run { id: string; query: string; status: 'queued' | 'running' | 'completed' | 'completed_with_errors' | 'failed'; stage: string; retrieved: number; reviewed: number; findings: Finding[]; errors?: string[]; created_at?: string; selected_finding_id?: string }
+export interface Handoff { status: string; message: string; run_id: string; query: string; finding: Finding }
+const base = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8080').replace(/\/$/, '');
+const statuses = ['queued', 'running', 'completed', 'completed_with_errors', 'failed'];
+function isObject(x: unknown): x is Record<string, unknown> { return typeof x === 'object' && x !== null && !Array.isArray(x); }
+function optionalString(x: unknown) { return x === undefined || x === null || typeof x === 'string'; }
+function isFinding(x: unknown): x is Finding { return isObject(x) && typeof x.id === 'string' && isObject(x.provision) && typeof x.provision.id === 'string' && typeof x.provision.title === 'string' && typeof x.provision.text === 'string' && ['citation','jurisdiction','topic','source_url','effective_date'].every(k => optionalString((x.provision as Record<string, unknown>)[k])) && (x.provision.synthetic === undefined || typeof x.provision.synthetic === 'boolean') && ['source_passage','barrier','desired_change','justification','amendment','gherkin'].every(k => typeof x[k] === 'string'); }
+function isRun(x: unknown): x is Run { return isObject(x) && typeof x.id === 'string' && typeof x.query === 'string' && typeof x.status === 'string' && statuses.includes(x.status) && typeof x.stage === 'string' && typeof x.retrieved === 'number' && typeof x.reviewed === 'number' && optionalString(x.created_at) && optionalString(x.selected_finding_id) && Array.isArray(x.findings) && x.findings.every(isFinding); }
+async function request(path: string, init?: RequestInit): Promise<unknown> {
+  let response: Response;
+  try { response = await fetch(new URL(path, base + '/'), init); } catch { throw new Error('Could not connect to the API. Check that the backend is running and try again.'); }
+  const raw = await response.text(); let data: unknown;
+  try { data = raw ? JSON.parse(raw) : null; } catch { if (response.ok) throw new Error('The API returned an invalid response. Please try again.'); }
+  if (!response.ok) throw new Error(isObject(data) && typeof data.error === 'string' ? data.error : `API request failed (HTTP ${response.status}). Please try again.`);
+  return data;
+}
+const json = (body: object): RequestInit => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+export async function createRun(query: string) { const data = await request('/api/runs', json({ query })); if (!isObject(data) || typeof data.id !== 'string' || typeof data.status_url !== 'string') throw new Error('The API returned an invalid run response.'); const url = new URL(data.status_url, base + '/'); if (url.origin !== new URL(base).origin) throw new Error('The API returned an invalid status URL.'); return { id: data.id, statusUrl: url.href }; }
+export async function getRun(path: string): Promise<Run> { const data = await request(path); if (!isRun(data)) throw new Error('The API returned invalid run data. Please try again.'); return data; }
+export async function listRuns(): Promise<Run[]> { const data = await request('/api/runs'); if (!Array.isArray(data) || !data.every(isRun)) throw new Error('The API returned invalid run history.'); return data; }
+export async function approve(runId: string, findingId: string) { const data = await request(`/api/runs/${encodeURIComponent(runId)}/review`, json({ finding_id: findingId })); if (!isObject(data) || data.status !== 'approved' || typeof data.selected_finding_id !== 'string' || data.selected_finding_id !== findingId) throw new Error('The API returned an invalid approval response.'); return data.selected_finding_id; }
+export async function mobilize(runId: string): Promise<Handoff> { const data = await request(`/api/runs/${encodeURIComponent(runId)}/mobilize`, { method: 'POST' }); if (!isObject(data) || typeof data.status !== 'string' || typeof data.message !== 'string' || typeof data.run_id !== 'string' || typeof data.query !== 'string' || !isFinding(data.finding)) throw new Error('The API returned an invalid handoff response.'); return data as unknown as Handoff; }
