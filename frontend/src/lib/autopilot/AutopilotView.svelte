@@ -19,7 +19,7 @@
 
   onMount(() => {
     enterRun(runId);
-    journey.stage = 'audit';
+    journey.stage = 'autopilot';
     recorded = loadLog(runId);
     // A live start only when asked (?live=1) and nothing was recorded yet; otherwise show the record.
     if (live && !recorded.length) startLive();
@@ -85,12 +85,12 @@
   $effect(() => {
     const st = (k: APStage) => stateOf(k);
     journey.query = query;
-    journey.analysisDone = st('audit') === 'done' || st('audit') === 'error';
+    journey.analysisDone = st('audit') === 'done';
     journey.hasFindings = !!audit?.findings?.length;
     journey.findingId = chosen?.id ?? null;
     journey.approved = st('redline') === 'done';
     journey.agentsBuilt = agents.length > 0;
-    journey.stage = st('mobilize') !== 'pending' ? 'mobilize' : st('select') !== 'pending' ? 'redline' : 'audit';
+    journey.stage = 'autopilot';
   });
 
   const offset = (e: APEvent) => `+${((e.t - start) / 1000).toFixed(1)}s`;
@@ -181,8 +181,8 @@
 </ol>
 
 {#if finished}
-  <div class="ap-links">
-    {#if chosen}<a class="ghost-button" href={redlinePath(runId, chosen.id)}>Open Redline <ArrowRight size={14} /></a>{/if}
+  <div class="ap-links" aria-label="Continue reviewing this run">
+    {#if chosen}<a class="ghost-button" href={redlinePath(runId, chosen.id)}>Review in Redline <ArrowRight size={14} /></a>{/if}
     {#if agents.length}<a class="ghost-button" href={mobilizePath(runId)}>Open Mobilize console <ArrowRight size={14} /></a>{/if}
   </div>
 {/if}

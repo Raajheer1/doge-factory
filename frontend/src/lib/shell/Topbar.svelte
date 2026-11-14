@@ -1,7 +1,7 @@
 <script lang="ts">
   import { STAGES, journey, runPath } from '$lib/journey.svelte';
 
-  const stageLabel = $derived(journey.stage === 'queue' ? 'Problem queue' : STAGES.find((s) => s.key === journey.stage)?.label ?? '');
+  const stageLabel = $derived(journey.stage === 'queue' ? 'Problem queue' : journey.stage === 'autopilot' ? 'Autopilot' : STAGES.find((s) => s.key === journey.stage)?.label ?? '');
   const shortQuery = $derived(journey.query.length > 48 ? journey.query.slice(0, 47) + '…' : journey.query);
 </script>
 

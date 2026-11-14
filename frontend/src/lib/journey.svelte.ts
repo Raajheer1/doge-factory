@@ -4,7 +4,7 @@
 import type { VoiceStatus } from './voice';
 
 export type StageKey = 'audit' | 'redline' | 'mobilize';
-export type PageKey = StageKey | 'queue';
+export type PageKey = StageKey | 'queue' | 'autopilot';
 
 export const STAGES: { key: StageKey; label: string; hint: string }[] = [
   { key: 'audit', label: 'Audit', hint: 'Find the policy in the way' },
@@ -38,3 +38,4 @@ export const runPath = (id: string) => `/runs/${encodeURIComponent(id)}`;
 export const redlinePath = (id: string, findingId?: string | null) =>
   `${runPath(id)}/redline${findingId ? `?finding=${encodeURIComponent(findingId)}` : ''}`;
 export const mobilizePath = (id: string) => `${runPath(id)}/mobilize`;
+export const autopilotPath = (id: string) => `${runPath(id)}/autopilot`;
