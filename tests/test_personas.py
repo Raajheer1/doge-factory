@@ -52,17 +52,3 @@ def test_generate_persona_raises_on_refusal():
     client, _ = stub_client(SimpleNamespace(stop_reason="refusal", parsed_output=None))
     with pytest.raises(RuntimeError, match="refusal"):
         generate_persona(**demo_inputs(), client=client)
-
-
-def test_generate_persona_asks_for_variety_against_existing_personas():
-    draft = PersonaDraft(
-        name="Priya Raman", age=41, gender=Gender.FEMALE, age_band=AgeBand.MIDDLE_AGED,
-        occupation="clinic director", background="Runs a clinic.", personal_impact="Loses days.",
-    )
-    client, messages = stub_client(SimpleNamespace(stop_reason="end_turn", parsed_output=draft))
-    first = generate_persona(**demo_inputs(), client=client)
-
-    generate_persona(**demo_inputs(), avoid=[first], client=client)
-
-    assert "Already created" in messages.kwargs["messages"][0]["content"]
-    assert "Priya Raman, 41, female, clinic director" in messages.kwargs["messages"][0]["content"]

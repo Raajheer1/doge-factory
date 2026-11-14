@@ -12,7 +12,7 @@ dependencies = [
 
 [project.optional-dependencies]
 console = ["fastapi>=0.115", "uvicorn>=0.30"]
-dev = ["pytest>=8", "fastapi>=0.115", "uvicorn>=0.30"]
+dev = ["pytest>=8"]
 
 [project.scripts]
 voice-agents = "voice_agents.cli:main"
@@ -25,7 +25,7 @@ build-backend = "setuptools.build_meta"
 include = ["voice_agents*"]
 
 [tool.setuptools.package-data]
-voice_agents = ["fixtures/*.json", "console/static/*"]
+voice_agents = ["fixtures/*.json"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

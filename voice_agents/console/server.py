@@ -1,15 +1,15 @@
-"""FastAPI app for the Mobilize console. Local only: run `voice-agents console`."""
+"""Mobilize API for the SvelteKit frontend (/mobilize). Local only: run
+`voice-agents console`."""
 
 import json
 import os
 import threading
-from importlib import resources
 from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse, StreamingResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from .. import calls
@@ -17,7 +17,7 @@ from ..cli import load_demo
 from . import pipeline
 from .pipeline import ConsoleAgent
 
-STATIC = Path(str(resources.files("voice_agents").joinpath("console/static")))
+FRONTEND_ORIGINS = ["http://127.0.0.1:5173", "http://localhost:5173"]
 MAX_PERSONAS = 4
 
 
@@ -52,17 +52,16 @@ class Store:
 class PipelineRun(BaseModel):
     personas: int = Field(default=3, ge=1, le=MAX_PERSONAS)
     source: str = Field(default="sample", pattern="^(claude|sample)$")
+    handoff: dict | None = None  # POST /api/runs/:id/mobilize response from the Go API
 
 
 def create_app(*, store_path: Path | None = None, demo: dict | None = None,
                sample_pause: float = 0.6) -> FastAPI:
-    app = FastAPI(title="DOGE Factory · Mobilize console")
+    app = FastAPI(title="DOGE Factory · Mobilize API")
+    app.add_middleware(CORSMiddleware, allow_origins=FRONTEND_ORIGINS,
+                       allow_methods=["*"], allow_headers=["*"])
     store = Store(store_path)
     demo = demo or load_demo()
-
-    @app.get("/")
-    def index():
-        return FileResponse(STATIC / "index.html")
 
     @app.get("/api/status")
     def status():
@@ -89,14 +88,18 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
 
     @app.post("/api/pipeline")
     def run_pipeline(body: PipelineRun):
+        try:
+            data = pipeline.input_from_handoff(body.handoff, demo) if body.handoff else demo
+        except (KeyError, TypeError) as exc:
+            raise HTTPException(422, f"Handoff is missing {exc}")
         if body.source == "claude":
-            source, label, pause = pipeline.claude_source(demo), pipeline.CLAUDE_LABEL, 0.0
+            source, label, pause = pipeline.claude_source(data), pipeline.CLAUDE_LABEL, 0.0
         else:
             source, label, pause = pipeline.sample_source(), "sample personas", sample_pause
 
         def stream():
             store.clear()  # each run replaces the roster shown in the graph
-            for ev in pipeline.run(demo, persona_count=body.personas, next_persona=source,
+            for ev in pipeline.run(data, persona_count=body.personas, next_persona=source,
                                    source_label=label, pause=pause):
                 if "agent" in ev:
                     store.add(ConsoleAgent(**ev["agent"]))
@@ -149,5 +152,4 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
             },
         }
 
-    app.mount("/static", StaticFiles(directory=STATIC), name="static")
     return app

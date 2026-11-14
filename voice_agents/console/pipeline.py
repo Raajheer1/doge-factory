@@ -80,7 +80,8 @@ def run(demo: dict, *, persona_count: int, next_persona: PersonaSource,
     target = f"{legislator.title} {legislator.name}"
 
     yield event("input", "done", f"Received Draft output: {policy.title} ({policy.state})",
-                data={"legislator": target, "district": legislator.district})
+                data={"policy": policy.model_dump(), "legislator": target,
+                      "district": legislator.district, "lobbyist": f"{lobbyist.name}, {lobbyist.firm}"})
 
     made: list[Persona] = []
     for i in range(1, persona_count + 1):
@@ -132,6 +133,45 @@ def run(demo: dict, *, persona_count: int, next_persona: PersonaSource,
                     agent=agent.model_dump(mode="json"))
 
     yield event("ready", "done", f"{persona_count + 2} agents ready to dial {to_number}")
+
+
+def input_from_handoff(handoff: dict, demo: dict) -> dict:
+    """Turn the Go API's mobilization handoff (an approved finding) into
+    pipeline input. The finding supplies the policy; legislator, lobbyist and
+    district are not in the handoff yet, so they stay demo targets (the user
+    plays all of them)."""
+    finding = handoff["finding"]
+    provision = finding["provision"]
+    jurisdiction = provision.get("jurisdiction") or "the state"
+    return {
+        **demo,
+        "source": "handoff",
+        "run_id": handoff.get("run_id", ""),
+        "query": handoff.get("query", ""),
+        "synthetic": bool(provision.get("synthetic")),
+        "policy": {
+            "title": provision["title"],
+            "summary": f"{finding['desired_change']} {finding['justification']}".strip(),
+            # The analysis never estimates savings; don't let the agents invent one.
+            "fiscal_impact": "No fiscal estimate yet; the DOGE Factory team is still preparing one.",
+            "state": jurisdiction,
+            "pain_point": finding["barrier"],
+            "key_legislators": demo["policy"]["key_legislators"],
+        },
+        "legislator": {**demo["legislator"], "district": f"{jurisdiction}'s 13th Senate District"},
+        "district_profile": f"A mixed urban and rural district in {jurisdiction} with residents, "
+                            "small businesses and public-sector workers affected by state rules.",
+        "lobbyist": {
+            **demo["lobbyist"],
+            "client_name": f"a statewide association affected by {provision['title']}",
+            "client_benefit": f"Their members run into this barrier directly: {finding['barrier']}",
+        },
+        "asks": {
+            "legislator": f"Ask the senator to support this change this session: {finding['desired_change']}",
+            "lobbyist": "Get them to raise this change with their client and agree to a 20-minute "
+                        "meeting with the DOGE Factory team to review the proposed amendment.",
+        },
+    }
 
 
 def claude_source(demo: dict) -> PersonaSource:
