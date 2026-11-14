@@ -9,6 +9,7 @@
 
 import argparse
 import json
+import os
 from importlib import resources
 from pathlib import Path
 
@@ -45,6 +46,9 @@ def build_request(agent_type: AgentType, demo: dict, persona_path: str | None) -
 
 def main() -> None:
     load_dotenv()
+    # An empty key would shadow an `ant auth login` profile, which the SDK uses otherwise.
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        os.environ.pop("ANTHROPIC_API_KEY", None)
     parser = argparse.ArgumentParser(prog="voice-agents")
     sub = parser.add_subparsers(dest="command", required=True)
 
