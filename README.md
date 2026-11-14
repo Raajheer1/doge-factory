@@ -56,7 +56,7 @@ For a given code section, DOGE Factory can help a policy team answer:
 
 ## Status
 
-Early-stage concept and product development.
+Early-stage concept and product development. The [housing policy graph guide](docs/housing-policy-graph.md) covers the HydraDB-backed fixture, setup, and tests.
 
 ## Disclaimer
 

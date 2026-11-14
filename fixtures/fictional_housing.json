@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {"label": "Jurisdiction", "id": "fictional:local:bayhaven", "name": "Bayhaven", "level": "local"},
+    {"label": "Jurisdiction", "id": "fictional:state:aster", "name": "State of Aster", "level": "state"},
+    {"label": "Jurisdiction", "id": "fictional:federal:union", "name": "Fictional Union", "level": "federal"},
+    {"label": "PolicyDocument", "id": "fictional:doc:bayhaven", "title": "Bayhaven Housing Permit Rule", "text": "Applications must be submitted on paper at the permit counter. Applicants may request an accessible alternative.", "source_url": "https://example.org/fictional/bayhaven-rule"},
+    {"label": "PolicyDocument", "id": "fictional:doc:aster", "title": "Aster Housing Records Rule", "text": "Housing records must be kept in bound ledgers.", "source_url": "https://example.org/fictional/aster-rule"},
+    {"label": "PolicyDocument", "id": "fictional:doc:union", "title": "Union Housing Notice Rule", "text": "Notices must be mailed to applicants.", "source_url": "https://example.org/fictional/union-rule"},
+    {"label": "Actor", "id": "fictional:actor:official", "name": "Morgan Vale", "type": "official"},
+    {"label": "Actor", "id": "fictional:actor:lobbyist", "name": "Riley Moss", "type": "lobbyist"},
+    {"label": "Actor", "id": "fictional:actor:client", "name": "Fictional Paper Coalition", "type": "organization"},
+    {"label": "PolicyFinding", "id": "fictional:finding:paper", "description": "Paper-only submissions delay accessible online intake.", "evidence_quote": "Applications must be submitted on paper at the permit counter."},
+    {"label": "RedlineProposal", "id": "fictional:proposal:online", "proposed_text": "Applications may be submitted electronically or on paper, with accessible alternatives available.", "estimated_annual_savings": 12000}
+  ],
+  "relationships": [
+    {"type": "ISSUED", "src": "fictional:local:bayhaven", "dst": "fictional:doc:bayhaven"},
+    {"type": "ISSUED", "src": "fictional:state:aster", "dst": "fictional:doc:aster"},
+    {"type": "ISSUED", "src": "fictional:federal:union", "dst": "fictional:doc:union"},
+    {"type": "HOLDS_OFFICE_IN", "src": "fictional:actor:official", "dst": "fictional:local:bayhaven"},
+    {"type": "REPRESENTS", "src": "fictional:actor:lobbyist", "dst": "fictional:actor:client"},
+    {"type": "LOBBIED_ON", "src": "fictional:actor:lobbyist", "dst": "fictional:doc:bayhaven", "source_url": "https://example.org/fictional/public-lobbying-filing"},
+    {"type": "HAS_AUTHORITY_OVER", "src": "fictional:actor:official", "dst": "fictional:doc:bayhaven", "source_url": "https://example.org/fictional/permit-authority"},
+    {"type": "HAS_FINDING", "src": "fictional:doc:bayhaven", "dst": "fictional:finding:paper"},
+    {"type": "ADDRESSED_BY", "src": "fictional:finding:paper", "dst": "fictional:proposal:online"},
+    {"type": "PROPOSES_CHANGE_TO", "src": "fictional:proposal:online", "dst": "fictional:doc:bayhaven"}
+  ]
+}
