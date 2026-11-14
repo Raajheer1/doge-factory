@@ -84,3 +84,20 @@ python3 -m unittest discover -s tests -v
 ```
 
 The test reimports the reviewed pilot and checks stable counts and navigable results. It does not drop the pilot collection.
+
+## Problem library collection (`other`)
+
+The `other` collection holds the cases from [the problem library](problem-library.md) in the same graph contract. Each case has:
+
+- a `PolicyDocument` with its blocking clause as one `PolicySection`;
+- an `evidence` document (cost and status figures) that `CITES` it;
+- its issuing `Jurisdiction`;
+- the administering agency, an `Actor` that `ADMINISTERS` it.
+
+The workbench searches it as **Problem library**. Evidence documents are excluded as candidates and passed to the model as related context.
+
+Officials and lobbyists are not loaded yet. Add them with the `HOLDS_OFFICE_IN`, `WORKS_FOR`, `HAS_AUTHORITY_OVER`, `REPRESENTS` and `LOBBIED_ON` edges, following the evidence rules in the [graph spec](hud-eiv-policy-graph-spec.md). Passages are excerpts, sometimes condensed where the library elides text; check the source before quoting them.
+
+```sh
+HYDRADB_COLLECTION=other python3 -m housing_graph fixtures/other.json
+```

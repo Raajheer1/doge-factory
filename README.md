@@ -77,7 +77,7 @@ set +a
 go run ./cmd/server
 ```
 
-In a second terminal, run `cd frontend`, `npm install` (first run), and `npm run dev`. Open http://127.0.0.1:5173. Choose **Healthcare** or **Housing**, enter a goal, and start an analysis. You can close or refresh the page while it runs; the backend continues processing. Open **Saved runs** in the sidebar to revisit a result, including after restarting the services.
+In a second terminal, run `cd frontend`, `npm install` (first run), and `npm run dev`. Open http://127.0.0.1:5173. Choose **Healthcare**, **Housing** or **Problem library** (the `other` collection: cases from [docs/problem-library.md](docs/problem-library.md)), enter a goal, and start an analysis. You can close or refresh the page while it runs; the backend continues processing. Open **Saved runs** in the sidebar to revisit a result, including after restarting the services.
 
 The Go server saves runs, findings, errors, and the approved finding in `data/runs.json` (relative to the directory where the server is started). This file is local, gitignored, and intended for a single server process. Set `RUNS_FILE` to use another path. Keep the backend running until an analysis finishes: if it stops or restarts during a run, that run is marked failed on startup, with any partial results retained; it does not automatically resume.
 

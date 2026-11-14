@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
-  import { ArrowRight, ArrowUpRight, Check, CheckCircle2, ChevronDown, CircleAlert, Clock3, FileSearch, FileText, FlaskConical, HeartPulse, House, Layers3, LoaderCircle, Megaphone, Menu, Search, ShieldCheck, Sparkles } from '@lucide/svelte';
-  import { createRun, getRun, listRuns, approve, mobilize, type Run, type Handoff } from '$lib/api';
+  import { ArrowRight, ArrowUpRight, Check, CheckCircle2, ChevronDown, CircleAlert, Clock3, FileSearch, FileText, FlaskConical, HeartPulse, House, Layers3, Library, LoaderCircle, Megaphone, Menu, Search, ShieldCheck, Sparkles } from '@lucide/svelte';
+  import { createRun, getRun, listRuns, approve, mobilize, type Collection, type Run, type Handoff } from '$lib/api';
   import './app.css';
 
   let query = '';
-  let collection: 'healthcare' | 'housing' = 'healthcare';
+  let collection: Collection = 'healthcare';
+  const examples: Record<Collection, string> = { healthcare: 'Optimize healthcare in Iowa', housing: 'Reduce housing assistance paperwork', other: 'AI identity verification for private car sales in Kentucky' };
   let run: Run | null = null;
   let selectedId = '';
   let handoff: Handoff | null = null;
@@ -98,9 +99,15 @@
                 <span class="collection-copy"><strong>Housing</strong><small>Housing &amp; assistance policy</small></span>
                 <span class="collection-indicator" aria-hidden="true"></span>
               </label>
+              <label class:collection-selected={collection === 'other'} class="collection-option">
+                <input type="radio" name="collection" value="other" bind:group={collection} />
+                <span class="collection-icon"><Library size={18}/></span>
+                <span class="collection-copy"><strong>Problem library</strong><small>Identity, benefits, procurement &amp; more</small></span>
+                <span class="collection-indicator" aria-hidden="true"></span>
+              </label>
             </div>
           </fieldset>
-          <label class="sr-only" for="goal">Policy goal</label><div class="input-wrap"><Search size={19}/><input id="goal" maxlength="2000" bind:value={query} placeholder={collection === 'healthcare' ? 'e.g. Optimize healthcare in Iowa' : 'e.g. Reduce housing assistance paperwork'} /><button class="primary-button" disabled={busy || loadingRun}>{#if busy}<LoaderCircle class="spin" size={17}/> Starting{:else}Analyze goal <ArrowRight size={17}/>{/if}</button></div><div class="input-meta"><span>Try: <button type="button" class="example" onclick={() => query = collection === 'healthcare' ? 'Optimize healthcare in Iowa' : 'Reduce housing assistance paperwork'}>“{collection === 'healthcare' ? 'Optimize healthcare in Iowa' : 'Reduce housing assistance paperwork'}”</button></span><span>{query.length} / 2,000</span></div>
+          <label class="sr-only" for="goal">Policy goal</label><div class="input-wrap"><Search size={19}/><input id="goal" maxlength="2000" bind:value={query} placeholder={'e.g. ' + examples[collection]} /><button class="primary-button" disabled={busy || loadingRun}>{#if busy}<LoaderCircle class="spin" size={17}/> Starting{:else}Analyze goal <ArrowRight size={17}/>{/if}</button></div><div class="input-meta"><span>Try: <button type="button" class="example" onclick={() => query = examples[collection]}>“{examples[collection]}”</button></span><span>{query.length} / 2,000</span></div>
         </form>
         <div class="scope-note"><span class="scope-dot"></span> Analysis considers a bounded set of retrieved provisions, not all applicable laws. Runs are saved locally; you can close this page and return via Saved runs while the backend keeps running.</div>
       </section>

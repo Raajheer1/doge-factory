@@ -24,10 +24,10 @@ func (h BYOG) Search(ctx context.Context, query string, limit int) ([]Provision,
 }
 
 func (h BYOG) SearchCollection(ctx context.Context, query string, limit int, collection string) ([]Provision, error) {
-	if collection != "housing" && collection != "healthcare" {
+	if collection != "housing" && collection != "healthcare" && collection != "other" {
 		return nil, fmt.Errorf("invalid collection")
 	}
-	payload, _ := json.Marshal(map[string]any{"database": h.Database, "collection": collection, "query": "MATCH (d:PolicyDocument) RETURN d.id AS id, d.title AS title, d.citation AS citation, d.text AS text, d.source_url AS source_url, d.topics AS topic, d.issuing_agency AS issuing_agency, d.source_snapshot AS snapshot LIMIT 10000", "params": map[string]any{}})
+	payload, _ := json.Marshal(map[string]any{"database": h.Database, "collection": collection, "query": "MATCH (d:PolicyDocument) WHERE coalesce(d.document_type, '') <> 'evidence' OPTIONAL MATCH (j:Jurisdiction)-[:ISSUED]->(d) OPTIONAL MATCH (e:PolicyDocument)-[:CITES]->(d) RETURN d.id AS id, d.title AS title, d.citation AS citation, d.text AS text, d.source_url AS source_url, d.topics AS topic, d.issuing_agency AS issuing_agency, d.source_snapshot AS snapshot, j.name AS jurisdiction, collect(e.text) AS evidence LIMIT 10000", "params": map[string]any{}})
 	req, err := http.NewRequestWithContext(ctx, "POST", strings.TrimRight(h.BaseURL, "/")+"/byog/query", bytes.NewReader(payload))
 	if err != nil {
 		return nil, err
@@ -101,11 +101,21 @@ func (h BYOG) SearchCollection(ctx context.Context, query string, limit int, col
 	for _, d := range raw.Data {
 		get := func(k string) string { s, _ := d[k].(string); return s }
 		p := Provision{ID: get("id"), Title: get("title"), Citation: get("citation"), Text: get("text"), SourceURL: get("source_url"), Topic: get("topic"), IssuingAgency: get("issuing_agency"), Jurisdiction: "", RelatedContext: []string{"Source snapshot: " + get("snapshot")}}
+		// Evidence documents (cost and status figures) that cite this policy.
+		if evidence, ok := d["evidence"].([]any); ok {
+			for _, e := range evidence {
+				if s, ok := e.(string); ok && s != "" {
+					p.RelatedContext = append(p.RelatedContext, "Evidence: "+s)
+				}
+			}
+		}
 		parts := strings.Split(p.ID, ":")
 		if len(parts) >= 2 && (parts[0] == "qap" || parts[0] == "healthcare-state-plan") {
 			p.Jurisdiction = stateNames[parts[1]]
 		} else if strings.HasPrefix(p.ID, "ecfr:") || strings.HasPrefix(p.ID, "usc:") {
 			p.Jurisdiction = "United States"
+		} else {
+			p.Jurisdiction = get("jurisdiction")
 		}
 		if p.ID == "" || p.Text == "" {
 			continue
