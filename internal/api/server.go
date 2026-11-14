@@ -7,6 +7,8 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -38,10 +40,28 @@ type Server struct {
 	mu       sync.Mutex
 	runs     map[string]*Run
 	path     string
+	workers  int
+	timeout  time.Duration
 }
 
 func New(repo policy.Repository, a analysis.Analyzer) *Server {
-	return &Server{repo: repo, analyzer: a, runs: map[string]*Run{}}
+	workers := 4
+	if value := os.Getenv("AUDIT_WORKERS"); value != "" {
+		if n, err := strconv.Atoi(value); err == nil && n >= 1 && n <= 20 {
+			workers = n
+		} else {
+			log.Printf("invalid AUDIT_WORKERS %q; using %d (allowed: 1–20)", value, workers)
+		}
+	}
+	timeout := 30 * time.Minute
+	if value := os.Getenv("AUDIT_TIMEOUT"); value != "" {
+		if d, err := time.ParseDuration(value); err == nil && d > 0 {
+			timeout = d
+		} else {
+			log.Printf("invalid AUDIT_TIMEOUT %q; using %s", value, timeout)
+		}
+	}
+	return &Server{repo: repo, analyzer: a, runs: map[string]*Run{}, workers: workers, timeout: timeout}
 }
 func (s *Server) Routes() *echo.Echo {
 	e := echo.New()
@@ -106,7 +126,7 @@ func runResponse(id string) map[string]string {
 	return map[string]string{"id": id, "status": "queued", "status_url": "/api/runs/" + id}
 }
 func (s *Server) execute(id string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), s.timeout)
 	defer cancel()
 	s.mu.Lock()
 	r := s.runs[id]
@@ -131,21 +151,62 @@ func (s *Server) execute(id string) {
 	r.Stage = "auditing_and_drafting"
 	s.saveWorkerLocked()
 	s.mu.Unlock()
-	for _, p := range provisions {
-		if err := ctx.Err(); err != nil {
-			s.fail(id, err)
-			return
+	// A bounded worker pool analyzes provisions independently. The collector
+	// owns progress updates, and stores findings in retrieval order rather than
+	// completion order so the highest-ranked result remains first.
+	type result struct {
+		index   int
+		finding *analysis.Finding
+		err     error
+	}
+	jobs := make(chan int)
+	results := make(chan result, s.workers)
+	var workers sync.WaitGroup
+	for i := 0; i < s.workers && i < len(provisions); i++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for index := range jobs {
+				if ctx.Err() != nil {
+					return
+				}
+				finding, err := s.analyzer.Analyze(ctx, query, provisions[index])
+				results <- result{index: index, finding: finding, err: err}
+			}
+		}()
+	}
+	go func() {
+		defer close(jobs)
+		for i := range provisions {
+			select {
+			case <-ctx.Done():
+				return
+			case jobs <- i:
+			}
 		}
-		f, err := s.analyzer.Analyze(ctx, query, p)
+	}()
+	go func() { workers.Wait(); close(results) }()
+	findings := make([]*analysis.Finding, len(provisions))
+	for outcome := range results {
 		s.mu.Lock()
 		r.Reviewed++
-		if err != nil {
-			r.Errors = append(r.Errors, p.ID+": "+err.Error())
-		} else if f != nil {
-			r.Findings = append(r.Findings, *f)
+		if outcome.err != nil {
+			r.Errors = append(r.Errors, provisions[outcome.index].ID+": "+outcome.err.Error())
+		} else if outcome.finding != nil {
+			findings[outcome.index] = outcome.finding
+			r.Findings = r.Findings[:0]
+			for _, finding := range findings {
+				if finding != nil {
+					r.Findings = append(r.Findings, *finding)
+				}
+			}
 		}
 		s.saveWorkerLocked()
 		s.mu.Unlock()
+	}
+	if err := ctx.Err(); err != nil {
+		s.fail(id, err)
+		return
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
