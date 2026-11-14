@@ -30,6 +30,7 @@ type Run struct {
 	CreatedAt         time.Time          `json:"created_at"`
 	Coverage          string             `json:"coverage,omitempty"`
 	SelectedFindingID string             `json:"selected_finding_id,omitempty"`
+	Handoff           *MobilizeHandoff   `json:"handoff,omitempty"`
 }
 type Server struct {
 	repo     policy.Repository
@@ -215,18 +216,59 @@ func (s *Server) review(c *echo.Context) error {
 }
 func (s *Server) mobilize(c *echo.Context) error {
 	s.mu.Lock()
-	defer s.mu.Unlock()
 	r, ok := s.runs[c.Param("id")]
 	if !ok {
+		s.mu.Unlock()
 		return c.JSON(404, map[string]string{"error": "run not found"})
 	}
 	if r.SelectedFindingID == "" {
+		s.mu.Unlock()
 		return c.JSON(409, map[string]string{"error": "select a finding in review first"})
 	}
-	for _, f := range r.Findings {
-		if f.ID == r.SelectedFindingID {
-			return c.JSON(200, map[string]any{"status": "simulated", "message": "Handoff prepared; no calls were placed.", "run_id": r.ID, "query": r.Query, "finding": f})
+	var finding *analysis.Finding
+	for i := range r.Findings {
+		if r.Findings[i].ID == r.SelectedFindingID {
+			f := r.Findings[i]
+			finding = &f
 		}
 	}
-	return errors.New("selected finding missing")
+	run, cached := *r, r.Handoff
+	s.mu.Unlock()
+	if finding == nil {
+		return errors.New("selected finding missing")
+	}
+	respond := func(h MobilizeHandoff) error {
+		return c.JSON(200, handoffResponse{MobilizeHandoff: h, Status: "simulated", Message: "Handoff prepared; no calls were placed.", Finding: *finding})
+	}
+	if cached != nil && cached.Policy.ID == finding.Provision.ID {
+		return respond(*cached)
+	}
+	b, ok := s.analyzer.(briefer)
+	if !ok {
+		return c.JSON(501, map[string]string{"error": "the analyzer cannot prepare a mobilize.v1 handoff"})
+	}
+	ctx, cancel := context.WithTimeout(c.Request().Context(), 2*time.Minute)
+	defer cancel()
+	brief, err := b.Brief(ctx, *finding)
+	if err != nil {
+		log.Printf("handoff brief: %v", err)
+		return c.JSON(502, map[string]string{"error": "could not prepare the handoff summary"})
+	}
+	var people []policy.Person
+	if repo, ok := s.repo.(policy.BYOG); ok {
+		if people, err = repo.People(ctx, run.Collection, finding.Provision.ID); err != nil {
+			log.Printf("handoff people: %v", err)
+			return c.JSON(502, map[string]string{"error": "could not load people for the handoff"})
+		}
+	}
+	h := buildHandoff(run, *finding, brief, people)
+	s.mu.Lock()
+	if r.SelectedFindingID == finding.ID {
+		r.Handoff = &h
+		if err := s.saveLocked(); err != nil {
+			log.Printf("save handoff: %v", err)
+		}
+	}
+	s.mu.Unlock()
+	return respond(h)
 }

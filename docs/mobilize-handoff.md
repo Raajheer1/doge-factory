@@ -6,7 +6,7 @@ agents and calls. Mobilize does no retrieval of its own: everything it needs is
 in this JSON document.
 
 Send it as the body of `POST /api/runs/:id/mobilize`'s response (or anywhere the
-frontend can pass it on). Mobilize validates it with `voice_agents/handoff.py`
+frontend can pass it on). The Go API's `POST /api/runs/:id/mobilize` returns it, with `people` read from the policy graph (strongest relationship first) and `spoken_title`, `change.summary` and `impact.affected_groups` written by a short model call from the approved finding. The response also keeps the earlier `status`, `message` and `finding` fields for existing clients. Mobilize validates it with `voice_agents/handoff.py`
 and rejects it with a field-level error if something required is missing.
 
 ## Example (HUD EIV pilot)
