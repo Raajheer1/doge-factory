@@ -19,6 +19,8 @@ type Provision struct {
 	SourceURL      string       `json:"source_url,omitempty"`
 	EffectiveDate  string       `json:"effective_date,omitempty"`
 	IssuingAgency  string       `json:"issuing_agency,omitempty"`
+	DocumentType   string       `json:"document_type,omitempty"`
+	SourceStatus   string       `json:"source_status,omitempty"`
 	RelatedContext []string     `json:"related_context,omitempty"`
 	Comparisons    []Comparison `json:"comparisons,omitempty"`
 	Synthetic      bool         `json:"synthetic"`

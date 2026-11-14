@@ -91,8 +91,8 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
     if (TERMINAL_STATUSES.includes(run.status)) break;
     await gate(1500);
   }
-  if (!run.findings.length) {
-    log('audit', 'error', run.status === 'failed' ? 'The audit failed; nothing to redline.' : 'No barriers found for this pitch.', { errors: run.errors });
+  if (run.status === 'failed' || !run.findings.length) {
+    log('audit', 'error', run.status === 'failed' ? 'The audit failed; review any partial findings manually.' : 'No barriers found for this pitch.', { errors: run.errors });
     return;
   }
   log('audit', 'done', `Audit complete: ${run.findings.length} barrier${run.findings.length === 1 ? '' : 's'} in ${run.reviewed} provisions`);
@@ -109,6 +109,7 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
     desired_change: finding.desired_change, safeguards: finding.safeguards ?? [],
   });
   await gate(2500);
+  if (!window.confirm('Review the finding, its source, amendment, and safeguards before approving. Approve this redline for mobilization?')) throw new Stopped();
   await approveFinding(runId, finding.id);
   log('redline', 'done', 'Redline approved for mobilization');
 
@@ -138,9 +139,10 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
   // 6. Call: the first agent (the most relevant person, or the first constituent) rings the allowlisted number.
   await gate(2000);
   const caller = agents.find((a) => a.kind === 'legislator') ?? agents[0];
+  if (!priorCall && !window.confirm(`Place a real call to ${caller.request.to_number}? The caller is synthetic; verify the target, consent and applicable disclosure requirements first.`)) throw new Stopped();
   log('call', 'running', caller.archetype ? `${caller.caller} is calling ${caller.target} (${caller.archetype})` : `${caller.caller} is calling as a constituent of ${caller.target}`, { agent: agentSummary(caller), to: caller.request.to_number });
   const conversation_id = priorCall ?? (await placeCall(caller.id)).conversation_id;
-  if (priorCall) log('call', 'progress', 'Reattached to the call placed earlier; not redialing', { conversation_id });
+  log('call', 'progress', priorCall ? 'Reattached to the call placed earlier; not redialing' : 'Call placed', { conversation_id });
   let lastTurns = -1;
   let status = 'initiated';
   for (;;) {

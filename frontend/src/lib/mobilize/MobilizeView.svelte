@@ -2,6 +2,7 @@
   import { onDestroy, onMount } from 'svelte';
   import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, FlaskConical, Hammer, LoaderCircle, PhoneCall } from '@lucide/svelte';
   import type { Handoff } from '$lib/api';
+  import ExpandableText from '$lib/ExpandableText.svelte';
   import { loadHandoff } from '$lib/runs';
   import { getConversation, getDemoInput, getStatus, listAgents, placeCall, runPipeline, type DemoInput, type VoiceAgent, type VoiceStatus } from '$lib/voice';
   import { FINAL_CALL_STATUSES, allAgents, applyEvent, emptyRun, fmtDuration, restoreRun } from '$lib/mobilize/run';
@@ -34,6 +35,7 @@
   let now = $state(Date.now());
   let ticker: ReturnType<typeof setInterval> | undefined;
   let poll: ReturnType<typeof setTimeout> | undefined;
+  let disposed = false;
 
   const agents = $derived(allAgents(run));
   const selected = $derived(agents.find((a) => a.id === selectedId) ?? null);
@@ -42,11 +44,14 @@
   const finding = $derived(handoff?.finding ?? null);
   const proposalTitle = $derived(finding?.provision.title ?? demo?.policy.title ?? '');
   const jurisdiction = $derived(finding?.provision.jurisdiction || demo?.policy.state || '');
-  const target = $derived(handoff?.people?.length ? `${handoff.people.length} people` : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
-  const sourceLabel = $derived(source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
   // A handoff with people gets one generated agent per person instead of the fixed set.
   const people = $derived(handoff?.people ?? []);
   const campaign = $derived(source === 'claude' && people.length > 0);
+  const official = $derived(handoff?.people?.find((p) => p.type === 'official' && p.state));
+  const lobbyist = $derived(handoff?.people?.find((p) => p.type === 'lobbyist' && p.clients?.length));
+  // A campaign targets everyone in the handoff; otherwise the first official, else the demo target.
+  const target = $derived(campaign ? `${people.length} people` : official ? `${official.title || ''} ${official.name}`.trim() : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
+  const sourceLabel = $derived(source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
   const planned = $derived(campaign ? people.length : count);
   const totalCalls = $derived(agents.reduce((sum, a) => sum + a.conversations.length, 0));
 
@@ -68,10 +73,10 @@
       } catch (e) { handoffError = e instanceof Error ? e.message : 'Could not load the approved proposal.'; }
     }
   });
-  onDestroy(() => { clearInterval(ticker); clearTimeout(poll); journey.health = null; });
+  onDestroy(() => { disposed = true; clearInterval(ticker); clearTimeout(poll); journey.health = null; });
 
   async function build() {
-    if (building) return;
+    if (building || (runId && !handoff)) return;
     buildError = '';
     clearTimeout(poll);
     call = null;
@@ -104,6 +109,7 @@
   }
 
   async function dial(agent: VoiceAgent) {
+    if (!window.confirm(`Place a real call to ${agent.request.to_number}? The caller is synthetic; verify the target, consent and applicable disclosure requirements first.`)) return;
     clearTimeout(poll);
     call = { agentId: agent.id, conversationId: null, data: null, error: '' };
     try {
@@ -118,9 +124,18 @@
   function watch(agent: VoiceAgent, conversationId: string) {
     clearTimeout(poll);
     call = { agentId: agent.id, conversationId, data: null, error: '' };
+    let failures = 0;
     const tick = async () => {
-      if (call?.conversationId !== conversationId) return;
-      try { call.data = await getConversation(conversationId); } catch { /* The conversation can 404 right after dialing. */ }
+      if (disposed || call?.conversationId !== conversationId) return;
+      try {
+        const data = await getConversation(conversationId);
+        if (disposed || call?.conversationId !== conversationId) return;
+        call.data = data;
+        failures = 0;
+      } catch {
+        if (disposed || call?.conversationId !== conversationId) return;
+        if (++failures >= 5) { call.error = 'Could not load the call status. Select the call again to retry.'; return; }
+      }
       if (!FINAL_CALL_STATUSES.has(call.data?.status ?? '')) poll = setTimeout(tick, 2000);
     };
     void tick();
@@ -141,11 +156,12 @@
           <div class="section-kicker">{runId ? 'APPROVED REDLINE' : 'DEMO PROPOSAL'}</div>
           {#if finding}
             <h2>{finding.provision.title}</h2>
-            <p class="mz-meta">{finding.provision.jurisdiction || 'Jurisdiction unavailable'} · {finding.provision.citation || 'Citation unavailable'} · Goal: {handoff?.query}</p>
+            <p class="mz-meta">{finding.provision.jurisdiction || 'Jurisdiction unavailable'} · {finding.provision.citation || 'Citation unavailable'}</p>
+            {#if handoff?.query}<details class="mz-goal"><summary>View analysis goal</summary><p>{handoff.query}</p></details>{/if}
             {#if finding.provision.synthetic}<div class="synthetic-banner"><FlaskConical size={17} /><span><strong>Synthetic demo data.</strong> This source and its generated outputs are synthetic.</span></div>{/if}
             <div class="mz-input-grid">
-              <div><div class="mini-label">POTENTIAL BARRIER</div><p>{finding.barrier}</p></div>
-              <div><div class="mini-label">DESIRED CHANGE</div><p>{finding.desired_change}</p></div>
+              <div><div class="mini-label">POTENTIAL BARRIER</div><ExpandableText text={finding.barrier}/></div>
+              <div><div class="mini-label">DESIRED CHANGE</div><ExpandableText text={finding.desired_change}/></div>
             </div>
             {#if handoff}
               <div class="mz-handoff">
@@ -157,8 +173,9 @@
             {/if}
           {:else if runId && !handoffError}
             <p class="mz-muted"><LoaderCircle class="spin" size={15} /> Loading the approved proposal…</p>
+          {:else if runId && handoffError}
+            <p class="mz-error">{handoffError}</p><p class="mz-note">An approved handoff is required to build agents for this run. Return to the redline and try again.</p>
           {:else if demo}
-            {#if handoffError}<p class="mz-error">{handoffError}</p>{/if}
             <h2>{demo.policy.title}</h2>
             <p class="mz-meta">{demo.policy.state} · demo input</p>
             <p class="mz-prose">{demo.policy.summary}</p>
@@ -176,13 +193,13 @@
           </div>
         {:else if demo}
           <div class="mz-card">
-            <div class="section-kicker">CALL TARGETS <span class="mz-pill">DEMO</span></div>
+            <div class="section-kicker">CALL ROLES <span class="mz-pill">LOCAL DEMO</span></div>
             <dl class="mz-kv">
-              <dt>Legislator</dt><dd>{target}<small>{finding ? `Placeholder target for ${jurisdiction}` : demo.legislator.district}</small></dd>
-              <dt>Lobbyist</dt><dd>{demo.lobbyist.name}<small>{demo.lobbyist.firm}</small></dd>
-              <dt>Every call rings</dt><dd>{status?.allowed_numbers.join(', ') || demo.to_number}</dd>
+              <dt>Legislator</dt><dd>{target}<small>{official ? `${official.district || official.state} · source status: ${official.verified_at}` : 'Demo placeholder'}</small></dd>
+              <dt>Lobbyist</dt><dd>{lobbyist?.name || demo.lobbyist.name}<small>{lobbyist ? `${lobbyist.organization || lobbyist.clients?.join(', ')} · source status: ${lobbyist.verified_at}` : 'Demo placeholder'}</small></dd>
+              <dt>Dialed number</dt><dd>{demo.to_number}<small>{status?.allowed_numbers.includes(demo.to_number) ? 'Allowlisted' : 'Not allowlisted; calls will be blocked'}</small></dd>
             </dl>
-            <p class="mz-note">Targets aren't in the analysis handoff yet, so these are placeholders. Every call rings your phone and you play them.</p>
+            <p class="mz-note">These are roles for the demonstration, not the numbers being dialed. Missing roles use placeholders; verify sourced roles before any outreach.</p>
           </div>
         {/if}
       </section>
@@ -198,7 +215,7 @@
               <button role="radio" aria-checked={source === 'sample'} class:on={source === 'sample'} disabled={building} onclick={() => (source = 'sample')} title="Pre-written personas, no API cost">Sample</button>
               <button role="radio" aria-checked={source === 'claude'} class:on={source === 'claude'} disabled={building} onclick={() => (source = 'claude')} title="Generate personas live; uses API credits">Claude</button>
             </div>
-            <button class="primary-button" disabled={building || !demo} onclick={build}>
+            <button class="primary-button" disabled={building || !demo || (!!runId && !handoff)} onclick={build}>
               {#if building}<LoaderCircle class="spin" size={16} /> Building…{:else}<Hammer size={16} /> Build voice agents{/if}
             </button>
           </div>

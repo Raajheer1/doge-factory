@@ -18,12 +18,12 @@
     {run.findings[0]?.provision.synthetic === false ? 'Source text is real (HUD EIV pilot); the analysis wording is pre-written.' : ''}</span></div>
 {/if}
 <div class="run-summary">
-  <div class="run-goal"><span>YOUR PITCH</span><strong>{run.query}</strong><small>Started {displayDate(run.created_at)}</small></div>
-  <div class="summary-divider"></div>
-  <div class="run-progress"><div class="progress-title"><span>{terminal ? 'AUDIT STATUS' : 'IN PROGRESS'}</span><strong>{stageLabel}</strong></div>
-    <div class="progress-track"><i class:complete={terminal} class:auditing={run.stage === 'auditing_and_drafting'}></i></div></div>
-  <div class="stat"><strong>{run.retrieved}</strong><span>provisions retrieved</span></div>
-  <div class="stat"><strong>{run.reviewed}</strong><span>analyzed by model</span></div>
+  <div class="run-goal"><div class="run-goal-heading"><span>ANALYSIS GOAL</span><small>Started {displayDate(run.created_at)}</small></div><p>{run.query}</p></div>
+  <div class="run-summary-bottom">
+    <div class="run-progress"><div class="progress-title"><span>{terminal ? 'AUDIT STATUS' : 'IN PROGRESS'}</span><strong>{stageLabel}</strong></div>
+      <div class="progress-track" role="progressbar" aria-label="Provisions processed" aria-valuemin="0" aria-valuemax={Math.max(run.retrieved, 1)} aria-valuenow={run.reviewed}><i style:width={run.retrieved ? `${Math.min(100, run.reviewed / run.retrieved * 100)}%` : '0%'}></i></div><small>{run.retrieved ? `${run.reviewed} of ${run.retrieved} provisions processed` : 'Waiting for retrieval'}</small></div>
+    <div class="run-stat"><strong>{run.retrieved}</strong><span>provisions retrieved</span></div><div class="run-stat"><strong>{run.reviewed}</strong><span>processed by model</span></div><div class="run-stat"><strong>{run.findings.length}</strong><span>findings</span></div>
+  </div>
 </div>
 {#if errors.length}
   <div class="run-errors" role="status"><div><strong>{run.status === 'failed' ? 'Audit failed' : 'Audit reported issues'}</strong>{#each errors as issue}<p>{issue}</p>{/each}</div></div>

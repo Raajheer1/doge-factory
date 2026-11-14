@@ -150,3 +150,5 @@
 .mz-handoff p{font-size:12px;color:#42574b;margin:8px 0 0}
 .mz-handoff details{margin-top:10px}.mz-handoff summary{cursor:pointer;font-size:11px;font-weight:700;color:#597665}
 .mz-handoff pre{margin-top:8px;max-height:320px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+.mz-goal{margin-top:10px}.mz-goal summary{cursor:pointer;color:#397b53;font-size:11px;font-weight:700}.mz-goal p{font-size:12px;line-height:1.6;color:#64756a;overflow-wrap:anywhere}
+.mz-input-grid p,.mz-kv dd{overflow-wrap:anywhere}

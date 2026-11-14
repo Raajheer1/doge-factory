@@ -27,7 +27,7 @@ func (h BYOG) SearchCollection(ctx context.Context, query string, limit int, col
 	if collection != "housing" && collection != "healthcare" && collection != "other" {
 		return nil, fmt.Errorf("invalid collection")
 	}
-	payload, _ := json.Marshal(map[string]any{"database": h.Database, "collection": collection, "query": "MATCH (d:PolicyDocument) WHERE coalesce(d.document_type, '') <> 'evidence' OPTIONAL MATCH (j:Jurisdiction)-[:ISSUED]->(d) OPTIONAL MATCH (e:PolicyDocument)-[:CITES]->(d) RETURN d.id AS id, d.title AS title, d.citation AS citation, d.text AS text, d.source_url AS source_url, d.topics AS topic, d.issuing_agency AS issuing_agency, d.source_snapshot AS snapshot, j.name AS jurisdiction, collect(e.text) AS evidence LIMIT 10000", "params": map[string]any{}})
+	payload, _ := json.Marshal(map[string]any{"database": h.Database, "collection": collection, "query": "MATCH (d:PolicyDocument) WHERE coalesce(d.document_type, '') <> 'evidence' OPTIONAL MATCH (j:Jurisdiction)-[:ISSUED]->(d) OPTIONAL MATCH (e:PolicyDocument)-[:CITES]->(d) RETURN d.id AS id, d.title AS title, d.citation AS citation, d.text AS text, d.source_url AS source_url, d.topics AS topic, d.issuing_agency AS issuing_agency, d.document_type AS document_type, d.status AS source_status, d.source_snapshot AS snapshot, j.name AS jurisdiction, collect(e.text) AS evidence LIMIT 10000", "params": map[string]any{}})
 	req, err := http.NewRequestWithContext(ctx, "POST", strings.TrimRight(h.BaseURL, "/")+"/byog/query", bytes.NewReader(payload))
 	if err != nil {
 		return nil, err
@@ -76,6 +76,13 @@ func (h BYOG) SearchCollection(ctx context.Context, query string, limit int, col
 		}
 	}
 	words := strings.FieldsFunc(strings.ToLower(query), func(r rune) bool { return !((r >= 'a' && r <= 'z') || (r >= '0' && r <= '9')) })
+	queryWords := " " + strings.Join(words, " ") + " "
+	requestedStates := map[string]bool{}
+	for _, name := range stateNames {
+		if strings.Contains(queryWords, " "+strings.ToLower(name)+" ") {
+			requestedStates[name] = true
+		}
+	}
 	terms := map[string]bool{}
 	for _, w := range words {
 		if len(w) > 3 {
@@ -100,7 +107,7 @@ func (h BYOG) SearchCollection(ctx context.Context, query string, limit int, col
 	var rankedDocs []ranked
 	for _, d := range raw.Data {
 		get := func(k string) string { s, _ := d[k].(string); return s }
-		p := Provision{ID: get("id"), Title: get("title"), Citation: get("citation"), Text: get("text"), SourceURL: get("source_url"), Topic: get("topic"), IssuingAgency: get("issuing_agency"), Jurisdiction: "", RelatedContext: []string{"Source snapshot: " + get("snapshot")}}
+		p := Provision{ID: get("id"), Title: get("title"), Citation: get("citation"), Text: get("text"), SourceURL: get("source_url"), Topic: get("topic"), IssuingAgency: get("issuing_agency"), DocumentType: get("document_type"), SourceStatus: get("source_status"), Jurisdiction: "", RelatedContext: []string{"Source snapshot: " + get("snapshot")}}
 		// Evidence documents (cost and status figures) that cite this policy.
 		if evidence, ok := d["evidence"].([]any); ok {
 			for _, e := range evidence {
@@ -120,6 +127,20 @@ func (h BYOG) SearchCollection(ctx context.Context, query string, limit int, col
 		if p.ID == "" || p.Text == "" {
 			continue
 		}
+		// A single-state request should not be crowded out by unrelated state
+		// plans. Keep federal and unknown-jurisdiction material as context.
+		if len(requestedStates) == 1 && !requestedStates[p.Jurisdiction] {
+			otherState := false
+			for _, name := range stateNames {
+				if p.Jurisdiction == name {
+					otherState = true
+					break
+				}
+			}
+			if otherState {
+				continue
+			}
+		}
 		hay := strings.ToLower(p.Title + " " + p.Topic + " " + p.Text)
 		score := 0
 		if p.Jurisdiction != "" && p.Jurisdiction != "United States" && strings.Contains(strings.ToLower(query), strings.ToLower(p.Jurisdiction)) {
@@ -128,6 +149,22 @@ func (h BYOG) SearchCollection(ctx context.Context, query string, limit int, col
 		for w := range terms {
 			if strings.Contains(hay, w) {
 				score++
+			}
+		}
+		// For income-verification research, favor passages that actually discuss
+		// verification and employment rather than generic QAP boilerplate. Only
+		// apply this boost when the user requested those concepts.
+		goal := strings.ToLower(query)
+		if strings.Contains(goal, "verif") && (strings.Contains(goal, "income") || strings.Contains(goal, "employ")) {
+			text := strings.ToLower(p.Text)
+			if strings.Contains(text, "verif") && (strings.Contains(text, "income") || strings.Contains(text, "employ")) {
+				score += 8
+				if strings.Contains(text, "employ") {
+					score += 4
+				}
+				if strings.Contains(text, "telephone") || strings.Contains(text, "phone") || strings.Contains(text, "oral verification") {
+					score += 3
+				}
 			}
 		}
 		if score > 0 {

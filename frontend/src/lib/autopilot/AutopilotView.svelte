@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onDestroy, onMount, tick } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
+  import ExpandableText from '$lib/ExpandableText.svelte';
   import { ArrowRight, Check, CircleAlert, FastForward, LoaderCircle, Pause, PhoneCall, Play, RotateCcw, Square, Zap } from '@lucide/svelte';
   import { AP_STAGES, Stopped, appendEvent, isFinished, loadLog, runAutopilot, type APEvent, type APStage } from '$lib/autopilot';
   import { enterRun, journey, mobilizePath, redlinePath } from '$lib/journey.svelte';
@@ -92,13 +93,6 @@
     journey.stage = st('mobilize') !== 'pending' ? 'mobilize' : st('select') !== 'pending' ? 'redline' : 'audit';
   });
 
-  // Keep the stage that just changed in view.
-  $effect(() => {
-    if (!events.length) return;
-    const id = `ap-${events[events.length - 1].stage}`;
-    void tick().then(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
-  });
-
   const offset = (e: APEvent) => `+${((e.t - start) / 1000).toFixed(1)}s`;
   const relevanceLabel = (r: string) => r.replaceAll('_', ' ');
 </script>
@@ -106,7 +100,7 @@
 <section class="ap-head">
   <div>
     <div class="eyebrow"><span></span> AUTOPILOT</div>
-    <h1>{query || 'Autopilot run'}</h1>
+    <h1>Autopilot <em>run.</em></h1>
     <p class="ap-meta">
       {#if mode === 'live'}<span class="ap-badge live"><Zap size={12} /> LIVE</span>
       {:else if mode === 'replay'}<span class="ap-badge replay"><FastForward size={12} /> REPLAY · {speed}×</span>
@@ -129,9 +123,13 @@
   </div>
 </section>
 
+{#if query}
+  <section class="ap-goal" aria-label="Analysis goal"><span class="mini-label">ANALYSIS GOAL</span><ExpandableText text={query} limit={240}/></section>
+{/if}
+
 {#if error}<div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>Autopilot stopped</strong><p>{error}</p></div></div>{/if}
 {#if mode === 'idle' && !events.length}
-  <div class="empty-state"><Zap size={22} /><h3>No autopilot record for this run yet</h3><p>Start autopilot to audit, redline, approve, build agents and place the call without clicking through.</p></div>
+  <div class="empty-state"><Zap size={22} /><h3>No autopilot record for this run yet</h3><p>Start autopilot to audit, draft and build agents. You will be asked to confirm approval and any real call.</p></div>
 {/if}
 
 <ol class="ap-timeline">

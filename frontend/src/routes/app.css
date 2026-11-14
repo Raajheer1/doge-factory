@@ -73,9 +73,62 @@ details.scenario pre{margin-top:12px}
 .collection-selected .collection-indicator{border:4px solid #4e8c64}
 @media(max-width:480px){.collection-options{flex-direction:column}.collection-option{width:100%}}
 
+/* Keep long research questions separate from the compact progress dashboard. */
+.run-summary{display:block;padding:0;overflow:hidden}
+.run-goal{min-width:0;padding:20px 24px}
+.run-goal-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.run-goal-heading small{margin:0;white-space:nowrap}
+.run-goal p{max-width:100ch;margin:9px 0 0;color:#3c5144;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+.run-summary-bottom{display:grid;grid-template-columns:minmax(210px,2fr) repeat(3,minmax(100px,1fr));align-items:center;gap:0;border-top:1px solid #edf1ed;background:#fbfcfa}
+.run-progress{width:auto;padding:18px 24px}
+.progress-title{gap:12px}.progress-title strong{text-align:right}
+.run-progress small{display:block;margin-top:8px;color:#93a198;font-size:10px}
+.progress-track{margin-top:9px}
+.run-stat{padding:4px 20px;border-left:1px solid #e7eee8}
+.run-stat strong,.run-stat span{display:block}.run-stat strong{font-family:'DM Serif Display',Georgia,serif;font-size:23px;font-weight:400;line-height:1.1}.run-stat span{margin-top:5px;font-size:10px;color:#88998e}
+@media(max-width:760px){.run-summary-bottom{grid-template-columns:repeat(3,1fr)}.run-progress{grid-column:1/-1;border-bottom:1px solid #e7eee8}.run-stat{margin:16px 0}.run-stat:nth-child(2){border-left:0}}
+@media(max-width:480px){.run-goal{padding:18px}.run-goal-heading{align-items:flex-start;flex-direction:column;gap:4px}.run-progress{padding:16px 18px}.run-stat{padding:0 12px}.run-stat span{line-height:1.4}}
+
+/* Finding overview: show the essentials first and keep long documents on demand. */
+.detail-header h3{font-family:'DM Sans',sans-serif;font-size:18px;line-height:1.4;letter-spacing:-.015em;font-weight:700;max-width:70ch}
+.finding-card strong{display:-webkit-box;-webkit-line-clamp:4;line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.insight-grid>div{min-width:0;border:1px solid #edf1ed;border-radius:8px;padding:15px;background:#fbfcfa}
+.insight-grid p,.rationale p{font-size:12px;line-height:1.7;color:#687b6e}
+.rationale{padding-top:15px}
+.detail-sections{display:grid;gap:8px;margin-top:22px}
+.detail-disclosure{border:1px solid #e5ece6;border-radius:8px;background:#fff;overflow:hidden}
+.detail-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;cursor:pointer;list-style:none}
+.detail-disclosure>summary::-webkit-details-marker{display:none}
+.detail-disclosure>summary:hover{background:#f7faf7}
+.detail-disclosure>summary:focus-visible{outline:3px solid #8ebba4;outline-offset:-3px}
+.detail-disclosure>summary strong,.detail-disclosure>summary small{display:block}
+.detail-disclosure>summary strong{font-size:12px;color:#304a39}
+.detail-disclosure>summary small{font-size:10px;color:#91a097;margin-top:4px}
+.detail-disclosure>summary svg{flex:none;color:#82a18d;transition:transform .15s}
+.detail-disclosure[open]>summary svg{transform:rotate(180deg)}
+.disclosure-content{border-top:1px solid #edf1ed;padding:14px 16px}
+.disclosure-content .considerations,.disclosure-content .scenario:first-child{margin-top:0}
+.disclosure-content .text-block p{max-height:440px;overflow:auto}
+@media(max-width:480px){.detail-header h3{font-size:16px}.insight-grid{gap:10px}.detail-disclosure>summary{padding:13px}}
+
+
 /* Secondary actions next to a primary button. */
 .ghost-button{display:inline-flex;align-items:center;gap:7px;border:1px solid #dbe5dc;background:#fff;color:#36574a;border-radius:6px;padding:10px 13px;font-size:11px;font-weight:700;text-decoration:none}
 .ghost-button:hover{border-color:#9fc0a9}
 .ghost-button.danger{color:#8a4a3c;border-color:#efd6cc}
 .input-wrap .ghost-button{padding:12px 13px}
 .queue-item{display:flex;gap:8px;align-items:stretch}.queue-item .queue-row{flex:1;min-width:0}.queue-ap{flex:none}
+
+/* Long goals are editable without squeezing them into a single line. */
+.input-wrap textarea{min-width:0;flex:1;resize:vertical;border:0;outline:0;color:#273d30;font:inherit;font-size:13px;line-height:1.6;background:transparent;padding:9px 0}
+.input-wrap textarea::placeholder{color:#a6b3aa}
+@media(max-width:480px){.input-wrap textarea{width:calc(100% - 35px);flex:auto}}
+
+/* Long findings and small screens should not stretch the workspace. */
+.barrier-list{grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))}
+.barrier-card strong,.barrier-card p{overflow-wrap:anywhere}
+.barrier-card p{display:-webkit-box;-webkit-line-clamp:4;line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.breadcrumb{display:flex;align-items:center;min-width:0;overflow:hidden;white-space:nowrap}
+.breadcrumb a{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.breadcrumb strong{flex:none}
+@media(max-width:760px){.topbar{gap:12px}.top-right .health{display:none}.queue-item{flex-wrap:wrap}.queue-item .queue-row{flex-basis:100%;border-bottom:0}.queue-ap{margin:0 16px 12px}.barrier-card{min-width:0}}

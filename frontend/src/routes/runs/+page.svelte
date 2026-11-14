@@ -17,8 +17,9 @@
 
   const label = (r: Run) => r.selected_finding_id ? 'Redline approved · ready to mobilize'
     : ['queued', 'running'].includes(r.status) ? 'Auditing'
-    : r.status === 'failed' ? 'Failed'
-    : r.findings.length ? `${r.findings.length} barrier${r.findings.length === 1 ? '' : 's'} to redline` : 'No barriers found';
+    : r.status === 'failed' ? 'Analysis failed'
+    : r.status === 'completed_with_errors' ? `Completed with errors · ${r.findings.length} findings`
+    : r.findings.length ? `${r.findings.length} barrier${r.findings.length === 1 ? '' : 's'} to redline` : 'No findings';
   const nextHref = (r: Run) => (r.selected_finding_id ? mobilizePath(r.id) : r.findings.length ? redlinePath(r.id) : runPath(r.id));
   const nextLabel = (r: Run) => (r.selected_finding_id ? 'Mobilize' : r.findings.length ? 'Redline' : 'Audit');
 </script>
@@ -39,11 +40,14 @@
 {#if !runs}
   <div class="loading-panel"><LoaderCircle class="spin" size={20} /> Loading problems…</div>
 {:else}
+  {#each [{ title: 'Saved analyses', items: runs.filter((r) => !isDemo(r.id)) }, { title: 'Built-in demos', items: runs.filter((r) => isDemo(r.id)) }] as group}
+  <div class="section-heading"><div><h2>{group.title}</h2><p>{group.title === 'Built-in demos' ? 'Prepared examples, not analyses of your queries.' : 'Your locally saved runs.'}</p></div></div>
+  {#if !group.items.length}<div class="empty-state"><p>No saved analyses yet. Start a new analysis to see it here.</p></div>{:else}
   <div class="queue">
-    {#each runs as r}
+    {#each group.items as r}
       <div class="queue-item"><a class="queue-row" href={nextHref(r)}>
         <span class="queue-state" class:approved={!!r.selected_finding_id} class:running={['queued', 'running'].includes(r.status)}>
-          {#if r.selected_finding_id}<Megaphone size={15} />{:else if ['queued', 'running'].includes(r.status)}<LoaderCircle class="spin" size={15} />{:else}<Check size={15} />{/if}
+          {#if r.selected_finding_id}<Megaphone size={15} />{:else if ['queued', 'running'].includes(r.status)}<LoaderCircle class="spin" size={15} />{:else if r.status === 'failed' || r.status === 'completed_with_errors'}<CircleAlert size={15} />{:else}<Check size={15} />{/if}
         </span>
         <span class="queue-main">
           <strong>{r.query}</strong>
@@ -56,4 +60,6 @@
         {#if hasLog(r.id)}<RotateCcw size={14} /> Replay{:else}<Zap size={14} /> Autopilot{/if}</a></div>
     {/each}
   </div>
+  {/if}
+  {/each}
 {/if}
