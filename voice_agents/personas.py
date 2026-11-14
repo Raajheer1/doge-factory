@@ -1,12 +1,15 @@
 """Generate a synthetic constituent persona for a legislator's district."""
 
+import os
+
 import anthropic
 from pydantic import BaseModel
 
 from .models import AgeBand, Gender, Legislator, Persona, Policy
 from .voices import pick_voice
 
-MODEL = "claude-opus-5-5"
+# Haiku is plenty for short persona sketches; override with PERSONA_MODEL.
+MODEL = os.environ.get("PERSONA_MODEL", "claude-haiku-5-5")
 
 SYSTEM = """You create realistic, specific constituent personas for a policy-advocacy demo.
 Each persona is one plausible resident of the given district who is personally affected by the policy.
@@ -31,7 +34,7 @@ def generate_persona(
     client: anthropic.Anthropic | None = None,
 ) -> Persona:
     client = client or anthropic.Anthropic()
-    response = client.beta.messages.parse(
+    response = client.messages.parse(
         model=MODEL,
         max_tokens=16000,
         system=SYSTEM,
@@ -46,9 +49,6 @@ def generate_persona(
             ),
         }],
         output_format=PersonaDraft,
-        # Re-run on a fallback model if the request is declined.
-        betas=["server-side-fallback-2026-07-01"],
-        fallbacks="default",
     )
     if response.stop_reason == "refusal" or response.parsed_output is None:
         raise RuntimeError(f"Persona generation failed (stop_reason={response.stop_reason})")

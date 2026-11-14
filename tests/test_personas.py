@@ -20,7 +20,7 @@ class StubMessages:
 
 def stub_client(response):
     messages = StubMessages(response)
-    return SimpleNamespace(beta=SimpleNamespace(messages=messages)), messages
+    return SimpleNamespace(messages=messages), messages
 
 
 def demo_inputs():
