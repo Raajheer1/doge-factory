@@ -132,3 +132,4 @@ details.scenario pre{margin-top:12px}
 .breadcrumb a{overflow:hidden;text-overflow:ellipsis;min-width:0}
 .breadcrumb strong{flex:none}
 @media(max-width:760px){.topbar{gap:12px}.top-right .health{display:none}.queue-item{flex-wrap:wrap}.queue-item .queue-row{flex-basis:100%;border-bottom:0}.queue-ap{margin:0 16px 12px}.barrier-card{min-width:0}}
+.start-actions{display:flex;flex-direction:column;gap:6px;align-self:center}.start-actions .ghost-button{justify-content:center;gap:8px}
