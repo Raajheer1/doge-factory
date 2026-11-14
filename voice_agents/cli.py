@@ -84,8 +84,13 @@ def main() -> None:
     if args.command == "export-calls":
         from .call_logs import export_all
 
+        from .call_logs import push_all
+
         saved, index = export_all()
         print(f"Saved {saved} new calls; {index} has one row per call")
+        pushed = push_all()
+        print(f"Upserted {pushed} calls to Supabase" if pushed else
+              "Supabase not configured (set SUPABASE_URL and SUPABASE_SECRET_KEY to sync)")
         return
 
     demo = load_demo()

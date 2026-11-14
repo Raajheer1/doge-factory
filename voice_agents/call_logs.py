@@ -1,8 +1,10 @@
-"""Local copies of finished calls for analysis.
+"""Finished calls, saved for analysis.
 
 Each call is saved as call_logs/<conversation_id>.json: the full ElevenLabs
 conversation (transcript, analysis, metadata) plus the agent context we built it
-with. calls.jsonl flattens them, one row per call, for pandas/duckdb.
+with. calls.jsonl flattens them, one row per call, for pandas/duckdb. With
+SUPABASE_URL and SUPABASE_SECRET_KEY set, each call is also upserted to the
+`calls` and `call_turns` tables.
 """
 
 import json
@@ -32,11 +34,13 @@ def save(conversation: dict, context: dict | None = None) -> Path | None:
     path = log_dir() / f"{cid}.json"
     if context is None and path.exists():
         context = json.loads(path.read_text()).get("context")
-    path.write_text(json.dumps({
+    saved = {
         "saved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "context": context or {},
         "conversation": conversation,
-    }, indent=2))
+    }
+    path.write_text(json.dumps(saved, indent=2))
+    push(saved)
     return path
 
 
@@ -57,9 +61,11 @@ def row(saved: dict) -> dict:
     meta, analysis = c.get("metadata") or {}, c.get("analysis") or {}
     turns = [t for t in c.get("transcript") or [] if t.get("message")]
     variables = ctx.get("dynamic_variables") or (c.get("conversation_initiation_client_data") or {}).get("dynamic_variables") or {}
+    linked = ctx.get("metadata") or {}
     return {
         "conversation_id": c.get("conversation_id"),
         "elevenlabs_agent_id": c.get("agent_id"),
+        "agent_name": c.get("agent_name"),
         "started_at": meta.get("start_time_unix_secs"),
         "duration_secs": meta.get("call_duration_secs"),
         "status": c.get("status"),
@@ -67,19 +73,51 @@ def row(saved: dict) -> dict:
         "archetype": ctx.get("archetype") or c.get("agent_name") or ctx.get("kind"),
         "caller": ctx.get("caller") or variables.get("caller_name") or variables.get("persona_name"),
         "target": ctx.get("target") or variables.get("target_name"),
+        "target_role": variables.get("target_role"),
         "policy_title": variables.get("policy_title"),
         "goal": variables.get("goal") or variables.get("ask"),
-        "run_id": (ctx.get("metadata") or {}).get("run_id"),
-        "person_id": (ctx.get("metadata") or {}).get("person_id"),
+        "run_id": linked.get("run_id"),
+        "query": linked.get("query"),
+        "policy_id": linked.get("policy_id"),
+        "jurisdiction": linked.get("jurisdiction"),
+        "person_id": linked.get("person_id"),
         "call_successful": analysis.get("call_successful"),
         "summary": analysis.get("transcript_summary"),
         "data_collection": {k: v.get("value") for k, v in (analysis.get("data_collection_results") or {}).items()},
         "evaluation": {k: v.get("result") for k, v in (analysis.get("evaluation_criteria_results") or {}).items()},
+        "elevenlabs_sentiment": analysis.get("sentiment_analysis"),
         "turns": len(turns),
         "agent_words": sum(len(t["message"].split()) for t in turns if t.get("role") == "agent"),
         "user_words": sum(len(t["message"].split()) for t in turns if t.get("role") == "user"),
         "transcript": [{"role": t.get("role"), "at": t.get("time_in_call_secs"), "message": t["message"]} for t in turns],
     }
+
+
+def push(saved: dict) -> bool:
+    """Upsert one saved call (and its turns) to Supabase; a no-op if it isn't configured."""
+    url, key = os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SECRET_KEY")
+    if not url or not key:
+        return False
+    headers = {"apikey": key, "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"}
+    if key.startswith("eyJ"):  # a legacy service_role JWT also goes in Authorization
+        headers["Authorization"] = f"Bearer {key}"
+    r = row(saved)
+    c = saved["conversation"]
+    record = {
+        **{k: v for k, v in r.items() if k != "started_at"},
+        "started_at": datetime.fromtimestamp(r["started_at"], timezone.utc).isoformat() if r["started_at"] else None,
+        "transcript_text": "\n".join(f"{t['role']}: {t['message']}" for t in r["transcript"]),
+        "context": saved.get("context") or {},
+        # The useful parts of the ElevenLabs record; traces and realtime snapshots are left out.
+        "raw": {k: c.get(k) for k in ("metadata", "analysis", "transcript", "conversation_initiation_client_data")},
+    }
+    base = url.rstrip("/") + "/rest/v1"
+    httpx.post(f"{base}/calls", headers=headers, json=record, timeout=30).raise_for_status()
+    turns = [{"conversation_id": r["conversation_id"], "turn_index": i, "role": t["role"],
+              "at_secs": t["at"], "message": t["message"]} for i, t in enumerate(r["transcript"])]
+    if turns:
+        httpx.post(f"{base}/call_turns", headers=headers, json=turns, timeout=30).raise_for_status()
+    return True
 
 
 def write_index() -> Path:
@@ -88,6 +126,11 @@ def write_index() -> Path:
     out = log_dir() / "calls.jsonl"
     out.write_text("".join(json.dumps(r) + "\n" for r in rows))
     return out
+
+
+def push_all() -> int:
+    """Upsert every locally saved call to Supabase."""
+    return sum(push(json.loads(p.read_text())) for p in sorted(log_dir().glob("conv_*.json")))
 
 
 def export_all() -> tuple[int, Path]:
