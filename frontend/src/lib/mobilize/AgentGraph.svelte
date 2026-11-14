@@ -4,8 +4,8 @@
   import type { AgentKind, VoiceAgent } from '$lib/voice';
   import { avatarColor, initials, type NodeState, type RunState } from './run';
 
-  let { run, planned, campaign = false, sourceLabel, proposalTitle, jurisdiction, target, selectedId, liveAgentId, onselect }: {
-    run: RunState; planned: number; campaign?: boolean; sourceLabel: string; proposalTitle: string; jurisdiction: string; target: string;
+  let { run, planned, campaign = false, ticking = true, sourceLabel, proposalTitle, jurisdiction, target, selectedId, liveAgentId, onselect }: {
+    run: RunState; planned: number; campaign?: boolean; ticking?: boolean; sourceLabel: string; proposalTitle: string; jurisdiction: string; target: string;
     selectedId: string | null; liveAgentId: string | null; onselect: (id: string) => void;
   } = $props();
 
@@ -59,6 +59,38 @@
     });
   }
 
+  // A ticking clock on the node being planned, so long reasoning visibly runs.
+  let clock = $state(Date.now());
+  $effect(() => {
+    if (runningIndex < 0 || !ticking) return;
+    const id = setInterval(() => (clock = Date.now()), 500);
+    return () => clearInterval(id);
+  });
+  // Replays fold in events with their recorded times, so only a live build ticks.
+  const secs = (from?: number) => (from && ticking ? `${Math.max(0, Math.round((clock - from) / 1000))}s` : '');
+
+  // Keep the node being planned in view while the graph scrolls.
+  const runningIndex = $derived(run.personas.findIndex((p) => p.state === 'running'));
+  $effect(() => {
+    const i = runningIndex;
+    if (i < 0 || !canvas) return;
+    void tick().then(() => {
+      const el = canvas.querySelector<HTMLElement>(`[data-node="p${i}"]`);
+      if (el) canvas.scrollTo({ top: Math.max(0, el.offsetTop - 60), behavior: 'smooth' });
+    });
+  });
+  const tail = (s: string, n = 240) => (s.length > n ? '…' + s.slice(-n) : s);
+  const thought = (text: string) => tail(text.replaceAll('**', '').trim());
+  // The plan streams as JSON; show the field being written, in words.
+  const FIELD: Record<string, string> = { caller_name: 'Caller', occupation: 'Occupation', caller_role: 'Who they are', background: 'Background', personal_stake: 'Why they care', goal: 'Goal', talking_points: 'Talking points', objections: 'Objections', first_message: 'Opening line' };
+  function drafting(json: string): string {
+    const keys = [...json.matchAll(/"(\w+)":/g)];
+    const last = keys.at(-1);
+    if (!last || !(last[1] in FIELD)) return '';
+    const value = json.slice(last.index! + last[0].length).replace(/^[\s\[]*"?/, '').replaceAll('","', ' · ').replace(/["\]},]+\s*$/, '').replaceAll('\\"', '"');
+    return `${FIELD[last[1]]}: ${tail(value, 200)}`;
+  }
+
   $effect(() => {
     $state.snapshot(run);
     void planned; void selectedId; void liveAgentId;
@@ -101,10 +133,15 @@
           {#if slot.persona}<span class="mz-avatar" style="background:{avatarColor(slot.persona.name)}">{initials(slot.persona.name)}</span>
           {:else}<span class="mz-ic"><Sparkles size={15} /></span>{/if}
           <div class="mz-min">
-            <div class="mz-name">{slot.persona?.name ?? `Persona ${i + 1}`}</div>
-            <div class="mz-sub">{slot.persona ? `${slot.persona.age} · ${slot.persona.occupation}` : slot.state === 'running' ? 'Drafting…' : 'Waiting'}</div>
+            <div class="mz-name">{slot.persona?.name ?? (slot.target ? `Caller → ${slot.target}` : `Persona ${i + 1}`)}</div>
+            <div class="mz-sub">{slot.persona ? `${slot.persona.age} · ${slot.persona.occupation}`
+              : slot.state === 'error' ? 'Skipped'
+              : slot.state === 'running' ? (slot.phase === 'writing' ? `Writing the call plan… ${secs(slot.startedAt)}` : slot.target ? `Thinking… ${secs(slot.startedAt)}` : 'Drafting…')
+              : slot.archetype ?? 'Waiting'}</div>
           </div>
         </div>
+        {#if slot.state === 'running' && slot.phase === 'writing' && slot.draft}<p class="mz-think">{drafting(slot.draft)}</p>
+        {:else if slot.state === 'running' && slot.thinking}<p class="mz-think">{thought(slot.thinking)}</p>{/if}
         {#if slot.persona}
           <div class="mz-tags"><span class="mz-tag"><Mic size={11} />{slot.voice ?? 'casting…'}</span>
             <span class="mz-tag">{slot.persona.gender} · {slot.persona.age_band.replace('_', ' ')}</span></div>

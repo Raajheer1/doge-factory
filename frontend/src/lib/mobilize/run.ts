@@ -2,7 +2,11 @@
 import type { PipelineEvent, Persona, Stage, VoiceAgent } from '$lib/voice';
 
 export type NodeState = 'pending' | 'running' | 'done' | 'error';
-export interface PersonaSlot { state: NodeState; persona?: Persona; voice?: string }
+export interface PersonaSlot {
+  state: NodeState; persona?: Persona; voice?: string;
+  // Generated agents: who the call is for, and the planner's streamed reasoning.
+  target?: string; archetype?: string; phase?: 'thinking' | 'writing'; thinking?: string; draft?: string; startedAt?: number;
+}
 export interface TraceRow { stage: Stage | 'error'; start: number; end: number | null; message: string; status: string }
 export interface RunState {
   phase: 'idle' | 'running' | 'done' | 'error';
@@ -55,22 +59,36 @@ export function applyEvent(r: RunState, ev: PipelineEvent) {
     return;
   }
 
+  const i = (ev.data?.index ?? 0) - 1;
+  if (ev.stage === 'think') {
+    // Streamed reasoning updates the running node; it isn't a trace row of its own.
+    const slot = r.personas[i];
+    if (!slot) return;
+    slot.phase = ev.data!.phase;
+    if (ev.data!.phase === 'thinking') slot.thinking = (slot.thinking ?? '') + ev.data!.delta;
+    else slot.draft = (slot.draft ?? '') + ev.data!.delta;
+    return;
+  }
   if (ev.stage === 'persona' && ev.status === 'running') {
     r.rows.push({ stage: 'persona', start: t, end: null, message: ev.message, status: 'running' });
-    r.personas[ev.data!.index - 1] = { state: 'running' };
+    r.personas[i] = { ...r.personas[i], state: 'running', startedAt: t, target: ev.data!.target ?? r.personas[i]?.target, archetype: ev.data!.archetype ?? r.personas[i]?.archetype };
     r.synthState = 'running';
   } else if (ev.stage === 'persona') {
     const open = r.rows.find((row) => row.stage === 'persona' && row.end === null);
-    if (open) Object.assign(open, { end: t, message: ev.message, status: 'done' });
-    r.personas[ev.data!.index - 1] = ev.data!.skipped ? { state: 'error' } : { state: 'running', persona: ev.data!.persona };
+    if (open) Object.assign(open, { end: t, message: ev.message, status: ev.data!.skipped ? 'error' : 'done' });
+    r.personas[i] = ev.data!.skipped ? { ...r.personas[i], state: 'error' } : { ...r.personas[i], state: 'running', persona: ev.data!.persona };
   } else {
     r.rows.push({ stage: ev.stage, start: t, end: t, message: ev.message, status: ev.status });
   }
 
   if (ev.stage === 'input') r.inputState = 'done';
-  if (ev.stage === 'plan') r.n = ev.data!.targets.length; // one generated agent per person
+  if (ev.stage === 'plan') {
+    // One generated agent per person; show who is coming before each is planned.
+    r.n = ev.data!.targets.length;
+    r.personas = ev.data!.targets.map((tg: { name: string; archetype: string }) => ({ state: 'pending' as NodeState, target: tg.name, archetype: tg.archetype }));
+  }
   if (ev.stage === 'voice') {
-    const slot = r.personas.find((p) => p.persona && !p.voice);
+    const slot = r.personas.find((p) => p.persona && !p.voice && p.state !== 'error');
     if (slot) {
       slot.voice = ev.message.match(/voice (\w+)/)?.[1];
       slot.state = 'done';

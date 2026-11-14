@@ -189,7 +189,7 @@
               {#each people as p}<dt>{p.type}</dt><dd>{p.title ? `${p.title} ` : ''}{p.name}<small>{p.relevance.replaceAll('_', ' ')}{p.clients?.length ? ` · for ${p.clients.join(', ')}` : ''}</small></dd>{/each}
               <dt>Every call rings</dt><dd>{status?.allowed_numbers.join(', ') || demo?.to_number}</dd>
             </dl>
-            <p class="mz-note">With Claude, each person gets a purpose-built agent. Every call rings your phone and you play them.</p>
+            <p class="mz-note">In Live mode, each person gets a purpose-built agent. Every call rings your phone and you play them.</p>
           </div>
         {:else if demo}
           <div class="mz-card">

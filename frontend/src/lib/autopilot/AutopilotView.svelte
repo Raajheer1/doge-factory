@@ -180,7 +180,7 @@
         {/if}
 
         {#if s.key === 'mobilize' && graph}
-          <div class="ap-graph"><AgentGraph run={graph} planned={planned} {campaign} sourceLabel={campaign ? lastData('mobilize', 'plan')?.model ?? 'Planner' : 'Claude'}
+          <div class="ap-graph"><AgentGraph run={graph} planned={planned} {campaign} ticking={mode === 'live'} sourceLabel={campaign ? lastData('mobilize', 'plan')?.model ?? 'Planner' : 'Claude'}
             proposalTitle={handoff?.spoken_title ?? ''} jurisdiction={chosen?.jurisdiction ?? ''} target={campaign ? `${planned} people` : handoff?.people?.[0]?.name ?? ''}
             selectedId={null} liveAgentId={liveAgentId} onselect={() => {}} /></div>
         {:else if s.key === 'mobilize' && (personas.length || agents.length)}

@@ -152,3 +152,4 @@
 .mz-handoff pre{margin-top:8px;max-height:320px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
 .mz-goal{margin-top:10px}.mz-goal summary{cursor:pointer;color:#397b53;font-size:11px;font-weight:700}.mz-goal p{font-size:12px;line-height:1.6;color:#64756a;overflow-wrap:anywhere}
 .mz-input-grid p,.mz-kv dd{overflow-wrap:anywhere}
+.mz-think{margin:9px 0 0;max-width:230px;font-size:10px;line-height:1.5;color:#5d7266;font-style:italic;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}

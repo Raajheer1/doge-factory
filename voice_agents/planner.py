@@ -5,6 +5,7 @@ the caller, goal and script for that archetype. Everything lands in the fixed
 "Generated Caller" ElevenLabs prompt, which holds the call structure and rules.
 """
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 
 import os
@@ -18,6 +19,7 @@ from .voices import pick_voice
 
 # One tier above the small models; override with PLANNER_MODEL.
 MODEL = os.environ.get("PLANNER_MODEL", "gpt-6.1-terra")
+EFFORT = os.environ.get("PLANNER_EFFORT", "high")  # real reasoning per agent; the build is meant to be watched
 
 
 @dataclass(frozen=True)
@@ -137,7 +139,9 @@ def policy_brief(h: MobilizeHandoff) -> str:
 
 
 def plan_agent(h: MobilizeHandoff, person: HandoffPerson, index: int,
-               client: openai.OpenAI | None = None) -> PlannedAgent:
+               client: openai.OpenAI | None = None) -> Iterator[tuple[str, str] | PlannedAgent]:
+    """Stream one call plan: yields ("thinking", text) for the model's reasoning
+    summary, ("writing", text) while it writes the plan, then the PlannedAgent."""
     client = client or openai.OpenAI()
     archetype = archetype_for(person)
     gender, band = VOICE_MIX[index % len(VOICE_MIX)]
@@ -145,10 +149,10 @@ def plan_agent(h: MobilizeHandoff, person: HandoffPerson, index: int,
     facts = [f"Calling: {name} ({role})", f"Why them: {person.relevance.replace('_', ' ')}"]
     if person.clients:
         facts.append(f"Their clients: {', '.join(person.clients)}")
-    response = client.responses.parse(
+    with client.responses.stream(
         model=MODEL,
-        reasoning={"effort": "low"},  # short creative plans; keeps each call to a few seconds
-        max_output_tokens=4000,
+        reasoning={"effort": EFFORT, "summary": "detailed"},  # the summary is what the UI shows as thinking
+        max_output_tokens=8000,
         instructions=SYSTEM,
         input=[{"role": "user", "content": (
             f"{policy_brief(h)}\n\n" + "\n".join(facts) + "\n\n"
@@ -159,7 +163,15 @@ def plan_agent(h: MobilizeHandoff, person: HandoffPerson, index: int,
             f"{INITIALS[(index * 7 + 3) % len(INITIALS)]}.\nWrite the call plan."
         )}],
         text_format=CallPlan,
-    )
+    ) as stream:
+        for ev in stream:
+            if ev.type == "response.reasoning_summary_text.delta":
+                yield "thinking", ev.delta
+            elif ev.type == "response.reasoning_summary_part.added":
+                yield "thinking", "\n\n"
+            elif ev.type == "response.output_text.delta":
+                yield "writing", ev.delta
+        response = stream.get_final_response()
     plan = response.output_parsed
     if plan is None:
         raise RuntimeError(f"Call plan for {person.name} failed (status={response.status})")
@@ -170,4 +182,4 @@ def plan_agent(h: MobilizeHandoff, person: HandoffPerson, index: int,
         personal_impact=plan.personal_stake,
         voice_id=pick_voice(gender, band, seed=plan.caller_name),
     )
-    return PlannedAgent(person=person, archetype=archetype, persona=persona, plan=plan)
+    yield PlannedAgent(person=person, archetype=archetype, persona=persona, plan=plan)

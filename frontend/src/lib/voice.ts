@@ -11,7 +11,7 @@ export interface VoiceAgent {
   payload: Record<string, unknown> & { agent_id: string };
   created_at: string; conversations: string[];
 }
-export type Stage = 'input' | 'plan' | 'persona' | 'voice' | 'assemble' | 'ready';
+export type Stage = 'input' | 'plan' | 'persona' | 'think' | 'voice' | 'assemble' | 'ready';
 export interface PipelineEvent { t: string; stage: Stage; status: 'running' | 'done' | 'error'; message: string; data?: Record<string, any>; agent?: VoiceAgent }
 export interface VoiceStatus { elevenlabs_key: boolean; phone_number: boolean; allowed_numbers: string[]; persona_model: string; planner_model?: string; max_personas: number }
 export interface DemoInput {

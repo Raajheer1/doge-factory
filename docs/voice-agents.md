@@ -47,7 +47,9 @@ from the person's type and `relevance`:
 
 An OpenAI model (`PLANNER_MODEL`, `gpt-6.1-terra` by default, needs `OPENAI_API_KEY`)
 then writes the caller, goal, talking points, likely objections and opening line from the
-handoff: one call per person, all in parallel, about 7–9 seconds for ten people. They fill the variables of the single **Generated Caller** agent, whose
+handoff, one person at a time at `PLANNER_EFFORT` (default `high`), about 10 seconds
+each. The model's reasoning summary (when it gives one) and the plan as it is written
+stream to the UI as `think` events, so the graph shows each agent being worked out. They fill the variables of the single **Generated Caller** agent, whose
 prompt holds the call structure and the rules (no invented facts, AI disclosure, end the
 call). Code picks each caller's gender and age band, so voices vary across the roster.
 Its post-call fields are `target_position` (supportive/undecided/opposed/no_answer),
