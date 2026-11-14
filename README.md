@@ -61,3 +61,7 @@ Early-stage concept and product development. The [housing policy graph guide](do
 ## Disclaimer
 
 DOGE Factory is a policy-analysis and drafting-support tool. Its output is not legal advice and should be reviewed by qualified legal, policy, security, and subject-matter experts before use.
+
+## Voice agents
+
+The Mobilize step's calling agents live in `voice_agents/`. See [docs/voice-agents.md](docs/voice-agents.md).
