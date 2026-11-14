@@ -41,12 +41,13 @@ from the person's type and `relevance`:
 |---|---|---|
 | lobbyist | Lobbyist pitch: raise it with their named clients, take a meeting | DOGE Factory organizer |
 | `authority_over_document` / `administers` (agency or official) | Stakeholder → Agency: guidance, waiver or support | resident from an affected group |
-| other official | Constituent → Legislator: support the amendment | constituent from an affected group |
+| legislator (Senator, Representative, …) | Constituent → Legislator: support the amendment | constituent from an affected group |
 | other organization | Coalition invite: sign a coalition letter | DOGE Factory organizer |
+| any other official or agency | Stakeholder → Agency | resident from an affected group |
 
-A small model (`PERSONA_MODEL`, Haiku by default) then writes the caller, goal, talking
-points, likely objections and opening line from the handoff, one call per person, four
-at a time. They fill the variables of the single **Generated Caller** agent, whose
+An OpenAI model (`PLANNER_MODEL`, `gpt-6.1-terra` by default, needs `OPENAI_API_KEY`)
+then writes the caller, goal, talking points, likely objections and opening line from the
+handoff: one call per person, all in parallel, about 7–9 seconds for ten people. They fill the variables of the single **Generated Caller** agent, whose
 prompt holds the call structure and the rules (no invented facts, AI disclosure, end the
 call). Code picks each caller's gender and age band, so voices vary across the roster.
 Its post-call fields are `target_position` (supportive/undecided/opposed/no_answer),

@@ -19,7 +19,7 @@ from ..personas import MODEL as PERSONA_MODEL
 from ..voices import DEFAULT_VOICE_ID, pick_voice, voice_label
 
 STAGES = ("input", "plan", "persona", "voice", "assemble", "ready")
-PLAN_WORKERS = 4  # call plans drafted in parallel
+PLAN_WORKERS = 12  # call plans drafted in parallel; one wave for a typical handoff
 
 
 class ConsoleAgent(BaseModel):
@@ -157,7 +157,7 @@ def run_campaign(demo: dict) -> Iterator[dict]:
     yield event("plan", "done",
                 f"Planned {len(people)} agents: " + ", ".join(
                     f"{n} {a}" for a, n in _counts(t["archetype"] for t in targets)),
-                data={"targets": targets})
+                data={"targets": targets, "model": planner.MODEL})
 
     built = 0
     with ThreadPoolExecutor(PLAN_WORKERS) as pool:
@@ -231,7 +231,6 @@ def input_from_mobilize_v1(h: MobilizeHandoff, demo: dict) -> dict:
     legislator = demo["legislator"]
     if legislators:
         official = legislators[0]
-        state = official.state
         legislator = {"title": official.title, "name": official.name,
                       "district": official.district or f"{official.state} (statewide)"}
     lobbyist = demo["lobbyist"]

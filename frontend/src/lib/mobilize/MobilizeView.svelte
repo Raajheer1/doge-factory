@@ -51,7 +51,7 @@
   const lobbyist = $derived(handoff?.people?.find((p) => p.type === 'lobbyist' && p.clients?.length));
   // A campaign targets everyone in the handoff; otherwise the first official, else the demo target.
   const target = $derived(campaign ? `${people.length} people` : official ? `${official.title || ''} ${official.name}`.trim() : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
-  const sourceLabel = $derived(source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
+  const sourceLabel = $derived(campaign ? status?.planner_model ?? 'Planner' : source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
   const planned = $derived(campaign ? people.length : count);
   const totalCalls = $derived(agents.reduce((sum, a) => sum + a.conversations.length, 0));
 
@@ -213,7 +213,7 @@
               <div class="mz-stepper"><button aria-label="Fewer personas" disabled={building} onclick={() => (count = Math.max(1, count - 1))}>−</button><output>{count}</output><button aria-label="More personas" disabled={building} onclick={() => (count = Math.min(status?.max_personas ?? 4, count + 1))}>+</button></div></div>{/if}
             <div class="mz-seg" role="radiogroup" aria-label="Persona source">
               <button role="radio" aria-checked={source === 'sample'} class:on={source === 'sample'} disabled={building} onclick={() => (source = 'sample')} title="Pre-written personas, no API cost">Sample</button>
-              <button role="radio" aria-checked={source === 'claude'} class:on={source === 'claude'} disabled={building} onclick={() => (source = 'claude')} title="Generate personas live; uses API credits">Claude</button>
+              <button role="radio" aria-checked={source === 'claude'} class:on={source === 'claude'} disabled={building} onclick={() => (source = 'claude')} title="Generate agents live with a model; uses API credits">Live</button>
             </div>
             <button class="primary-button" disabled={building || !demo || (!!runId && !handoff)} onclick={build}>
               {#if building}<LoaderCircle class="spin" size={16} /> Building…{:else}<Hammer size={16} /> Build voice agents{/if}

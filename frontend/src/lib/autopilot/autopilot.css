@@ -59,3 +59,4 @@
 .ap-transcript b{display:block;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#8a998f;margin-bottom:2px}
 .ap-links{display:flex;gap:8px;margin:6px 0 0 48px}
 @media(max-width:760px){.ap-head{flex-direction:column;align-items:flex-start}.ap-head h1{font-size:30px}.ap-controls{justify-content:flex-start}.ap-links{margin-left:0;flex-wrap:wrap}.ap-people li{grid-template-columns:auto 1fr}.ap-people em{grid-row:auto;grid-column:2;justify-self:start}}
+.ap-graph{margin-top:12px;border:1px solid #edf1ed;border-radius:8px;overflow:hidden}.ap-graph .mz-canvas{min-height:0;max-height:560px}

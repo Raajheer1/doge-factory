@@ -2,8 +2,11 @@
   import { onDestroy, onMount } from 'svelte';
   import ExpandableText from '$lib/ExpandableText.svelte';
   import { ArrowRight, Check, CircleAlert, FastForward, LoaderCircle, Pause, PhoneCall, Play, RotateCcw, Square, Zap } from '@lucide/svelte';
-  import { AP_STAGES, Stopped, appendEvent, isFinished, loadLog, runAutopilot, type APEvent, type APStage } from '$lib/autopilot';
+  import { AP_STAGES, PERSONAS, Stopped, appendEvent, isFinished, loadLog, runAutopilot, type APEvent, type APStage } from '$lib/autopilot';
   import { enterRun, journey, mobilizePath, redlinePath } from '$lib/journey.svelte';
+  import AgentGraph from '$lib/mobilize/AgentGraph.svelte';
+  import { applyEvent, emptyRun } from '$lib/mobilize/run';
+  import '$lib/mobilize/mobilize.css';
   import './autopilot.css';
 
   let { runId, live }: { runId: string; live: boolean } = $props();
@@ -79,6 +82,17 @@
   const agents = $derived((byStage.mobilize ?? []).filter((e) => e.data?.agent).map((e) => e.data!.agent));
   const callData = $derived([...(byStage.call ?? [])].reverse().find((e) => e.data?.transcript)?.data);
   const callAgent = $derived(lastData('call', 'agent'));
+  // The Mobilize agent graph, rebuilt from the recorded pipeline events so it fills in live and in replays.
+  const campaign = $derived(!!handoff?.people?.length);
+  const planned = $derived(campaign ? handoff!.people.length : PERSONAS);
+  const graph = $derived.by(() => {
+    const raw = (byStage.mobilize ?? []).filter((e) => e.data?.pipeline).map((e) => e.data!.pipeline);
+    if (!raw.length) return null;
+    const r = { ...emptyRun(planned), phase: 'running' as const };
+    for (const ev of raw) applyEvent(r, ev);
+    return r;
+  });
+  const liveAgentId = $derived(callAgent && stateOf('call') === 'running' ? callAgent.id : null);
   const query = $derived(audit?.query ?? '');
 
   // Mirror progress into the shared journey so the sidebar stepper follows along.
@@ -165,7 +179,11 @@
           {:else}<p class="ap-small">{handoff.notes || 'No people in the handoff; Mobilize uses demo targets.'}</p>{/if}
         {/if}
 
-        {#if s.key === 'mobilize' && (personas.length || agents.length)}
+        {#if s.key === 'mobilize' && graph}
+          <div class="ap-graph"><AgentGraph run={graph} planned={planned} {campaign} sourceLabel={campaign ? lastData('mobilize', 'plan')?.model ?? 'Planner' : 'Claude'}
+            proposalTitle={handoff?.spoken_title ?? ''} jurisdiction={chosen?.jurisdiction ?? ''} target={campaign ? `${planned} people` : handoff?.people?.[0]?.name ?? ''}
+            selectedId={null} liveAgentId={liveAgentId} onselect={() => {}} /></div>
+        {:else if s.key === 'mobilize' && (personas.length || agents.length)}
           {#if personas.length}<ul class="ap-personas">{#each personas as p}<li><strong>{p.name}, {p.age}</strong><small>{p.occupation}</small><p>{p.personal_impact}</p></li>{/each}</ul>{/if}
           {#if agents.length}<div class="ap-chips">{#each agents as a}<span>{a.archetype ? `${a.archetype}: ` : ''}{a.caller} → {a.target}</span>{/each}</div>{/if}
         {/if}

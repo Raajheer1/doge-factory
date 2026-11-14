@@ -1,5 +1,5 @@
 /* Mobilize page. Builds on app.css (shell, typography, buttons); everything here is mz- prefixed. */
-[data-kind=legislator]{--k:#3b805e}[data-kind=survey]{--k:#6b5ca5}[data-kind=lobbyist]{--k:#a8742a}
+[data-kind=legislator]{--k:#3b805e}[data-kind=survey]{--k:#6b5ca5}[data-kind=lobbyist]{--k:#a8742a}[data-kind=generated]{--k:#2f6f8f}
 
 
 .mz-card{background:#fff;border:1px solid #e3ebe4;border-radius:10px;box-shadow:0 5px 18px #283e2e08}

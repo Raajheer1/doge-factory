@@ -127,10 +127,13 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
   try { localStorage.setItem('doge-agents-run', runId); } catch { /* optional */ }
   const agents: VoiceAgent[] = [];
   await runPipeline({ personas: PERSONAS, source: 'claude', handoff }, (ev) => {
-    if (ev.status === 'error') log('mobilize', 'error', ev.message);
-    else if (ev.stage === 'persona' && ev.status === 'done') log('mobilize', 'progress', ev.message, { persona: ev.data?.persona });
-    else if (ev.stage === 'assemble' && ev.agent) { agents.push(ev.agent); log('mobilize', 'progress', ev.message, { agent: agentSummary(ev.agent) }); }
-    else if (ev.stage === 'input' || ev.stage === 'plan') log('mobilize', 'progress', ev.message, { [ev.stage]: ev.data });
+    // Every raw pipeline event is kept so the agent graph rebuilds live and in replays.
+    const pipeline = ev;
+    if (ev.status === 'error') log('mobilize', 'error', ev.message, { pipeline });
+    else if (ev.stage === 'persona' && ev.status === 'done') log('mobilize', 'progress', ev.message, { persona: ev.data?.persona, pipeline });
+    else if (ev.stage === 'assemble' && ev.agent) { agents.push(ev.agent); log('mobilize', 'progress', ev.message, { agent: agentSummary(ev.agent), pipeline }); }
+    else if (ev.stage === 'input' || ev.stage === 'plan') log('mobilize', 'progress', ev.message, { [ev.stage]: ev.data, pipeline });
+    else log('mobilize', 'progress', ev.message, { pipeline });
   });
   if (!agents.length) { log('mobilize', 'error', 'No agents were built.'); return; }
   onRosterBuilt?.();

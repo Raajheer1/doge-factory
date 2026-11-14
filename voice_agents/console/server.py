@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from .. import calls
 from ..cli import load_demo
+from .. import planner
 from . import pipeline
 from .pipeline import ConsoleAgent
 
@@ -70,6 +71,7 @@ def create_app(*, store_path: Path | None = None, demo: dict | None = None,
             "phone_number": bool(os.environ.get("ELEVENLABS_PHONE_NUMBER_ID")),
             "allowed_numbers": sorted(calls.allowed_numbers()),
             "persona_model": pipeline.PERSONA_MODEL,
+            "planner_model": planner.MODEL,
             "max_personas": MAX_PERSONAS,
         }
 
