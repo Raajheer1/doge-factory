@@ -58,7 +58,9 @@ const agentSummary = (a: VoiceAgent) => ({ id: a.id, kind: a.kind, archetype: a.
 /** Run the whole journey for `runId`, appending to its log through `emit`. */
 export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ctl: Controls, onRosterBuilt?: () => void) {
   // A rerun starts a fresh log, but never redials a call that was already placed.
-  const priorCall = [...loadLog(runId)].reverse().find((e) => e.stage === 'call' && e.data?.conversation_id)?.data?.conversation_id as string | undefined;
+  let savedCall: string | null = null;
+  try { savedCall = localStorage.getItem(`doge-autopilot-call:${runId}`); } catch { /* storage is optional */ }
+  const priorCall = savedCall ?? ([...loadLog(runId)].reverse().find((e) => e.stage === 'call' && e.data?.conversation_id)?.data?.conversation_id as string | undefined);
   const events: APEvent[] = [];
   saveLog(runId, events);
   const log = (stage: APStage, status: APEvent['status'], message: string, data?: Record<string, any>) => {
@@ -142,6 +144,7 @@ export async function runAutopilot(runId: string, emit: (e: APEvent) => void, ct
   if (!priorCall && !window.confirm(`Place a real call to ${caller.request.to_number}? The caller is synthetic; verify the target, consent and applicable disclosure requirements first.`)) throw new Stopped();
   log('call', 'running', caller.archetype ? `${caller.caller} is calling ${caller.target} (${caller.archetype})` : `${caller.caller} is calling as a constituent of ${caller.target}`, { agent: agentSummary(caller), to: caller.request.to_number });
   const conversation_id = priorCall ?? (await placeCall(caller.id)).conversation_id;
+  try { localStorage.setItem(`doge-autopilot-call:${runId}`, conversation_id); } catch { /* storage is optional */ }
   log('call', 'progress', priorCall ? 'Reattached to the call placed earlier; not redialing' : 'Call placed', { conversation_id });
   let lastTurns = -1;
   let status = 'initiated';

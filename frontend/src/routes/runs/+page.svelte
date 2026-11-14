@@ -8,20 +8,24 @@
 
   let runs = $state<Run[] | null>(null);
   let apiOnline = $state(true);
+  let loadError = $state('');
 
   onMount(async () => {
     enterRun(null);
     journey.stage = 'queue';
-    ({ runs, apiOnline } = await loadQueue());
+    await refresh();
   });
+
+  async function refresh() { ({ runs, apiOnline, loadError } = await loadQueue()); }
 
   const label = (r: Run) => r.selected_finding_id ? 'Redline approved · ready to mobilize'
     : ['queued', 'running'].includes(r.status) ? 'Auditing'
     : r.status === 'failed' ? 'Analysis failed'
     : r.status === 'completed_with_errors' ? `Completed with errors · ${r.findings.length} findings`
     : r.findings.length ? `${r.findings.length} barrier${r.findings.length === 1 ? '' : 's'} to redline` : 'No findings';
-  const nextHref = (r: Run) => (r.selected_finding_id ? mobilizePath(r.id) : r.findings.length ? redlinePath(r.id) : runPath(r.id));
-  const nextLabel = (r: Run) => (r.selected_finding_id ? 'Mobilize' : r.findings.length ? 'Redline' : 'Audit');
+  const nextHref = (r: Run) => (r.status === 'failed' || ['queued', 'running'].includes(r.status) ? runPath(r.id) : r.selected_finding_id ? mobilizePath(r.id) : r.findings.length ? redlinePath(r.id) : runPath(r.id));
+  const nextLabel = (r: Run) => (r.status === 'failed' || ['queued', 'running'].includes(r.status) ? 'Audit' : r.selected_finding_id ? 'Mobilize' : r.findings.length ? 'Redline' : 'Audit');
+  const date = (value?: string) => { if (!value) return 'Date unavailable'; const d = new Date(value); return Number.isNaN(d.valueOf()) ? 'Date unavailable' : d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }); };
 </script>
 
 <svelte:head><title>DOGE Factory — Problem queue</title></svelte:head>
@@ -33,8 +37,8 @@
 </div>
 
 {#if !apiOnline}
-  <div class="alert-error queue-offline" role="status"><CircleAlert size={18} /><div><strong>Analysis API offline</strong>
-    <p>Showing built-in demo problems only. Start the Go API to see real runs; a new pitch can replay a demo audit on request.</p></div></div>
+  <div class="alert-error queue-offline" role="status"><CircleAlert size={18} /><div><strong>Saved analyses unavailable</strong>
+    <p>{loadError} Showing built-in demos only; your saved runs have not been deleted.</p></div><button onclick={refresh}>Retry</button></div>
 {/if}
 
 {#if !runs}
@@ -51,7 +55,7 @@
         </span>
         <span class="queue-main">
           <strong>{r.query}</strong>
-          <small>{label(r)}{#if r.findings[0]} · {r.findings[0].provision.citation || r.findings[0].provision.title}{/if}</small>
+          <small>{date(r.created_at)} · {r.collection === 'other' ? 'Problem library' : r.collection || 'Policy'} · {label(r)}{#if r.findings[0]} · {r.findings[0].provision.citation || r.findings[0].provision.title}{/if}</small>
         </span>
         {#if isDemo(r.id)}<span class="queue-tag"><FlaskConical size={11} /> DEMO</span>{/if}
         <span class="queue-next">{nextLabel(r)} <ArrowRight size={14} /></span>

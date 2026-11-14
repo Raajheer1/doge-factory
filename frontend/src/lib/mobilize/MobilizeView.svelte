@@ -182,14 +182,14 @@
             <a class="mz-link" href="/">Pitch a product to mobilize a real proposal <ArrowRight size={14} /></a>
           {/if}
         </div>
-        {#if people.length}
+        {#if campaign && demo}
           <div class="mz-card">
-            <div class="section-kicker">CALL TARGETS <span class="mz-pill">{people.length} FROM THE GRAPH</span></div>
+            <div class="section-kicker">CALL ROLES <span class="mz-pill">{people.length} FROM HANDOFF</span></div>
             <dl class="mz-kv">
-              {#each people as p}<dt>{p.type}</dt><dd>{p.title ? `${p.title} ` : ''}{p.name}<small>{p.relevance.replaceAll('_', ' ')}{p.clients?.length ? ` · for ${p.clients.join(', ')}` : ''}</small></dd>{/each}
-              <dt>Every call rings</dt><dd>{status?.allowed_numbers.join(', ') || demo?.to_number}</dd>
+              {#each people as p}<dt>{p.type}</dt><dd>{p.title ? `${p.title} ` : ''}{p.name}<small>{p.relevance.replaceAll('_', ' ')} · {p.verified_at}{p.clients?.length ? ` · for ${p.clients.join(', ')}` : ''}</small></dd>{/each}
+              <dt>Dialed number</dt><dd>{demo.to_number}<small>{status?.allowed_numbers.includes(demo.to_number) ? 'Allowlisted' : 'Not allowlisted; calls will be blocked'}</small></dd>
             </dl>
-            <p class="mz-note">With Claude, each person gets a purpose-built agent. Every call rings your phone and you play them.</p>
+            <p class="mz-note">Claude plans an agent for each handoff role. The listed roles are not the number being dialed; verify them before outreach.</p>
           </div>
         {:else if demo}
           <div class="mz-card">
@@ -227,7 +227,7 @@
           <div class="mz-card mz-graph-card">
             <div class="mz-card-bar">
               <span class="mini-label">AGENT GRAPH</span>
-              {#if run.start}<span class="mz-runmeta"><span class="status-dot" class:active-dot={building}></span>{building ? 'Building' : run.phase === 'error' ? 'Failed' : 'Complete'} · {fmtDuration((run.end ?? now) - run.start)} · {run.rows.length} events · {agents.length} agents</span>{/if}
+              {#if run.start}<span class="mz-runmeta"><span class="status-dot" class:active-dot={building}></span>{building ? 'Building' : run.phase === 'error' ? 'Failed' : run.personas.some((p) => p.state === 'error') ? 'Complete with skipped roles' : 'Complete'} · {fmtDuration((run.end ?? now) - run.start)} · {run.rows.length} events · {agents.length} agents</span>{/if}
             </div>
             {#if demo}
               <AgentGraph {run} {planned} {campaign} {sourceLabel} {proposalTitle} {jurisdiction} {target} {selectedId} {liveAgentId} onselect={select} />

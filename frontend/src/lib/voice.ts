@@ -56,12 +56,24 @@ export async function runPipeline(body: { personas: number; source: 'sample' | '
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '';
+  let ready = false;
+  let pipelineError = '';
+  const dispatch = (part: string) => {
+    if (!part.startsWith('data: ')) return;
+    const event: PipelineEvent = JSON.parse(part.slice(6));
+    if (event.status === 'error') pipelineError = event.message;
+    if (event.stage === 'ready' && event.status === 'done') ready = true;
+    onEvent(event);
+  };
   for (;;) {
     const { value, done } = await reader.read();
     if (done) break;
     buffer += decoder.decode(value, { stream: true });
     const parts = buffer.split('\n\n');
     buffer = parts.pop() ?? '';
-    for (const part of parts) if (part.startsWith('data: ')) onEvent(JSON.parse(part.slice(6)));
+    for (const part of parts) dispatch(part);
   }
+  buffer += decoder.decode();
+  if (buffer.trim()) dispatch(buffer.trim());
+  if (!ready) throw new Error(pipelineError || 'Agent build ended unexpectedly. Please try again.');
 }

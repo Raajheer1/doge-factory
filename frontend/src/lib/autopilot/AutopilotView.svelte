@@ -4,6 +4,8 @@
   import { ArrowRight, Check, CircleAlert, FastForward, LoaderCircle, Pause, PhoneCall, Play, RotateCcw, Square, Zap } from '@lucide/svelte';
   import { AP_STAGES, Stopped, appendEvent, isFinished, loadLog, runAutopilot, type APEvent, type APStage } from '$lib/autopilot';
   import { enterRun, journey, mobilizePath, redlinePath } from '$lib/journey.svelte';
+  import { loadRun, TERMINAL_STATUSES } from '$lib/runs';
+  import type { Run } from '$lib/api';
   import './autopilot.css';
 
   let { runId, live }: { runId: string; live: boolean } = $props();
@@ -16,16 +18,25 @@
   let error = $state('');
   let replayTimer: ReturnType<typeof setTimeout> | undefined;
   let recorded = $state<APEvent[]>([]);
+  let actualRun = $state<Run | null>(null);
+  let runError = $state('');
+  let disposed = false;
+
+  async function refreshRun() {
+    try { const next = await loadRun(runId); if (!disposed) { actualRun = next; runError = ''; } }
+    catch (e) { if (!disposed) runError = e instanceof Error ? e.message : 'Could not load this run.'; }
+  }
 
   onMount(() => {
     enterRun(runId);
     journey.stage = 'autopilot';
+    void refreshRun();
     recorded = loadLog(runId);
     // A live start only when asked (?live=1) and nothing was recorded yet; otherwise show the record.
     if (live && !recorded.length) startLive();
     else if (recorded.length) startReplay();
   });
-  onDestroy(() => { stopped = true; clearTimeout(replayTimer); });
+  onDestroy(() => { disposed = true; stopped = true; clearTimeout(replayTimer); });
 
   async function startLive() {
     clearTimeout(replayTimer);
@@ -41,6 +52,7 @@
     } finally {
       recorded = loadLog(runId);
       mode = 'idle';
+      void refreshRun();
     }
   }
 
@@ -79,17 +91,18 @@
   const agents = $derived((byStage.mobilize ?? []).filter((e) => e.data?.agent).map((e) => e.data!.agent));
   const callData = $derived([...(byStage.call ?? [])].reverse().find((e) => e.data?.transcript)?.data);
   const callAgent = $derived(lastData('call', 'agent'));
-  const query = $derived(audit?.query ?? '');
+  const query = $derived(actualRun?.query ?? audit?.query ?? '');
 
-  // Mirror progress into the shared journey so the sidebar stepper follows along.
+  // Replay describes historical events; navigation reflects the current run,
+  // never the progressively replayed approval state.
   $effect(() => {
-    const st = (k: APStage) => stateOf(k);
     journey.query = query;
-    journey.analysisDone = st('audit') === 'done';
-    journey.hasFindings = !!audit?.findings?.length;
-    journey.findingId = chosen?.id ?? null;
-    journey.approved = st('redline') === 'done';
-    journey.agentsBuilt = agents.length > 0;
+    if (actualRun) {
+      journey.analysisDone = TERMINAL_STATUSES.includes(actualRun.status);
+      journey.hasFindings = actualRun.findings.length > 0;
+      journey.findingId = actualRun.selected_finding_id ?? null;
+      journey.approved = !!actualRun.selected_finding_id;
+    }
     journey.stage = 'autopilot';
   });
 
@@ -127,6 +140,7 @@
   <section class="ap-goal" aria-label="Analysis goal"><span class="mini-label">ANALYSIS GOAL</span><ExpandableText text={query} limit={240}/></section>
 {/if}
 
+{#if runError}<div class="alert-error" role="alert"><CircleAlert size={18}/><div><strong>Could not load current run</strong><p>{runError} Recorded events may be out of date.</p></div><button onclick={refreshRun}>Retry</button></div>{/if}
 {#if error}<div class="alert-error" role="alert"><CircleAlert size={18} /><div><strong>Autopilot stopped</strong><p>{error}</p></div></div>{/if}
 {#if mode === 'idle' && !events.length}
   <div class="empty-state"><Zap size={22} /><h3>No autopilot record for this run yet</h3><p>Start autopilot to audit, draft and build agents. You will be asked to confirm approval and any real call.</p></div>

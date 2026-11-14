@@ -61,7 +61,7 @@ export function applyEvent(r: RunState, ev: PipelineEvent) {
     r.synthState = 'running';
   } else if (ev.stage === 'persona') {
     const open = r.rows.find((row) => row.stage === 'persona' && row.end === null);
-    if (open) Object.assign(open, { end: t, message: ev.message, status: 'done' });
+    if (open) Object.assign(open, { end: t, message: ev.message, status: ev.data?.skipped ? 'error' : 'done' });
     r.personas[ev.data!.index - 1] = ev.data!.skipped ? { state: 'error' } : { state: 'running', persona: ev.data!.persona };
   } else {
     r.rows.push({ stage: ev.stage, start: t, end: t, message: ev.message, status: ev.status });
@@ -83,6 +83,7 @@ export function applyEvent(r: RunState, ev: PipelineEvent) {
   }
   if (ev.stage === 'ready') {
     r.phase = 'done';
+    r.synthState = r.personas.some((p) => p.state === 'error') ? 'error' : 'done';
     r.end = t;
   }
 }
