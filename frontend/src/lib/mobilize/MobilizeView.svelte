@@ -2,6 +2,7 @@
   import { onDestroy, onMount } from 'svelte';
   import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, FlaskConical, Hammer, LoaderCircle, PhoneCall } from '@lucide/svelte';
   import type { Handoff } from '$lib/api';
+  import ExpandableText from '$lib/ExpandableText.svelte';
   import { loadHandoff } from '$lib/runs';
   import { getConversation, getDemoInput, getStatus, listAgents, placeCall, runPipeline, type DemoInput, type VoiceAgent, type VoiceStatus } from '$lib/voice';
   import { FINAL_CALL_STATUSES, allAgents, applyEvent, emptyRun, fmtDuration, restoreRun } from '$lib/mobilize/run';
@@ -34,6 +35,7 @@
   let now = $state(Date.now());
   let ticker: ReturnType<typeof setInterval> | undefined;
   let poll: ReturnType<typeof setTimeout> | undefined;
+  let disposed = false;
 
   const agents = $derived(allAgents(run));
   const selected = $derived(agents.find((a) => a.id === selectedId) ?? null);
@@ -42,7 +44,9 @@
   const finding = $derived(handoff?.finding ?? null);
   const proposalTitle = $derived(finding?.provision.title ?? demo?.policy.title ?? '');
   const jurisdiction = $derived(finding?.provision.jurisdiction || demo?.policy.state || '');
-  const target = $derived(demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
+  const official = $derived(handoff?.people?.find((p) => p.type === 'official' && p.state));
+  const lobbyist = $derived(handoff?.people?.find((p) => p.type === 'lobbyist' && p.clients?.length));
+  const target = $derived(official ? `${official.title || ''} ${official.name}`.trim() : demo ? `${demo.legislator.title} ${demo.legislator.name}` : '');
   const sourceLabel = $derived(source === 'claude' ? status?.persona_model ?? 'Claude' : 'Sample library');
   const totalCalls = $derived(agents.reduce((sum, a) => sum + a.conversations.length, 0));
 
@@ -64,7 +68,7 @@
       } catch (e) { handoffError = e instanceof Error ? e.message : 'Could not load the approved proposal.'; }
     }
   });
-  onDestroy(() => { clearInterval(ticker); clearTimeout(poll); journey.health = null; });
+  onDestroy(() => { disposed = true; clearInterval(ticker); clearTimeout(poll); journey.health = null; });
 
   async function build() {
     if (building || (runId && !handoff)) return;
@@ -115,9 +119,18 @@
   function watch(agent: VoiceAgent, conversationId: string) {
     clearTimeout(poll);
     call = { agentId: agent.id, conversationId, data: null, error: '' };
+    let failures = 0;
     const tick = async () => {
-      if (call?.conversationId !== conversationId) return;
-      try { call.data = await getConversation(conversationId); } catch { /* The conversation can 404 right after dialing. */ }
+      if (disposed || call?.conversationId !== conversationId) return;
+      try {
+        const data = await getConversation(conversationId);
+        if (disposed || call?.conversationId !== conversationId) return;
+        call.data = data;
+        failures = 0;
+      } catch {
+        if (disposed || call?.conversationId !== conversationId) return;
+        if (++failures >= 5) { call.error = 'Could not load the call status. Select the call again to retry.'; return; }
+      }
       if (!FINAL_CALL_STATUSES.has(call.data?.status ?? '')) poll = setTimeout(tick, 2000);
     };
     void tick();
@@ -138,11 +151,12 @@
           <div class="section-kicker">{runId ? 'APPROVED REDLINE' : 'DEMO PROPOSAL'}</div>
           {#if finding}
             <h2>{finding.provision.title}</h2>
-            <p class="mz-meta">{finding.provision.jurisdiction || 'Jurisdiction unavailable'} · {finding.provision.citation || 'Citation unavailable'} · Goal: {handoff?.query}</p>
+            <p class="mz-meta">{finding.provision.jurisdiction || 'Jurisdiction unavailable'} · {finding.provision.citation || 'Citation unavailable'}</p>
+            {#if handoff?.query}<details class="mz-goal"><summary>View analysis goal</summary><p>{handoff.query}</p></details>{/if}
             {#if finding.provision.synthetic}<div class="synthetic-banner"><FlaskConical size={17} /><span><strong>Synthetic demo data.</strong> This source and its generated outputs are synthetic.</span></div>{/if}
             <div class="mz-input-grid">
-              <div><div class="mini-label">POTENTIAL BARRIER</div><p>{finding.barrier}</p></div>
-              <div><div class="mini-label">DESIRED CHANGE</div><p>{finding.desired_change}</p></div>
+              <div><div class="mini-label">POTENTIAL BARRIER</div><ExpandableText text={finding.barrier}/></div>
+              <div><div class="mini-label">DESIRED CHANGE</div><ExpandableText text={finding.desired_change}/></div>
             </div>
             {#if handoff}
               <div class="mz-handoff">
@@ -165,13 +179,13 @@
         </div>
         {#if demo}
           <div class="mz-card">
-            <div class="section-kicker">CALL TARGETS <span class="mz-pill">DEMO</span></div>
+            <div class="section-kicker">CALL ROLES <span class="mz-pill">LOCAL DEMO</span></div>
             <dl class="mz-kv">
-              <dt>Legislator</dt><dd>{target}<small>{finding ? `Placeholder target for ${jurisdiction}` : demo.legislator.district}</small></dd>
-              <dt>Lobbyist</dt><dd>{demo.lobbyist.name}<small>{demo.lobbyist.firm}</small></dd>
-              <dt>Every call rings</dt><dd>{status?.allowed_numbers.join(', ') || demo.to_number}</dd>
+              <dt>Legislator</dt><dd>{target}<small>{official ? `${official.district || official.state} · source status: ${official.verified_at}` : 'Demo placeholder'}</small></dd>
+              <dt>Lobbyist</dt><dd>{lobbyist?.name || demo.lobbyist.name}<small>{lobbyist ? `${lobbyist.organization || lobbyist.clients?.join(', ')} · source status: ${lobbyist.verified_at}` : 'Demo placeholder'}</small></dd>
+              <dt>Dialed number</dt><dd>{demo.to_number}<small>{status?.allowed_numbers.includes(demo.to_number) ? 'Allowlisted' : 'Not allowlisted; calls will be blocked'}</small></dd>
             </dl>
-            <p class="mz-note">Targets aren't in the analysis handoff yet, so these are placeholders. Every call rings your phone and you play them.</p>
+            <p class="mz-note">These are roles for the demonstration, not the numbers being dialed. Missing roles use placeholders; verify sourced roles before any outreach.</p>
           </div>
         {/if}
       </section>

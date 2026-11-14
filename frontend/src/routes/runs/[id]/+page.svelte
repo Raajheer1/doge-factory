@@ -36,7 +36,7 @@
 
 <div class="page-heading">
   <div><div class="eyebrow"><span></span> STEP 1 · AUDIT</div><h1>Policy in the way of <em>your pitch.</em></h1>
-    <p>{run ? `“${run.query}”` : 'Loading your audit…'}</p></div>
+    <p>Review source-backed findings from your analysis.</p></div>
   <a class="back-link" href="/runs"><ArrowLeft size={14} /> Problem queue</a>
 </div>
 
@@ -54,7 +54,7 @@
         <a class="barrier-card" href={redlinePath(run.id, finding.id)}>
           <div class="finding-top"><span>BARRIER {String(index + 1).padStart(2, '0')} · {finding.provision.jurisdiction || 'Jurisdiction unavailable'}</span>
             {#if run.selected_finding_id === finding.id}<span class="approved-small"><Check size={12} /> APPROVED</span>{/if}</div>
-          <strong>{finding.provision.title}</strong>
+          <strong>{finding.title || finding.provision.title}</strong>
           <span class="finding-citation">{finding.provision.citation || 'Citation unavailable'}{finding.provision.synthetic ? ' · synthetic' : ''}</span>
           <p>{finding.barrier}</p>
           <span class="barrier-cta"><FilePenLine size={14} /> {run.selected_finding_id === finding.id ? 'View redline' : 'Redline this barrier'} <ArrowRight size={14} /></span>

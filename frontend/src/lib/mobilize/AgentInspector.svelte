@@ -48,7 +48,7 @@
         <strong>{statusText}</strong>
         <small class="mz-mono">{mine?.conversationId ? `${mine.conversationId.slice(0, 20)}…${data?.duration ? ` · ${data.duration}s` : ''}` : agent.request.to_number}</small>
         {#if mine?.error}<p class="mz-error">{mine.error}</p>{/if}
-        {#if agent.conversations.length > 1}
+        {#if agent.conversations.length > 1 || (agent.conversations.length && mine?.error)}
           <div class="mz-history">{#each agent.conversations as id, i}<button class:on={mine?.conversationId === id} onclick={() => onwatch(agent, id)}>Call {i + 1}</button>{/each}</div>
         {/if}
       </div>

@@ -118,3 +118,17 @@ details.scenario pre{margin-top:12px}
 .ghost-button.danger{color:#8a4a3c;border-color:#efd6cc}
 .input-wrap .ghost-button{padding:12px 13px}
 .queue-item{display:flex;gap:8px;align-items:stretch}.queue-item .queue-row{flex:1;min-width:0}.queue-ap{flex:none}
+
+/* Long goals are editable without squeezing them into a single line. */
+.input-wrap textarea{min-width:0;flex:1;resize:vertical;border:0;outline:0;color:#273d30;font:inherit;font-size:13px;line-height:1.6;background:transparent;padding:9px 0}
+.input-wrap textarea::placeholder{color:#a6b3aa}
+@media(max-width:480px){.input-wrap textarea{width:calc(100% - 35px);flex:auto}}
+
+/* Long findings and small screens should not stretch the workspace. */
+.barrier-list{grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))}
+.barrier-card strong,.barrier-card p{overflow-wrap:anywhere}
+.barrier-card p{display:-webkit-box;-webkit-line-clamp:4;line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.breadcrumb{display:flex;align-items:center;min-width:0;overflow:hidden;white-space:nowrap}
+.breadcrumb a{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.breadcrumb strong{flex:none}
+@media(max-width:760px){.topbar{gap:12px}.top-right .health{display:none}.queue-item{flex-wrap:wrap}.queue-item .queue-row{flex-basis:100%;border-bottom:0}.queue-ap{margin:0 16px 12px}.barrier-card{min-width:0}}

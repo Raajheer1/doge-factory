@@ -17,7 +17,7 @@
   let actionError = $state('');
   let actionBusy = $state(false);
 
-  const selected = $derived(run ? run.findings.find((f) => f.id === requested) ?? run.findings.find((f) => f.id === run?.selected_finding_id) ?? run.findings[0] ?? null : null);
+  const selected = $derived(run ? (requested ? run.findings.find((f) => f.id === requested) ?? null : run.findings.find((f) => f.id === run?.selected_finding_id) ?? run.findings[0] ?? null) : null);
   const canApprove = $derived(!!run && ['completed', 'completed_with_errors'].includes(run.status));
   const approved = $derived(!!selected && run?.selected_finding_id === selected.id);
   const list = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
@@ -71,7 +71,7 @@
 {#if run}
   <RunHeader {run} />
   {#if !selected}
-    <div class="empty-state"><h3>No barriers to redline yet</h3><p>Redlines are available once the audit finds a barrier.</p><a class="back-link" href={runPath(run.id)}>Back to audit</a></div>
+    <div class="empty-state"><h3>{requested ? 'Finding not found' : 'No barriers to redline yet'}</h3><p>{requested ? 'This finding is not available in this run. Return to the audit to choose a finding.' : 'Redlines are available once the audit finds a barrier.'}</p><a class="back-link" href={runPath(run.id)}>Back to audit</a></div>
   {:else}
     <div class="workspace">
       <div class="findings-column">
@@ -80,13 +80,13 @@
         <div class="finding-list">{#each run.findings as finding, index}
           <a class="finding-card" class:selected-card={selected.id === finding.id} href={redlinePath(run.id, finding.id)} data-sveltekit-replacestate data-sveltekit-noscroll>
             <div class="finding-top"><span>BARRIER {String(index + 1).padStart(2, '0')}</span>{#if run.selected_finding_id === finding.id}<span class="approved-small"><Check size={12} /> APPROVED</span>{/if}</div>
-            <strong>{finding.provision.title}</strong><span class="finding-citation">{finding.provision.citation || 'Citation unavailable'}</span>
+            <strong>{finding.title || finding.provision.title}</strong><span class="finding-citation">{finding.provision.citation || 'Citation unavailable'}</span>
           </a>{/each}</div>
         <div class="list-foot"><span class="tiny-spark">✳</span> Redlines are proposals for review, not legal conclusions.</div>
       </div>
 
       <div class="detail-column">
-        <div class="detail-header"><div><div class="mini-label">REDLINE</div><h3>{selected.provision.title}</h3>
+        <div class="detail-header"><div><div class="mini-label">REDLINE</div><h3>{selected.title || selected.provision.title}</h3>
           <div class="detail-meta"><span>{selected.provision.jurisdiction || 'Jurisdiction unavailable'}</span><span>·</span><span>{selected.provision.citation || 'Citation unavailable'}</span><span>·</span><span>Effective {displayDate(selected.provision.effective_date)}</span>{#if selected.provision.document_type}<span>·</span><span>{selected.provision.document_type.replaceAll('_', ' ')}</span>{/if}{#if selected.provision.source_status}<span>·</span><span>{selected.provision.source_status.replaceAll('_', ' ')}</span>{/if}</div></div>
           <span class="proposal-pill">FOR REVIEW</span></div>
         {#if selected.provision.synthetic}<div class="synthetic-banner"><FlaskConical size={17} /><span><strong>Synthetic demo data.</strong> This source and its generated outputs are synthetic.</span></div>{/if}
